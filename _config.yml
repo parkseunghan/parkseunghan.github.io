@@ -18,9 +18,9 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 locale                   : "ko-KR" # costomized by parkseunghan (default:en-US)
 title                    : "ParkSeungHan's blog" # costomized by parkseunghan
 title_separator          : "-"
-subtitle                 : "study note."# site tagline that appears below site title in masthead
-name                     : "Seunghan, Park" # costomized by parkseunghan
-description              : "I'm the best." # costomized by parkseunghan
+subtitle                 : "study note." # site tagline that appears below site title in masthead
+name                     : "박승한(Seunghan, Park)" # costomized by parkseunghan
+description              : "" # costomized by parkseunghan
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -106,8 +106,8 @@ analytics:
 author:
   name             : "Seunghan, Park"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I'm the best."
-  location         : "world"
+  bio              : "I like strawberries"
+  location         : "My home"
   email            :
   links:
     - label: "Email"
