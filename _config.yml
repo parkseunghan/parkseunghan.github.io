@@ -16,9 +16,9 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 
 # Site Settings
 locale                   : "ko-KR" # costomized by parkseunghan (default:en-US)
-title                    : "Park's study note" # costomized by parkseunghan
+title                    : "ParkSeungHan's blog" # costomized by parkseunghan
 title_separator          : "-"
-subtitle                 : # site tagline that appears below site title in masthead
+subtitle                 : "study note."# site tagline that appears below site title in masthead
 name                     : "Seunghan, Park" # costomized by parkseunghan
 description              : "I'm the best." # costomized by parkseunghan
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
