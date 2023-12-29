@@ -18,15 +18,15 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 locale                   : "ko-KR" # costomized by parkseunghan (default:en-US)
 title                    : "ParkSeungHan's blog" # costomized by parkseunghan
 title_separator          : "-"
-subtitle                 : "study note." # site tagline that appears below site title in masthead
+subtitle                 : "study note." # site tagline that appears below site title in masthead # costomized by parkseunghan
 name                     : "박승한(Seunghan, Park)" # costomized by parkseunghan
-description              : "" # costomized by parkseunghan
-url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+description              : "abcdefg" # costomized by parkseunghan
+url                      : "https://parkseunghan.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io" # costomized by parkseunghan
 baseurl                  : # the subpath of your site, e.g. "/blog"
-repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+repository               : "https://github.com/parkseunghan/parkseunghan.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes" # costomized by parkseunghan
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
-masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
+masthead_title           : "ParkSeungHan" # overrides the website title displayed in the masthead, use " " for no title # costomized by parkseunghan
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
 comments:
@@ -104,10 +104,10 @@ analytics:
 
 # Site Author
 author:
-  name             : "Seunghan, Park"
+  name             : "Seunghan, Park" # costomized by parkseunghan
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I like strawberries"
-  location         : "My home"
+  bio              : "I<br/>like<br/>strawberries" # costomized by parkseunghan
+  location         : "My home" # costomized by parkseunghan
   email            :
   links:
     - label: "Email"
