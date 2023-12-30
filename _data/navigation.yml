@@ -1,5 +1,7 @@
 # main links
 main:
+  - title: "Post"
+    url: /posts/
   - title: "Category"
     url: /categories/
   # - title: "Quick-Start Guide"
