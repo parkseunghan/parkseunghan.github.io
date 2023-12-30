@@ -134,7 +134,7 @@ footer:
   links:
     - label: "Email"  
       icon: "fas fa-fw fa-envelope-square"
-      url: mailto:01seunghan@gmail.com
+      # url: mailto:01seunghan@gmail.com
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
       # url:
@@ -143,7 +143,7 @@ footer:
       # url:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/parkseunghan"
+      # url: "https://github.com/parkseunghan"
     - label: "GitLab"
       icon: "fab fa-fw fa-gitlab"
       # url:
