@@ -12,10 +12,10 @@
 
 # theme                  : "minimal-mistakes-jekyll"
 # remote_theme           : "mmistakes/minimal-mistakes"
-# minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+minimal_mistakes_skin    : "aqua" # "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
-locale                   : "ko-KR" # costomized by parkseunghan (default:en-US)
+locale                   : "en-US"# "ko-KR" # costomized by parkseunghan (default:en-US)
 title                    : "ParkSeungHan" # costomized by parkseunghan
 title_separator          : "-"
 subtitle                 : "It's me." # site tagline that appears below site title in masthead # costomized by parkseunghan
@@ -26,7 +26,7 @@ baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "https://github.com/parkseunghan/parkseunghan.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes" # costomized by parkseunghan
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
-masthead_title           : "ParkSeungHan" # overrides the website title displayed in the masthead, use " " for no title # costomized by parkseunghan
+masthead_title           : " " # overrides the website title displayed in the masthead, use " " for no title # costomized by parkseunghan
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
 comments:
