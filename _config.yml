@@ -16,7 +16,7 @@ minimal_mistakes_skin    : "dirt" # "default" # "air", "aqua", "contrast", "dark
 
 # Site Settings
 locale                   : "en-US" # "ko-KR" # costomized by parkseunghan (default:en-US)
-title                    : " ParkSeungHan " # costomized by parkseunghan
+title                    : "ParkSeungHan's Playground" # costomized by parkseunghan
 title_separator          : "-"
 subtitle                 : "It's me." # site tagline that appears below site title in masthead # costomized by parkseunghan
 name                     : "박승한(Seunghan Park)" # costomized by parkseunghan
