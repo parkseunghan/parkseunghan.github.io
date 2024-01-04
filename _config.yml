@@ -292,7 +292,7 @@ defaults:
       layout: home
       author_profile: true
       sidebar:
-        nav: main
+        nav: "main"
 
   # _posts
   - scope:
