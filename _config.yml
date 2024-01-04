@@ -285,6 +285,15 @@ compress_html:
 
 # Defaults
 defaults:
+  # default # costomized by parkseunghan
+  - scope:
+      path: ''
+    values:
+      layout: home
+      author_profile: true
+      sidebar:
+        nav: main-sidebar
+
   # _posts
   - scope:
       path: ""
@@ -292,7 +301,21 @@ defaults:
     values:
       layout: single
       author_profile: true
-      read_time: true
-      comments: # true
+      show_date: true # added by parkseunghan
+      show_header-meta: true # added by parkseunghan
+      read_time: false # default: true # costomized by parkseunghan
+      comments: true # costomized by parkseunghan
       share: true
       related: true
+      toc-top
+      toc: false
+      toc_sticky: true
+      sidebar:
+        nav: main-sidebar
+      right-widget:
+        toc: true
+      use_kakao-sdk: true
+
+
+
+
