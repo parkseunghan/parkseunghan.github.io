@@ -287,9 +287,9 @@ compress_html:
 defaults:
   # default # costomized by parkseunghan
   - scope:
-      path: ''
+      path: ""
     values:
-      layout: home
+      layout: "default"
       author_profile: true
       sidebar:
         nav: "main"
@@ -307,14 +307,7 @@ defaults:
       comments: true # costomized by parkseunghan
       share: true
       related: true
-      toc-top
-      toc: false
-      toc_sticky: true
-      sidebar:
-        nav: main-sidebar
-      right-widget:
-        toc: true
-      use_kakao-sdk: true
+     
 
 
 
