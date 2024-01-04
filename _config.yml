@@ -107,7 +107,7 @@ author:
   name             : "Seunghan Park" # costomized by parkseunghan
   avatar           : "/assets/images/pack1.png" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "I<br/>like<br/>strawberries" # costomized by parkseunghan
-  location         : "Pyeongtaek ,Rep. of Korea" # costomized by parkseunghan
+  location         : "Pyeongtaek, Rep. of Korea" # costomized by parkseunghan
   email            :
   links:
     - label: "Email"
