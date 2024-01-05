@@ -289,10 +289,10 @@ defaults:
   - scope:
       path: ""
     values:
-      layout: home
+      layout: single
       author_profile: true
       sidebar:
-        nav: "main"
+        nav: "main" # "main-sidebar"
 
   # _posts
   - scope:
