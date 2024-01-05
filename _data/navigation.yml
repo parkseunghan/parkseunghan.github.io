@@ -21,9 +21,9 @@ main-sidebar:
   - title: "Dreamhack"
     url: /dreamhack/
     children:
-      - title: "Web-Hacking"
+      - title: "Web Hacking"
         url: /dreamhack/webhacking/
-      - title: "System-Hacking"
+      - title: "System Hacking"
         url: /dreamhack/systemhacking/
-      - title: "War-Game"
+      - title: "War Game"
         url: /dreamhack/wargame/
