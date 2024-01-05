@@ -307,7 +307,13 @@ defaults:
       comments: true # costomized by parkseunghan
       share: true
       related: true
-      
+      toc-top: true
+      toc: false
+      toc_sticky: true
+      sidebar:
+        nav: main-sidebar
+      right-widget:
+        toc: true
 
 
 
