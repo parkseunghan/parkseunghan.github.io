@@ -289,7 +289,7 @@ defaults:
   - scope:
       path: ""
     values:
-      layout: single
+      layout: home
       author_profile: true
       sidebar:
         nav: "main-sidebar"
