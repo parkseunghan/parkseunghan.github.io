@@ -16,11 +16,6 @@ main:
   #   url: /sitemap/
 
 main-sidebar:
-  - title: "PlayGround"
-    url: /blog/posts/
-    chileren:
-      # - title: ""
-      #   url: /blog/newpath/
   - title: "Study"
     url: /study/
     chileren:
