@@ -292,7 +292,7 @@ defaults:
       layout: single
       author_profile: true
       sidebar:
-        nav: "main" # "main-sidebar"
+        nav: "main-sidebar"
 
   # _posts
   - scope:
@@ -307,7 +307,7 @@ defaults:
       comments: true # costomized by parkseunghan
       share: true
       related: true
-     
+      
 
 
 
