@@ -14,3 +14,19 @@ main:
   #   url: /collection-archive/
   # - title: "Sitemap"
   #   url: /sitemap/
+
+main-sidebar:
+  - title: "PlayGround"
+    url: /blog/
+    chileren:
+      # - title: ""
+      #   url: /blog/newpath/
+  - title: "Study"
+    url: /study/
+    chileren:
+      - title: "[Dreamhack]Web-Hacking
+        url: /study/dreamhack/webhacking/
+      - title: "[Dreamhack]System-Hacking
+        url: /study/dreamhack/systemhacking/
+      - title: "[Dreamhack]War-Game
+        url: /study/dreamhack/wargame/
