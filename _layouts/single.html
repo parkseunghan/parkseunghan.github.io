@@ -44,8 +44,10 @@ layout: default
             {% endif %}
             {% include page__meta.html %}
           </header>
-          {% include page__header-meta.html %}
-          {% include page__header-category-list.html target=post %}
+            <h3>
+              {% include page__header-meta.html %}
+              {% include page__header-category-list.html target=post %}
+            </h3>
         </div>
       {% endunless %}
 
