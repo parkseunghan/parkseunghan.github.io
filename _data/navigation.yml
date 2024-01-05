@@ -16,12 +16,13 @@ main:
   #   url: /sitemap/
 
 main-sidebar:
+  - title: "Post"
+    url: /posts/
   - title: "Study"
     url: /study/
-    chileren:
+    children:
       - title: "[Dreamhack]Web-Hacking
         url: /study/dreamhack/webhacking/
-        category: "dreamhack"
       - title: "[Dreamhack]System-Hacking
         url: /study/dreamhack/systemhacking/
       - title: "[Dreamhack]War-Game
