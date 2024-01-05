@@ -17,7 +17,7 @@ main:
 
 main-sidebar:
   - title: "PlayGround"
-    url: /blog/
+    url: /blog/posts/
     chileren:
       # - title: ""
       #   url: /blog/newpath/
@@ -26,6 +26,7 @@ main-sidebar:
     chileren:
       - title: "[Dreamhack]Web-Hacking
         url: /study/dreamhack/webhacking/
+        category: "dreamhack"
       - title: "[Dreamhack]System-Hacking
         url: /study/dreamhack/systemhacking/
       - title: "[Dreamhack]War-Game
