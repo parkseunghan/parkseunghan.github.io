@@ -87,17 +87,17 @@ body {
       margin-top: -0.5em;
     }
   }
-  .page__header-meta {
-    padding-top: $font-size * 2;
-    font-size: 0.8em;
-    line-height: 1.5;
-  }
+  
   .page__header-taxonomy {
     font-size: 0.8em;
   }
 }
 
-
+.page__header-meta {
+    padding-top: $font-size * 2;
+    font-size: 0.8em;
+    line-height: 1.5;
+  }
 
 .page__lead {
   font-family: $global-font-family;
