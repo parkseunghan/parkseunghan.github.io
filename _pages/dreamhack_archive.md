@@ -1,6 +1,6 @@
 ---
 title: "Dreamhack"
-layout: archive
+layout: archive_subtoc
 permalink: /dreamhack/
 author_profile: true
 ---
