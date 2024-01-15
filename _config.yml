@@ -262,6 +262,9 @@ category_archive:
 tag_archive:
   type: liquid
   path: /tags/
+dreamhack_archive:
+  type: liquid
+  path: /dreamhack/
 # https://github.com/jekyll/jekyll-archives
 # jekyll-archives:
 #   enabled:
