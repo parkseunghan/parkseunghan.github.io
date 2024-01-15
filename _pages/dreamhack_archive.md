@@ -1,8 +1,6 @@
 ---
 title: "Dreamhack"
-layout: categorie
+layout: posts
 permalink: /dreamhack/
 author_profile: true
-sidebar:
-  nav: "main-sidebar"
 ---
