@@ -28,7 +28,7 @@ main-sidebar:
       - title: "War Game"
         url: /dreamhack/wargame/
         
-  - title: "WebDevelop"
+  - title: "Web Develop"
     url: /webdev/
     children:
       - title: "HTTP"
