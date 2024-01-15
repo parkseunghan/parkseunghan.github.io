@@ -1,6 +1,6 @@
 ---
 title: "Dreamhack"
-layout: posts
+layout: archive
 permalink: /dreamhack/
 author_profile: true
 ---
