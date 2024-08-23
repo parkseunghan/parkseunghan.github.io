@@ -194,6 +194,8 @@ return redirect(url_for("success", username=user[1], flag=LOGIN_FLAG)
 
 “success” 뷰로 리다이렉트 후 flag 변수를 LOGIN_FLAG로 설정
 
+|
+
 ```python
 elif user:
 	return redirect(url_for("success", username=user[1]))
@@ -261,7 +263,7 @@ admin' -- 1
 
 뒤에 1을 쓰는 이유는 공백이 있음을 명확하게 하기 위해서임. 아닐 수도 있음ㅋ
 
-password는 어차피 주석처리 되기 때문에 아무거나 넣어도 됨 
+password는 주석처리 될 운명이기 때문에 아무거나 넣어도 됨 
 
 |
 
