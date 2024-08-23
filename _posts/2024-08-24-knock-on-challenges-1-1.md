@@ -17,7 +17,7 @@ published: true
 
 <http://war.knock-on.org:10002/>
 
-![1.1 SQL Injection - Login]()
+![1.1 SQL Injection - Login 1](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_1.png)
 
 |
 
@@ -100,7 +100,7 @@ if __name__ == "__main__":
 
 ### 메인 화면
 
-![1.1 SQL Injection - Login]()
+![1.1 SQL Injection - Login 2](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_2.png)
 
 ```python
 SELECT * FROM user WHERE username = 'Usename 폼 입력값' AND password = 'Password 폼 입력값'
@@ -110,7 +110,7 @@ SELECT * FROM user WHERE username = 'Usename 폼 입력값' AND password = 'Pass
 
 |
 
-![1.1 SQL Injection - Login]()
+![1.1 SQL Injection - Login 3](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_3.png)
 
 폼에 `‘` 를 입력하면 에러가 뜸
 
