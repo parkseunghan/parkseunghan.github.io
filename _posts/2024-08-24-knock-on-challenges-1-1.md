@@ -1,5 +1,5 @@
 ---
-title: "[Writeup] Knockon Bootcamp - 1.1 SQL Injection - Login(100)"
+title: "[Writeup] Knockon Bootcamp - 1.1 SQL Injection"
 categories:
   - Web Hacking
 tags:
