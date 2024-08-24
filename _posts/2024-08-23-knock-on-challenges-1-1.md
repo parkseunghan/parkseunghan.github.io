@@ -203,12 +203,12 @@ user = result.fetchone()
 
 ```python
 if user and user[1] == "admin":
-return redirect(url_for("success", username=user[1], flag=LOGIN_FLAG)
+  return redirect(url_for("success", username=user[1], flag=LOGIN_FLAG)
 ```
 
 `user`가 존재하고 `user[1]`(user의 두 번째 필드)이 “admin”이면,
 
-“success” 뷰로 리다이렉트 후 flag 변수를 LOGIN_FLAG로 설정
+`success` 뷰로 리다이렉트 후 `username`을 `user[1]`로, `flag`를 `LOGIN_FLAG`로 설정
 
 |
 
@@ -217,9 +217,9 @@ elif user:
 	return redirect(url_for("success", username=user[1]))
 ```
 
-`user`가 존재하지만 `user[1]`이 없는 경우
+`user`가 존재할 경우
 
-“success” 뷰로만 리다이렉트
+`success` 뷰로 리다이렉트 후 `username` 을 `user[1]` 로 설정
 
 |
 
@@ -239,7 +239,7 @@ return render_template("success.html", username=username, flag=flag)
 
 `success.html` 이 렌더링되면서 `username`과 `flag` 변수 전달
 
-즉, login()에서 admin으로 로그인에 성공하면 flag가 화면에 나타나게 됨
+즉, login()에서 admin으로 로그인에 성공하면 username과 flag가 화면에 나타나게 됨
 
 |
 
