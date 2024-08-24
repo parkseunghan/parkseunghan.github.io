@@ -19,6 +19,22 @@ published: true
 
 ![1.1 SQL Injection - Login 1](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_1.png)
 
+![1.1 SQL Injection - Login 2](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_2.png)
+
+![1.1 SQL Injection - Login 3](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_3.png)
+
+|
+
+### 목표
+
+admin 계정으로 로그인하기
+
+|
+
+### 공격 기법
+
+SQL Injection
+
 |
 
 |
@@ -100,7 +116,7 @@ if __name__ == "__main__":
 
 ### 메인 화면
 
-![1.1 SQL Injection - Login 2](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_2.png)
+![1.1 SQL Injection - Login 4](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_4.png)
 
 ```python
 SELECT * FROM user WHERE username = 'Usename 폼 입력값' AND password = 'Password 폼 입력값'
@@ -110,7 +126,7 @@ SELECT * FROM user WHERE username = 'Usename 폼 입력값' AND password = 'Pass
 
 |
 
-![1.1 SQL Injection - Login 3](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_3.png)
+![1.1 SQL Injection - Login 5](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_5.png)
 
 폼에 `‘` 를 입력하면 에러가 뜸
 
