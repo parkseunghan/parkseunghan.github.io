@@ -1,5 +1,5 @@
 ---
-title: "[Writeup] Knockon Bootcamp - 1.1 SQL Injection - Login(100)"
+title: "[Writeup] Knockon Bootcamp - 1.1 SQL Injection - Login"
 categories:
   - Web Hacking
 tags:
@@ -417,6 +417,8 @@ password: 1
 
 |
 
+|
+
 ### 방법 2
 
 ```js
@@ -424,6 +426,8 @@ username: admin
 
 password: strong_admin_password_it_cant_be_leak
 ```
+
+|
 
 |
 

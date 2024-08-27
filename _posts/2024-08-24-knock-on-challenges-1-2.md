@@ -1,5 +1,5 @@
 ---
-title: "[Writeup] Knockon Bootcamp - 1.2 SQL Injection - DB(100)"
+title: "[Writeup] Knockon Bootcamp - 1.2 SQL Injection - DB"
 categories:
   - Web Hacking
 tags:
@@ -691,6 +691,8 @@ password: 1
 
 ### query
 
+---
+
 ```sql
 select TABLE_NAME from information_schema.TABLES where TABLE_SCHEMA = "sqli_lab" limit 0,1
 ```
@@ -709,7 +711,11 @@ select Und3r_c0 from sqli_lab.`K0{` limit 0,1
 
 |
 
+|
+
 ### FLAG 
+
+---
 
 ```
 K0{Und3r_c0nstrUct10n}
