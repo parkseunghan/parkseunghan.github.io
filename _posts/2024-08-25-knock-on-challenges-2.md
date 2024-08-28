@@ -38,7 +38,7 @@ admin 계정의 password 알아내기
 
 ---
 
-Bline SQL Injection
+Blind SQL Injection
 
 - Boolean based
 

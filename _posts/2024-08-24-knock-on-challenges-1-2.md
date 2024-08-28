@@ -41,6 +41,8 @@ published: true
 
 SQL Injection
 
+- Union select
+
 |
 
 |
@@ -420,10 +422,6 @@ mysql> show tables;
 `information_schema.TABLES`: 테이블
 
 `information_schema.COLUMNS`: 열
-
-|
-
-이외에 존재하는 테이블들에 대한 분석은 [<1.2 SQL Injection DB - 번외>](https://parkseunghan.github.io/web%20hacking/knock-on-challenges-1-2-special/)에서 다루겠음
 
 |
 
