@@ -421,7 +421,7 @@ password: 1
 
 ### 방법 2
 
-```js
+```
 username: admin
 
 password: strong_admin_password_it_cant_be_leak

