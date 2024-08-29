@@ -7,7 +7,7 @@ tags:
   - Knockon Bootcamp
   - SQL Injection
   - Filter Bypass
-last_modified_at: 2024-08-30T00:10:00-05:00
+last_modified_at: 2024-08-30T00:10:00
 published: true
 ---
 
