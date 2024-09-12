@@ -403,7 +403,7 @@ return render_template("board.html", posts=posts, message=message)
 
 |
 
-## 문제 풀이
+## Exploit
 
 코드 분석 결과를 정리하면
 
@@ -430,7 +430,7 @@ return render_template("board.html", posts=posts, message=message)
 
 |
 
-## 문제 풀이 1: 내 웹 서버
+## Exploit 1: 내 웹 서버
 
 ### azure 설정
 
@@ -503,7 +503,7 @@ Accept-Encoding: gzip, deflate
 
 |
 
-## 문제 풀이 2: dreamhack **Request Bin**
+## Exploit 2: dreamhack Request Bin
 
 [dreamhack tools](https://tools.dreamhack.games/main)
 
@@ -568,7 +568,7 @@ Request Bin에 cookie가 잘 전달됨
 
 |
 
-## Exploit
+## Payload
 
 ### 방법 1
 

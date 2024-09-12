@@ -165,7 +165,7 @@ Boolean based Blind SQL Injection을 사용하여 참, 거짓 여부로 비밀�
 
 |
 
-## 문제 풀이
+## Exploit
 
 ### 1. 비밀번호 길이 알아내기
 
@@ -433,7 +433,7 @@ admin' and ascii(SUBSTRING(password,10,1)) = 126 -- 1
 
 |
 
-## Exploit
+## Payload
 
 ```python
 import requests

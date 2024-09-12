@@ -91,7 +91,7 @@ onmouseout="this.innerHTML='O'"
 
 |
 
-## Expolit
+## Payload
 
 a 태그의 요소를 1600px 위치에 도달시켜야 함
 

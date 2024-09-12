@@ -170,7 +170,7 @@ Boolean based Blind SQL Injection으로 admin 계정의 비밀번호를 알아�
 
 |
 
-## 문제 풀이
+## Exploit
 
 ### 필터링 우회: OR과 AND
 
@@ -439,7 +439,7 @@ payload = {"username":f"{username}' union select 1,2,3 from (select 1,2 as name,
 
 |
 
-## Exploit
+## Payload
 
 ```python
 import requests

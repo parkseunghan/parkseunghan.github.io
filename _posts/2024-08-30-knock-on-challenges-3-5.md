@@ -165,7 +165,7 @@ def success():
 
 |
 
-## 문제 풀이
+## Exploit
 
 ```sql
 ' union select 1,2,3 #
@@ -217,7 +217,7 @@ where name like 'admin'
 
 |
 
-## Exploit
+## Payload
 
 ### 방법 1
 
@@ -254,3 +254,5 @@ K0{good_4ft3rn00n!}
 ```
 
 |
+
+---

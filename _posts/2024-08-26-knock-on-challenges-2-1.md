@@ -147,7 +147,7 @@ Time based Blind SQL Injection 기법을 활용해서 서버의 쿼리 응답 �
 
 |
 
-## 문제 풀이
+## Exploit
 
 ### 1. 비밀번호 길이 알아내기
 
@@ -291,7 +291,7 @@ Boolean base의 코드에서 조금만 바꾸면 됨
 
 |
 
-## Exploit
+## Payload
 
 ```sql
 import requests

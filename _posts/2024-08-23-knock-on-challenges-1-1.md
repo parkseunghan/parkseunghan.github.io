@@ -292,7 +292,7 @@ return render_template("success.html", username=username, flag=flag)
 
 |
 
-## 문제 풀이
+## Exploit
 
 ### 방법 1
 
@@ -405,7 +405,7 @@ user 테이블의 구조는 위와 같은 형태임을 알 수 있음
 
 |
 
-## Exploit
+## Payload
 
 ### 방법 1
 

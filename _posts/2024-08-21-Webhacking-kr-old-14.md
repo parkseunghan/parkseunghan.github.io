@@ -125,7 +125,7 @@ ul 값과 사용자 입력 값이 같으면, href 속성이
 
 |
 
-## Exploit
+## Payload
 
 ### 방법 1 
 

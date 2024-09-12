@@ -170,7 +170,7 @@ if user and user[1] == "admin":
 
 |
 
-## 문제 풀이
+## Exploit
 
 1. `‘`를 입력하면 에러가 뜸 → SQL Injection 가능
 
@@ -188,7 +188,7 @@ if user and user[1] == "admin":
 
 |
 
-## Exploit
+## Payload
 
 ```
 username: admin' -- 1 
