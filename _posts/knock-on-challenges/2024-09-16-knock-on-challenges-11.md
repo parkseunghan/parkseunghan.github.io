@@ -505,20 +505,13 @@ K0{CRLF_is_very_common_vulnerability}
 
 |
 
-## 방법 2 - burp suite
+### 방법 2 - burp suite
 
 ### 2-1. post 요청 - header, value
 
 ```wasm
 POST / HTTP/1.1
 Host: war.knock-on.org:10013
-Accept-Language: ko-KR,ko;q=0.9
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.6613.120 Safari/537.36
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
-Accept-Encoding: gzip, deflate, br
-Connection: keep-alive
-Content-Length: 27
 Content-Type: application/x-www-form-urlencoded
 
 header=header1&value=value1
@@ -527,7 +520,7 @@ header=header1&value=value1
 ```wasm
 HTTP/1.1 200 OK
 Server: Werkzeug/3.0.3 Python/3.10.12
-Date: Mon, 16 Sep 2024 12:12:07 GMT
+Date: Mon, 16 Sep 2024 12:39:23 GMT
 Content-Type: text/html; charset=utf-8
 Content-Length: 51
 header1: value1
@@ -545,13 +538,6 @@ I't is very good day to walk out. Power thourgh!!!!
 ```wasm
 POST / HTTP/1.1
 Host: war.knock-on.org:10013
-Accept-Language: ko-KR,ko;q=0.9
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.6613.120 Safari/537.36
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
-Accept-Encoding: gzip, deflate, br
-Connection: keep-alive
-Content-Length: 44
 Content-Type: application/x-www-form-urlencoded
 
 header=header1: value1
@@ -580,13 +566,6 @@ I't is very good day to walk out. Power thourgh!!!!
 ```wasm
 POST / HTTP/1.1
 Host: war.knock-on.org:10013
-Accept-Language: ko-KR,ko;q=0.9
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.6613.120 Safari/537.36
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
-Accept-Encoding: gzip, deflate, br
-Connection: keep-alive
-Content-Length: 46
 Content-Type: application/x-www-form-urlencoded
 
 header=header1: value1
@@ -617,13 +596,6 @@ I't is very good day to walk out. Power thourgh!!!!
 ```html
 POST / HTTP/1.1
 Host: war.knock-on.org:10013
-Accept-Language: ko-KR,ko;q=0.9
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.6613.120 Safari/537.36
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
-Accept-Encoding: gzip, deflate, br
-Connection: keep-alive
-Content-Length: 46
 Content-Type: application/x-www-form-urlencoded
 
 header=header1: value1
@@ -656,13 +628,6 @@ I't is very good day to walk out. Power thourgh!!!!
 ```html
 POST /report HTTP/1.1
 Host: war.knock-on.org:10013
-Accept-Language: ko-KR,ko;q=0.9
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.6613.120 Safari/537.36
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
-Accept-Encoding: gzip, deflate, br
-Connection: keep-alive
-Content-Length: 72
 Content-Type: application/x-www-form-urlencoded
 
 header=header1: value1
@@ -683,6 +648,12 @@ K0{CRLF_is_very_common_vulnerability}
 ```
 
 그대로 경로만 `/report`로 바꿔줌
+
+|
+
+|
+
+|
 
 ## Payload
 
