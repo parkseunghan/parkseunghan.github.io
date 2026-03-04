@@ -1,9 +1,9 @@
 ---
 title: "데이터셋"
 categories:
-  - Report
+  - Machine Learning
 tags:
-  - Report
+  - Machine Learning
 last_modified_at: 2024-12-02T00:00:00-05:00
 published: false
 ---

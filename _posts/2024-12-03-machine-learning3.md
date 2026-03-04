@@ -1,9 +1,9 @@
 ---
 title: "기계학습 발표 - 수정본"
 categories:
-  - Report
+  - Machine Learning
 tags:
-  - Report
+  - Machine Learning
 last_modified_at: 2024-12-03T00:00:00-05:01
 published: false
 ---

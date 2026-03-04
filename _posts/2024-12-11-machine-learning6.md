@@ -1,17 +1,15 @@
 ---
-title: "기계학습 최종"
+title: "사이버 공격 유형 예측을 위한 머신러닝 모델 개발"
 categories:
-  - Report
+  - Machine Learning
 tags:
-  - Report
+  - Machine Learning
 last_modified_at: 2024-12-11T00:00:00-05:01
 published: true
 ---
 
 # 사이버 공격 유형 예측을 위한 머신러닝 모델 개발
 ## 최종보고서
-
-기계학습 11분반 - 2팀
 
 ---
 
