@@ -1,10 +1,10 @@
 ---
-title: "[Writeup] Knockon Bootcamp - 8.1 SSTI - server flag"
+title: "[Writeup] Knockon Bootcamp 2nd - 8.1 SSTI - server flag"
 categories:
   - Web Hacking
 tags:
-  - Writeup
-  - Knockon Bootcamp
+  - Wargame
+  - Knockon Bootcamp 2nd
   - Server Side Template Injection
 last_modified_at: 2024-09-15T14:00:00-05:00
 published: true

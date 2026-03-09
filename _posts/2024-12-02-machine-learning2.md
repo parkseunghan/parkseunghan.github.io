@@ -1,5 +1,5 @@
 ---
-title: "데이터셋"
+title: "[Writeup] 데이터셋"
 categories:
   - Machine Learning
 tags:

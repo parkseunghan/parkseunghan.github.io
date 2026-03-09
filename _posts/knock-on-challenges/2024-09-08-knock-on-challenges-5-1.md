@@ -1,10 +1,10 @@
 ---
-title: "[Writeup] Knockon Bootcamp - 5.1 xss_WAF_1"
+title: "[Writeup] Knockon Bootcamp 2nd - 5.1 xss_WAF_1"
 categories:
   - Web Hacking
 tags:
-  - Writeup
-  - Knockon Bootcamp
+  - Wargame
+  - Knockon Bootcamp 2nd
   - Cross Site Scripting
   - Stored XSS
   - Filter Bypass

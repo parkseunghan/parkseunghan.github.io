@@ -1,10 +1,10 @@
 ---
-title: "[Writeup] Knockon Bootcamp - 7. Dom clobbering"
+title: "[Writeup] Knockon Bootcamp 2nd - 7. Dom clobbering"
 categories:
   - Web Hacking
 tags:
-  - Writeup
-  - Knockon Bootcamp
+  - Wargame
+  - Knockon Bootcamp 2nd
   - Cross Site Scripting
   - DOM Based
   - DOM Clobbering

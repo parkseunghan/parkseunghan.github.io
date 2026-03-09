@@ -1,5 +1,5 @@
 ---
-title: "기계학습 발표 - 범주형 데이터, 배운내용"
+title: "[Writeup] 기계학습 발표 - 범주형 데이터, 배운내용"
 categories:
   - Machine Learning
 tags:

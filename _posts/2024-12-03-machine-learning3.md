@@ -1,5 +1,5 @@
 ---
-title: "기계학습 발표 - 수정본"
+title: "[Writeup] 기계학습 발표 - 수정본"
 categories:
   - Machine Learning
 tags:

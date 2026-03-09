@@ -1,10 +1,10 @@
 ---
-title: "[Writeup] Knockon Bootcamp - 1.1 SQL Injection - Login"
+title: "[Writeup] Knockon Bootcamp 2nd - 1.1 SQL Injection - Login"
 categories:
   - Web Hacking
 tags:
-  - Writeup
-  - Knockon Bootcamp
+  - Wargame
+  - Knockon Bootcamp 2nd
   - SQL Injection
   - Login
 last_modified_at: 2024-08-24T02:54:00-05:00

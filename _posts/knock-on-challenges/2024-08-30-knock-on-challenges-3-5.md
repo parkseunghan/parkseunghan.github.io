@@ -1,10 +1,10 @@
 ---
-title: "[Writeup] Knockon Bootcamp - 3.5 SQLi_WAF_5"
+title: "[Writeup] Knockon Bootcamp 2nd - 3.5 SQLi_WAF_5"
 categories:
   - Web Hacking
 tags:
-  - Writeup
-  - Knockon Bootcamp
+  - Wargame
+  - Knockon Bootcamp 2nd
   - SQL Injection
   - Filter Bypass
 last_modified_at: 2024-08-30T01:10:00-05:00

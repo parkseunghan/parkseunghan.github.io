@@ -1,10 +1,10 @@
 ---
-title: "[Writeup] Knockon Bootcamp - 12.2 IDOR"
+title: "[Writeup] Knockon Bootcamp 2nd - 12.2 IDOR"
 categories:
   - Web Hacking
 tags:
-  - Writeup
-  - Knockon Bootcamp
+  - Wargame
+  - Knockon Bootcamp 2nd
   - Insecure Direct Object References
 last_modified_at: 2024-09-16T16:30:00-05:00
 published: true

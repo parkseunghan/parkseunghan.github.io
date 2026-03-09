@@ -1,10 +1,10 @@
 ---
-title: "[Writeup] Knockon Bootcamp - 12.1 Business_logic_error"
+title: "[Writeup] Knockon Bootcamp 2nd - 12.1 Business_logic_error"
 categories:
   - Web Hacking
 tags:
-  - Writeup
-  - Knockon Bootcamp
+  - Wargame
+  - Knockon Bootcamp 2nd
   - Business Logic Error
 last_modified_at: 2024-09-16T15:30:00-05:00
 published: true

@@ -1,10 +1,10 @@
 ---
-title: "[Writeup] Knockon Bootcamp - 8.2 SSTI - secretkey"
+title: "[Writeup] Knockon Bootcamp 2nd - 8.2 SSTI - secretkey"
 categories:
   - Web Hacking
 tags:
-  - Writeup
-  - Knockon Bootcamp
+  - Wargame
+  - Knockon Bootcamp 2nd
   - Server Side Template Injection
 last_modified_at: 2024-09-15T14:30:00-05:00
 published: true

@@ -3,7 +3,7 @@ title: "[Writeup] Webhacking.kr - old-14"
 categories:
   - Web Hacking
 tags:
-  - Writeup
+  - Wargame
   - Webhacking.kr
   - old-14
 last_modified_at: 2024-08-22T00:00:00-05:00

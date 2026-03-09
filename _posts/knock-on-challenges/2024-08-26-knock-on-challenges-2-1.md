@@ -1,10 +1,10 @@
 ---
-title: "[Writeup] Knockon Bootcamp - 2.1 What time is it?"
+title: "[Writeup] Knockon Bootcamp 2nd - 2.1 What time is it?"
 categories:
   - Web Hacking
 tags:
-  - Writeup
-  - Knockon Bootcamp
+  - Wargame
+  - Knockon Bootcamp 2nd
   - Blind SQL Injection
   - Time based
 last_modified_at: 2024-08-26T18:31:00-05:00

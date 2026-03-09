@@ -1,10 +1,10 @@
 ---
-title: "[Writeup] Knockon Bootcamp - 5. Xross Site Scripting revenge"
+title: "[Writeup] Knockon Bootcamp 2nd - 5. Xross Site Scripting revenge"
 categories:
   - Web Hacking
 tags:
-  - Writeup
-  - Knockon Bootcamp
+  - Wargame
+  - Knockon Bootcamp 2nd
   - Cross Site Scripting
   - Stored XSS
   - DOM based XSS

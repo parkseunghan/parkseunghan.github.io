@@ -1,10 +1,10 @@
 ---
-title: "[Writeup] Knockon Bootcamp - 12.3 Race condition"
+title: "[Writeup] Knockon Bootcamp 2nd - 12.3 Race condition"
 categories:
   - Web Hacking
 tags:
-  - Writeup
-  - Knockon Bootcamp
+  - Wargame
+  - Knockon Bootcamp 2nd
   - Insecure Direct Object References
 last_modified_at: 2024-09-16T20:30:00-05:00
 published: true

@@ -1,5 +1,5 @@
 ---
-title: "기계학습 발표 - 특성"
+title: "[Writeup] 기계학습 발표 - 특성"
 categories:
   - Machine Learning
 tags:

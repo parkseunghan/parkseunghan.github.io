@@ -1,10 +1,10 @@
 ---
-title: "[Writeup] Knockon Bootcamp - 11. CRLF injection"
+title: "[Writeup] Knockon Bootcamp 2nd - 11. CRLF injection"
 categories:
   - Web Hacking
 tags:
-  - Writeup
-  - Knockon Bootcamp
+  - Wargame
+  - Knockon Bootcamp 2nd
   - Carriage Return Line Feed
   - CRLF Injection
 last_modified_at: 2024-09-15T21:30:00-05:00

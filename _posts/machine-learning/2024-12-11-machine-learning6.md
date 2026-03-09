@@ -1,5 +1,5 @@
 ---
-title: "사이버 공격 유형 예측을 위한 머신러닝 모델 개발"
+title: "[Report] 사이버 공격 유형 예측을 위한 머신러닝 모델 개발"
 categories:
   - Machine Learning
 tags:

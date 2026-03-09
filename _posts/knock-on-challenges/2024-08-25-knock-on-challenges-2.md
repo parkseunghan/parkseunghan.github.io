@@ -1,10 +1,10 @@
 ---
-title: "[Writeup] Knockon Bootcamp - 2. Blind SQL Injection"
+title: "[Writeup] Knockon Bootcamp 2nd - 2. Blind SQL Injection"
 categories:
   - Web Hacking
 tags:
-  - Writeup
-  - Knockon Bootcamp
+  - Wargame
+  - Knockon Bootcamp 2nd
   - Blind SQL Injection
   - Boolean based
 last_modified_at: 2024-08-26T18:30:00-05:00

@@ -12,5 +12,37 @@ main:
   #   url: /sitemap/
   - title: "Categories"
     url: /categories/
-  - title: "KnockOn TIL"
-    url: https://parkseunghan.github.io/knock-on-til/
+  # - title: "KnockOn TIL"
+  #   url: https://parkseunghan.github.io/knock-on-til/
+
+
+    # 좌측 사이드바
+# _data/navigation.yml
+category_sidebar:
+  - title: "Vulnerability Research"
+    children:
+      - title: "Web Hacking"
+        url: /categories/#web-hacking
+      - title: "1-Day Analysis"
+        url: /categories/#1-day-analysis
+
+  - title: "Offensive Security"
+    children:
+      # - title: "Bug Bounty"
+      #   url: /categories/#bug-bounty
+      - title: "Malware & Reversing"
+        url: /categories/#malware-reversing
+
+  - title: "Security Engineering"
+    children:
+      - title: "Web Architecture"
+        url: /categories/#web-architecture
+      # - title: "AI in Security"
+      #   url: /categories/#ai-in-security
+
+  # - title: "Tooling & Automation"
+  #   children:
+  #     - title: "Burp Suite"
+  #       url: /categories/#burp-suite
+  #     - title: "Python Scripts"
+  #       url: /categories/#python-scripts

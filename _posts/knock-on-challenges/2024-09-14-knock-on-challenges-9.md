@@ -1,10 +1,10 @@
 ---
-title: "[Writeup] Knockon Bootcamp - 9. File Uploaded"
+title: "[Writeup] Knockon Bootcamp 2nd - 9. File Uploaded"
 categories:
   - Web Hacking
 tags:
-  - Writeup
-  - Knockon Bootcamp
+  - Wargame
+  - Knockon Bootcamp 2nd
   - File Upload
   - Command Injection
 last_modified_at: 2024-09-15T18:30:00-05:00

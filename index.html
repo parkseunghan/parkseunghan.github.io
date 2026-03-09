@@ -1,4 +1,10 @@
 ---
-layout: home
+layout: single
+title: "Information Security Portfolio" 
 author_profile: true
+sidebar:
+    nav: "category_sidebar"
 ---
+
+{% capture portfolio_content %}{% include portfolio.md %}{% endcapture %}
+{{ portfolio_content | markdownify }}

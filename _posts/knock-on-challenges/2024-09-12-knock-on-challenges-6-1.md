@@ -1,10 +1,10 @@
 ---
-title: "[Writeup] Knockon Bootcamp - 6.1 Base camp"
+title: "[Writeup] Knockon Bootcamp 2nd - 6.1 Base camp"
 categories:
   - Web Hacking
 tags:
-  - Writeup
-  - Knockon Bootcamp
+  - Wargame
+  - Knockon Bootcamp 2nd
   - Cross Site Scripting
   - Stored XSS
 last_modified_at: 2024-09-12T20:20:00-05:00

@@ -1,10 +1,10 @@
 ---
-title: "[Writeup] Knockon Bootcamp - 10. File Download"
+title: "[Writeup] Knockon Bootcamp 2nd - 10. File Download"
 categories:
   - Web Hacking
 tags:
-  - Writeup
-  - Knockon Bootcamp
+  - Wargame
+  - Knockon Bootcamp 2nd
   - Local file Inclusion
   - Path traversal
 last_modified_at: 2024-09-15T20:30:00-05:00

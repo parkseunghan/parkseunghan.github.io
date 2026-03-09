@@ -1,10 +1,10 @@
 ---
-title: "[Writeup] Knockon Bootcamp - 10.2 Can't access revenge!"
+title: "[Writeup] Knockon Bootcamp 2nd - 10.2 Can't access revenge!"
 categories:
   - Web Hacking
 tags:
-  - Writeup
-  - Knockon Bootcamp
+  - Wargame
+  - Knockon Bootcamp 2nd
   - File Upload
   - Command Injection
 last_modified_at: 2024-09-15T21:30:00-05:00
