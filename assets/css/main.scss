@@ -43,7 +43,7 @@
 .page__content {
   img {
     max-width: 100%; /* 가로로 컨테이너를 벗어나지 않음 */
-    max-height: 400px; /* [핵심] 세로로 너무 긴 캡처 화면이 스크롤을 장악하는 것 방지 */
+    max-height: 500px; /* [핵심] 세로로 너무 긴 캡처 화면이 스크롤을 장악하는 것 방지 */
     width: auto; /* 원본의 종횡비(Aspect Ratio) 강제 유지 */
     display: block; /* 이미지를 블록(Block) 요소로 전환 */
     margin: 1.5rem auto; /* 이미지를 항상 중앙 정렬(Center Alignment)하고 상하 여백 추가 */
