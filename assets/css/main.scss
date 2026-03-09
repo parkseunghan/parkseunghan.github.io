@@ -1,6 +1,5 @@
 ---
-# Only the main Sass file needs front matter (the dashes are enough)
-search: false
+
 ---
 
 @charset "utf-8";
@@ -26,11 +25,12 @@ search: false
     padding-right: 2rem; 
   }
   
-  .page {
+  .page, .archive {
     /* 전체에서 사이드바 크기(250px)를 뺀 나머지를 본문에 할당 */
     width: calc(100% - 250px) !important; 
     padding-left: 1rem; 
     padding-right: 1.5rem; 
+    float: right; /* 테마의 기본 정렬(Alignment) 속성을 안전하게 강제 유지 */
   }
 }
 
