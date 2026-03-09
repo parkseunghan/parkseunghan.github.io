@@ -7,3 +7,47 @@ search: false
 
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
+
+/* --- [Layout Expansion: 전역 레이아웃 밸런싱 및 사이드바 여백 확보 패치] --- */
+
+/* 1. 전체 레이아웃 제어 및 화면 가장자리 여백 추가 */
+#main {
+  max-width: 1350px; 
+  /* [핵심 패치] 브라우저 창과 사이드바, 본문 양끝에 시원한 기본 여백을 강제 할당 */
+  padding-left: 2rem;  
+  padding-right: 2rem; 
+}
+
+/* 2. 데스크탑 환경에서 사이드바 및 본문의 비율/간격(Gap) 최적화 */
+@media (min-width: 1024px) {
+  .sidebar {
+    width: 250px !important; 
+    /* 사이드바와 우측 본문 사이에 부딪히지 않도록 간격 확보 */
+    padding-right: 2rem; 
+  }
+  
+  .page {
+    /* 전체에서 사이드바 크기(250px)를 뺀 나머지를 본문에 할당 */
+    width: calc(100% - 250px) !important; 
+    padding-left: 1rem; 
+    padding-right: 1.5rem; 
+  }
+}
+
+/* 3. 본문 텍스트가 렌더링(Rendering)되는 영역 */
+.page__inner-wrap {
+  max-width: 100%; 
+}
+
+/* 4. 코드 블록 및 이미지 통제 */
+.page__content {
+  img {
+    max-width: 100%; /* 가로로 컨테이너를 벗어나지 않음 */
+    max-height: 400px; /* [핵심] 세로로 너무 긴 캡처 화면이 스크롤을 장악하는 것 방지 */
+    width: auto; /* 원본의 종횡비(Aspect Ratio) 강제 유지 */
+    display: block; /* 이미지를 블록(Block) 요소로 전환 */
+    margin: 1.5rem auto; /* 이미지를 항상 중앙 정렬(Center Alignment)하고 상하 여백 추가 */
+    border-radius: 6px; /* 콤팩트 모던 미니멀 기조 적용 */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08); /* 이미지와 배경을 분리하는 미세한 그림자 */
+  }
+}
