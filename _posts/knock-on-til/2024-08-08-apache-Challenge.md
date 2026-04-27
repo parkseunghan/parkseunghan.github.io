@@ -1,17 +1,14 @@
 ---
-title: "[2주차 TIL] KnockOn Bootcamp - Apache (Challenge)"
+title: "KnockOn Bootcamp 2nd - 2주차 Apache 실습"
 categories:
-  - Web Architecture
+  - Web Fundamentals
 tags:
-  - Knockon Bootcamp 2nd
+  - KnockOn Bootcamp 2nd
   - Apache
-last_modified_at: 2024-08-08T05:54:00-05:00
+last_modified_at: 2024-08-08T19:54:00+09:00
 published: true
 ---
-
-|
-
-# 아파치와 Nginx의 차이점 이해하기
+## 아파치와 Nginx의 차이점 이해하기
 
 ## 아키텍처
 
@@ -21,17 +18,13 @@ published: true
 
 이를 MPM (Multi-Processing Module)이라는 모듈을 통해 관리
 
-|
-
 **`대표적인 MPM`**: prefork, worker, event
 
 `prefork`: 각 요청마다 별도의 프로세스를 생성하여 안정적이지만 메모리 사용량이 많음
 
-`worker`: 각 요청마다 쓰레드를 생성하여 메모리 사용 효율이 좋음
+`worker`: 요청별 쓰레드 생성, 메모리 사용 효율적
 
 `event`: worker 기반이지만 Keep-Alive 연결을 보다 효율적으로 처리함
-
-|
 
 - **Nginx**
 
@@ -41,25 +34,19 @@ published: true
 
 -- 높은 성능과 낮은 리소스 사용
 
-|
-
 ## 성능
 
 - **아파치 (Apache)**
 
 동시 연결 처리 능력이 Nginx에 비해 상대적으로 낮음
 
-*동적 콘텐츠* 처리 (CGI, PHP)에서 성능이 좋음
-
-|
+*동적 콘텐츠* 처리 성능 우수
 
 - **Nginx**
 
 높은 동시 연결 처리 능력. 트래픽이 많은 사이트에서 뛰어난 성능을 보임
 
 *정적 콘텐츠* 제공 속도가 매우 빠름
-
-|
 
 ## 설정 파일
 
@@ -71,8 +58,6 @@ published: true
 
 .htaccess 파일을 통해 개별 디렉터리에서 설정을 변경할 수 있는 유연성을 제공하지만, 파일을 매 요청마다 읽어야 하기 때문에 성능 저하가 발생할 수 있음
 
-|
-
 - **Nginx**
 
 설정 파일은 주로 nginx.conf를 사용
@@ -81,9 +66,7 @@ published: true
 
 모든 설정이 단일 또는 소수의 파일에 집약되어 있어, 설정 관리가 상대적으로 단순하며 성능 상의 이점이 있음
 
-|
-
-# 모듈 및 기능 확장
+## 모듈 및 기능 확장
 
 - **아파치 (Apache)**
 
@@ -93,17 +76,13 @@ published: true
 
 모듈이 많아 다양한 요구 사항을 충족할 수 있지만, 모듈 로드로 인한 성능 저하가 있을 수 있음
 
-|
-
 - **Nginx**
 
-핵심 기능을 확장할 수 있는 모듈을 지원하지만, *컴파일 시점*에 모듈을 포함해야 합니다.
+핵심 기능을 확장할 수 있는 모듈을 지원하지만, *컴파일 시점*에 모듈을 포함해야 합니다
 
 동적 모듈 로드를 지원하지 않음
 
 *경량화*된 코어와 모듈로 높은 성능을 유지할 수 있음
-
-|
 
 ## 프록시 및 로드 밸런싱
 
@@ -115,8 +94,6 @@ published: true
 
 클라이언트가 프록시를 설정함
 
-|
-
 `리버스 프록시`: 클라이언트 -- 리버스 프록시 서버 -- 백엔드 서버
 
 서버를 대신해주는 프록시 서버
@@ -124,8 +101,6 @@ published: true
 서버가 프록시를 설정함
 
 자체적으로 로드 밸런싱 기능이 있음
-
-|
 
 **`로드 밸런싱`**
 
@@ -135,13 +110,9 @@ published: true
 
 로드 밸런서는 클라이언트의 요청을 여러 서버에 균등하게 배분하여 각 서버 부하를 최소화함
 
-|
-
 - **아파치 (Apache)**
 
 'mod_proxy' 모듈을 통해 리버스 프록시와 로드 밸런싱 기능을 제공
-
-|
 
 - **Nginx**
 
@@ -149,10 +120,7 @@ published: true
 
 주로 프록시 서버 및 로드 밸런서로 많이 사용
 
-|
-
-
-# 사용
+## 사용
 
 - **아파치 (Apache)**
 
@@ -160,15 +128,11 @@ published: true
 
 PHP와의 통합이 용이하여 LAMP 스택에서 많이 사용
 
-|
-
 `LAMP`: 웹 개발 환경을 구성하는 소프트웨어 스택
 
 (Linux, Apache, MySQL, PHP) 4가지 소프트웨어 기술의 번들
 
 정적, 동적 웹 콘텐츠 모두 제작 가능
-
-|
 
 - **Nginx**
 
@@ -177,8 +141,6 @@ PHP와의 통합이 용이하여 LAMP 스택에서 많이 사용
 정적 콘텐츠 제공, 리버스 프록시, 로드 밸런싱 역할에 적합
 
 LEMP (Linux, Nginx, MySQL, PHP) 스택에서 많이 사용
-
-|
 
 ## 정리
 
@@ -191,19 +153,11 @@ LEMP (Linux, Nginx, MySQL, PHP) 스택에서 많이 사용
 | 프록시와 로드 밸런싱 | mod_proxy 모듈로 제공 | 기본적으로 내장된 리버스 프록시 및 로드 밸런싱 기능 |
 | 사용 사례 |	다양한 기능과 모듈이 필요한 경우 유리  LAMP 스택에서 많이 사용됨 | 높은 성능과 낮은 리소스 사용이 요구되는 경우 유리  정적 콘텐츠 제공, 리버스 프록시, 로드 밸런싱에 적합  LEMP 스택에서 많이 사용됨
 
-|
-
----
-
-|
-
-# Tomcat의 대해 이해하기
+## Tomcat의 대해 이해하기
 
 오픈 소스 서블릿 컨테이너(Servlet Container) 및 웹 서버
 
 주로 Java 기반 웹 애플리케이션을 실행하는 데 사용
-
-|
 
 ## 기능
 
@@ -211,25 +165,17 @@ LEMP (Linux, Nginx, MySQL, PHP) 스택에서 많이 사용
 
 클라이언트의 요청을 받아 서블릿과 JSP로 처리하고, 응답을 반환
 
-|
-
 **`웹 서버(Web Server)`**: HTTP 웹 서버로서 정적 콘텐츠(HTML, CSS, 이미지 등)를 제공
 
 웹 클라이언트로부터 HTTP 요청을 받아 정적 및 동적 콘텐츠를 제공
-
-|
 
 **`Java EE 지원`**: Java EE(Enterprise Edition)의 일부 사양을 지원하여, 엔터프라이즈급 웹 애플리케이션을 실행 가능
 
 서블릿, JSP, JDBC, JNDI 등 Java EE 사양의 일부를 구현하여 웹 애플리케이션 개발을 지원
 
-|
-
 ## 구조
 
 Tomcat은 모듈식 구조로 설계됨
-
-|
 
 **`Catalina`**: Tomcat의 서블릿 컨테이너
 
@@ -237,15 +183,11 @@ Tomcat은 모듈식 구조로 설계됨
 
 클라이언트 요청을 처리하고, 서블릿을 로드하고 실행하며, 응답을 생성
 
-|
-
 **`Coyote`**: Tomcat의 커넥터(Connector)
 
 HTTP/1.1 프로토콜을 처리하는 HTTP 커넥터
 
 클라이언트와 서버 간의 네트워크 통신을 관리하고, HTTP 요청과 응답을 처리
-
-|
 
 **`Jasper`**: Tomcat의 JSP 컴파일러
 
@@ -253,15 +195,11 @@ JSP 파일을 서블릿으로 변환
 
 JSP 페이지를 컴파일하여 실행 가능한 서블릿 코드로 변환
 
-|
-
 **`Cluster`**:Tomcat의 클러스터링 모듈
 
 여러 Tomcat 인스턴스 간에 세션 상태를 공유
 
 로드 밸런싱과 세션 복제를 통해 고가용성과 확장성을 제공
-
-|
 
 ## 설정 파일
 
@@ -269,23 +207,17 @@ JSP 페이지를 컴파일하여 실행 가능한 서블릿 코드로 변환
 
 커넥터, 엔진, 호스트, 컨텍스트 등을 설정
 
-|
-
 ```xml
 <Connector port="8080" protocol="HTTP/1.1"
            connectionTimeout="20000"
            redirectPort="8443" />
 ```
 
-|
-
 **`web.xml`**: 웹 애플리케이션의 배포 설명자(Deployment Descriptor)
 
 각 웹 애플리케이션의 설정을 정의
 
 서블릿 매핑, 필터, 리스너 등을 설정
-
-|
 
 ```xml
 <servlet>
@@ -298,13 +230,9 @@ JSP 페이지를 컴파일하여 실행 가능한 서블릿 코드로 변환
 </servlet-mapping>
 ```
 
-|
-
 **`context.xml`**: 개별 웹 애플리케이션의 컨텍스트 설정을 정의
 
 데이터 소스, 자바빈즈, 환경 변수 등을 설정
-
-|
 
 ```xml
 <Context path="/example" docBase="example" reloadable="true">
@@ -315,51 +243,33 @@ JSP 페이지를 컴파일하여 실행 가능한 서블릿 코드로 변환
 </Context>
 ```
 
-|
-
 ## 동작 원리
 
 ### 1. 클라이언트 요청 수신
 
 클라이언트가 웹 브라우저를 통해 HTTP 요청을 보냄
 
-|
-
 ### 2. Coyote 커넥터 처리
 
 Coyote 커넥터가 HTTP 요청을 수신하고 처리
-
-|
 
 ### 3. Catalina 엔진 실행
 
 Catalina 서블릿 컨테이너가 요청을 받아 서블릿 또는 JSP로 처리
 
-|
-
 ### 4. Jasper 컴파일
 
 JSP 요청의 경우, Jasper가 JSP를 서블릿으로 컴파일
-
-|
 
 ### 5. 서블릿 실행 및 응답 생성
 
 서블릿이 비즈니스 로직을 처리하고, 응답을 생성
 
-|
-
 ### 6. 클라이언트 응답 반환
 
 생성된 응답이 Coyote 커넥터를 통해 클라이언트에게 반환됨
 
-|
-
----
-
-|
-
-# apache 로컬환경 or 클라우드서버 에서 설치 후 실습해보기
+## apache 로컬환경 or 클라우드서버 에서 설치 후 실습해보기
 
 ## 로컬 환경 설치
 
@@ -374,15 +284,11 @@ sudo apt install apache2
 sudo systemctl status apache2
 ```
 
-|
-
-![아파치 로컬 실행](./assets/images/아파치1.png)
+![아파치 로컬 실행](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-apache-challenge-01.png)
 
 - "Active: active"로 아파치 웹서버 서비스가 실행되는 걸 확인
 
 - <http://localhost>로 접속. "Apache2 Default Page"가 뜸. 설치가 성공적으로 이루어짐
-
-|
 
 ### 실습
 
@@ -405,11 +311,7 @@ sudo systemctl restart apache2
 sudo service apache2 restart
 ```
 
-|
-
-![아파치 설정 파일](./assets/images/아파치2.png)
-
-|
+![아파치 설정 파일](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-apache-challenge-02.png)
 
 ### UFW 방화벽 설정 - HTTP, HTTPS 포트 개방
 
@@ -418,9 +320,7 @@ sudo service apache2 restart
 sudo ufw app list
 ```
 
-|
-
-![ufw app list](./assets/images/아파치3.png)
+![ufw app list](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-apache-challenge-03.png)
 
 > 80포트: Apache
 
@@ -428,49 +328,37 @@ sudo ufw app list
 
 > 443포트: Apache Secure
 
-|
-
 ```sh
 # 80, 443 포트 개방
 sudo ufw allow 'Apache Full'
 ```
 
-|
-
-![아파치 포트 개방](./assets/images/아파치4.png)
+![아파치 포트 개방](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-apache-challenge-04.png)
 
 - ufw가 활성화 되지 않아 포트가 열리지 않는다
 
 - ufw를 활성화 하자
-
-|
 
 ```sh
 # ufw 활성화
 sudo ufw enable
 ```
 
-|
+![ufw 활성화](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-apache-challenge-05.png)
 
-![ufw 활성화](./assets/images/아파치5.png)
-
-- 이전에 이미 룰을 추가했기 때문에 활성화만 해주면 된다.
-
-|
+- 이전에 이미 룰을 추가했기 때문에 활성화만 해주면 된다
 
 ### 페이지 수정
 
 ```sh
 # 로컬 페이지
-sudo vi /var/www/html/index.html 
+sudo vi /var/www/html/index.html
 
 # 수정 후 서버 재시작
 sudo systemctl restart apache2
 ```
 
 > 로컬 접속시 나타나는 페이지는 /var/www/html에 위치한 index.html파일
-
-|
 
 ### 외부 접속 확인
 
@@ -484,11 +372,7 @@ sudo apt install net-tools
 ifconfig
 ```
 
-|
-
-![ip 확인](./assets/images/아파치6.png)
-
-|
+![ip 확인](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-apache-challenge-06.png)
 
 ```sh
 # windows
@@ -497,23 +381,15 @@ ifconfig
 ping 192.168.149.137
 ```
 
-|
+![해당 ip로 접속](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-apache-challenge-07.png)
 
-![해당 ip로 접속](./assets/images/아파치7.png)
-
-> 192.168.149.137로 접속.
-
-|
-
----
-
-|
+> 192.168.149.137로 접속
 
 ## 클라우드 서버에서 설치
 
 ### AWS EC2 인스턴스 생성
 
-![인스턴트 시작](./assets/images/AWS_EC2_1.png)
+![인스턴트 시작](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-apache-challenge-08.png)
 
 AWS 가입 후 EC2 서비스 검색 후 들어가기
 
@@ -521,9 +397,7 @@ AWS 가입 후 EC2 서비스 검색 후 들어가기
 
 - 인스턴트 시작
 
-|
-
-![유형 선택](./assets/images/AWS_EC2_2.png)
+![유형 선택](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-apache-challenge-09.png)
 
 - Ubuntu 선택
 
@@ -533,9 +407,7 @@ AWS 가입 후 EC2 서비스 검색 후 들어가기
 
 - 새 키 페어 생성
 
-|
-
-![키 페어 생성](./assets/images/AWS_EC2_3.png)
+![키 페어 생성](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-apache-challenge-10.png)
 
 - RSA 선택
 
@@ -543,63 +415,45 @@ AWS 가입 후 EC2 서비스 검색 후 들어가기
 
 - 키 페어 생성
 
-|
-
-![보안 그룹 확인 및 인스턴트 시작](./assets/images/AWS_EC2_4.png)
+![보안 그룹 확인 및 인스턴트 시작](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-apache-challenge-11.png)
 
 - 보안 그룹을 확인하고(이따 설정할 거 있음), 인스턴트 시작
 
-|
-
-![인스턴트 생성 완](./assets/images/AWS_EC2_5.png)
+![인스턴트 생성 완](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-apache-challenge-12.png)
 
 - 인스턴트가 생성되면 모든 인스턴트 보기 클릭
 
-|
-
-![인스턴트 클릭](./assets/images/AWS_EC2_6.png)
+![인스턴트 클릭](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-apache-challenge-13.png)
 
 - 생성된 인스턴트 클릭
 
-|
-
 ### 인바운드 규칙
 
-![보안 그룹](./assets/images/AWS_EC2_7.png)
+![보안 그룹](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-apache-challenge-14.png)
 
 - 왼쪽 목록에 보안 그룹 클릭
 
-|
-
-![보안 그룹 선택](./assets/images/AWS_EC2_8.png)
+![보안 그룹 선택](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-apache-challenge-15.png)
 
 - 아까 봐둔 보안 그룹에 해당하는 거 클릭
 
-|
-
-![인바운드 규칙 편집](./assets/images/AWS_EC2_9.png)
+![인바운드 규칙 편집](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-apache-challenge-16.png)
 
 - 인바운드 규칙 편집 클릭
 
-|
-
-![규칙 추가](./assets/images/AWS_EC2_10.png)
+![규칙 추가](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-apache-challenge-17.png)
 
 - 규칙 추가 누르고
 
 - HTTP, HTTPS 생성 후 규칙 저장
 
-|
-
 ### SSH 접속
 
-![연결](./assets/images/AWS_EC2_11.png)
+![연결](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-apache-challenge-18.png)
 
 - 다시 인스턴스로 돌아와서 연결 클릭
 
-|
-
-![보안 그룹](./assets/images/AWS_EC2_12.png)
+![보안 그룹](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-apache-challenge-19.png)
 
 - SSH 클라이언트 클릭
 
@@ -613,16 +467,9 @@ AWS 가입 후 EC2 서비스 검색 후 들어가기
 ssh -i "~.pem" ubuntu@~.compute.amazonaws.com
 ```
 
-|
-
 안되면 아래 명령어 입력 후 다시 시도
 
 ```sh
 chmod 400 ~.pem
 ```
 
-|
-
----
-
-|

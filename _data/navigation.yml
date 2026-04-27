@@ -1,48 +1,29 @@
-# main links
 main:
-  # - title: "Quick-Start Guide"
-  #   url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
-  # - title: "About"
-  #   url: https://mmistakes.github.io/minimal-mistakes/about/
-  # - title: "Sample Posts"
-  #   url: /year-archive/
-  # - title: "Sample Collections"
-  #   url: /collection-archive/
-  # - title: "Sitemap"
-  #   url: /sitemap/
-  - title: "Categories"
+  - title: "홈"
+    url: /
+  - title: "카테고리"
     url: /categories/
-  # - title: "KnockOn TIL"
-  #   url: https://parkseunghan.github.io/knock-on-til/
+  - title: "태그"
+    url: /tags/
 
-
-    # 좌측 사이드바
-# _data/navigation.yml
 category_sidebar:
-  - title: "Vulnerability Research"
+  - title: "Portfolio Topics"
     children:
       - title: "Web Hacking"
         url: /categories/#web-hacking
-      - title: "1-Day Analysis"
-        url: /categories/#1-day-analysis
-
-  - title: "Offensive Security"
+      - title: "Web Fundamentals"
+        url: /categories/#web-fundamentals
+      - title: "Reverse Engineering"
+        url: /categories/#reverse-engineering
+      - title: "Malware Analysis"
+        url: /categories/#malware-analysis
+      - title: "Security Engineering"
+        url: /categories/#security-engineering
+  - title: "Series"
     children:
-      # - title: "Bug Bounty"
-      #   url: /categories/#bug-bounty
-      - title: "Malware & Reversing"
-        url: /categories/#malware-reversing
-
-  - title: "Security Engineering"
-    children:
-      - title: "Web Architecture"
-        url: /categories/#web-architecture
-      # - title: "AI in Security"
-      #   url: /categories/#ai-in-security
-
-  # - title: "Tooling & Automation"
-  #   children:
-  #     - title: "Burp Suite"
-  #       url: /categories/#burp-suite
-  #     - title: "Python Scripts"
-  #       url: /categories/#python-scripts
+      - title: "KISA Academy"
+        url: /series/kisa-academy/
+      - title: "Security Academy 7th"
+        url: /series/security-academy-7th/
+      - title: "KnockOn Bootcamp 2nd"
+        url: /series/knock-on-bootcamp-2nd/

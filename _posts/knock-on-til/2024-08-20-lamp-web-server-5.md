@@ -1,18 +1,15 @@
 ---
-title: "[3주차 TIL] KnockOn Bootcamp - 게시판 만들기(5) - 사용자 인증 & 관리"
+title: "KnockOn Bootcamp 2nd - 3주차 게시판 만들기 5 - 사용자 인증 & 관리"
 categories:
-  - Web Architecture
+  - Web Fundamentals
 tags:
-  - Knockon Bootcamp 2nd
+  - KnockOn Bootcamp 2nd
   - Authentication
-  - board
-last_modified_at: 2024-08-20T10:54:00-05:00
+  - Board
+last_modified_at: 2024-08-21T00:54:00+09:00
 published: true
 ---
-
-
-
-# 로그인 상태 관리: auth.php
+## 로그인 상태 관리: auth.php
 
 ## auth
 
@@ -38,13 +35,7 @@ if (!isset($_SESSION['id'])) {
 
 > 세션 id도 설정되어 있지 않고, 쿠키도 없으면 login.php로 리다이렉션
 
-|
-
----
-
-|
-
-# 회원가입: register.php
+## 회원가입: register.php
 
 ## register
 
@@ -148,8 +139,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['check_username'])) {
 > (1) 회원가입 폼 제출시 실행됨. check_username이 설정되어 있지 않으면 회원가입 수행(javascipt 아이디 중복 함수)
 
 > (2) check_username이 설정되어 있으면 로직 실행
-
-|
 
 html 부분
 
@@ -306,13 +295,7 @@ html 부분
 
 > 서버와 비동기적으로 통신해 사용자 경험 개선
 
-|
-
----
-
-|
-
-# 로그인: login.php
+## 로그인: login.php
 
 ## login
 
@@ -345,7 +328,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_result($id, $hashed_password);
         $stmt->fetch();
         $stmt->close();
-        
+
         // password_verify() 함수를 통해 해시된 비밀번호와 비교
         if ($id && password_verify($password, $hashed_password)) {
 
@@ -373,8 +356,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ```
 
-|
-
 html 부분
 
 ```php
@@ -387,7 +368,7 @@ html 부분
 </head>
 <body>
     <h1>로그인</h1>
-    
+
     <?php if (!empty($errors)): ?>
         <ul>
             <?php foreach ($errors as $error): ?>
@@ -414,13 +395,7 @@ html 부분
 </html>
 ```
 
-|
-
----
-
-|
-
-# 로그아웃: logout.php
+## 로그아웃: logout.php
 
 ## logout
 
@@ -461,8 +436,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 > 쿠키는 유효 기간을 현재 시간보다 이전의 시간으로 설정하면 삭제됨 -1이든 -3600(1시간 전)이든 -86400(1일 전)이든 과거의 시간이면 다 됨. 확실하게 하기 위해 큰 수를 쓰는 것
 
-|
-
 html 부분
 
 ```php
@@ -499,8 +472,3 @@ html 부분
 </html>
 ```
 
-|
-
----
-
-|

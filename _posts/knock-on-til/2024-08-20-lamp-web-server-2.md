@@ -1,17 +1,14 @@
 ---
-title: "[3주차 TIL] KnockOn Bootcamp - 게시판 만들기(2) - 초기 설정 & 메인 화면"
+title: "KnockOn Bootcamp 2nd - 3주차 게시판 만들기 2 - 초기 설정 & 메인 화면"
 categories:
-  - Web Architecture
+  - Web Fundamentals
 tags:
-  - Knockon Bootcamp 2nd
-  - board
-last_modified_at: 2024-08-20T07:54:00-05:00
+  - KnockOn Bootcamp 2nd
+  - Board
+last_modified_at: 2024-08-20T21:54:00+09:00
 published: true
 ---
-
-|
-
-# 초기 설정 파일 생성 - init, config, db, functions
+## 초기 설정 파일 생성 - init, config, db, functions
 
 파일에서는 init.php만 require할 수 있도록 초기 파일들 생성 후 require
 
@@ -31,13 +28,7 @@ require_once 'functions.php';
 
 > require_once, include_once: 파일이 이미 포함된 경우, 다시 포함하지 않음. 같은 파일을 여러 번 불러오는 것을 방지
 
-|
-
----
-
-|
-
-# MySQL 연결
+## MySQL 연결
 
 ## config
 
@@ -51,8 +42,6 @@ define('DB_USERNAME', 'your_username');
 define('DB_PASSWORD', 'your_password');
 define('DB_NAME', 'your_dbname');
 ```
-
-|
 
 ## db
 
@@ -70,8 +59,6 @@ if ($mysqli->connect_error) {
 }
 ```
 
-|
-
 ## index
 
 index.php에서 init.php파일 require
@@ -79,18 +66,12 @@ index.php에서 init.php파일 require
 ```php
 // index.php
 
-require_once 'init.php' 
+require_once 'init.php'
 
 // 추가 코드...
 ```
 
-|
-
----
-
-|
-
-# 메인 페이지 - index
+## 메인 페이지 - index
 
 ## config
 
@@ -101,8 +82,6 @@ define('POST_PER_PAGE', 7); // 한 페이지에 표시할 게시물 수
 define('MAX_LENGTH', 100); // 미리보기 내용
 ```
 
-|
-
 ## functions
 
 **`getTotalPosts()`**: 총 게시물 수를 계산
@@ -110,8 +89,6 @@ define('MAX_LENGTH', 100); // 미리보기 내용
 **`getPosts()`**: 모든 게시물 가져오기
 
 **`truncateContent()`**: 게시물 내용(content) 미리보기
-
-|
 
 ```php
 // functions.php
@@ -128,12 +105,12 @@ function getTotalPosts($mysqli, $query) {
     $stmt->bind_result($total_posts);
     $stmt->fetch();
     $stmt->close();
-    
+
     return $total_posts;
 }
 ```
 
-> $query는 search.php(검색기능)에서 코드 재사용을 위한 파라미터.
+> $query는 search.php(검색기능)에서 코드 재사용을 위한 파라미터
 
 > else 부분: posts의 수(전체 게시물 수)를 계산
 
@@ -147,8 +124,6 @@ function getTotalPosts($mysqli, $query) {
 
 > close(): DB자원 해제
 
-|
-
 ```php
 // functions.php
 
@@ -158,10 +133,10 @@ function getPosts($mysqli, $offset, $post_per_page, $query) {
         $search_term = '%' . $query . '%';
         $stmt->bind_param("ssii", $search_term, $search_term, $offset, $post_per_page);
     } else { // 이 부분
-    $stmt = $mysqli->prepare("SELECT posts.id, posts.title, posts.content, posts.created_at, posts.updated_at, posts.file_path, users.username 
-                               FROM posts 
-                               LEFT JOIN users ON posts.user_id = users.id 
-                               ORDER BY posts.created_at DESC 
+    $stmt = $mysqli->prepare("SELECT posts.id, posts.title, posts.content, posts.created_at, posts.updated_at, posts.file_path, users.username
+                               FROM posts
+                               LEFT JOIN users ON posts.user_id = users.id
+                               ORDER BY posts.created_at DESC
                                LIMIT ?, ?");
     }
 
@@ -173,7 +148,7 @@ function getPosts($mysqli, $offset, $post_per_page, $query) {
 }
 ```
 
-> $query는 search.php(검색기능)에서 코드 재사용을 위한 파라미터.
+> $query는 search.php(검색기능)에서 코드 재사용을 위한 파라미터
 
 > 게시물과 작성자(username)을 가져오는 쿼리 준비
 
@@ -182,8 +157,6 @@ function getPosts($mysqli, $offset, $post_per_page, $query) {
 > ORDER BY created_at DESC: 최신 게시물이 먼저 나오도록 내림차순 정렬(default는 ASC로, 오름차순)
 
 > LIMIT ?, ?: 페이지네이션 적용 offset만큼의 게시물을 건너뛰고, post_per_page개의 레코드를 가져옴
-
-|
 
 ```php
 // functions.php
@@ -198,8 +171,6 @@ function truncateContent($content, $maxLength = MAX_LENGTH) {
 > 게시물 길이가 $maxLength보다 길면, $maxLength길이의 문자 + '...' 을 붙여서 반환
 
 > 그렇지 않으면 전체 내용 그대로 반환
-
-|
 
 ## index
 
@@ -229,8 +200,6 @@ $mysqli->close();
 ```
 
 > getTotalPosts()와 getPosts()에서 query부분을 NULL로 넘겨줘서 무시함
-
-|
 
 html 부분
 
@@ -269,7 +238,7 @@ html 부분
                     <?php echo htmlspecialchars($row['title']); ?>
                 </a>
             </h2>
-            
+
             <p>게시일: <?php echo date('Y. m. d', strtotime($row['created_at'])); ?>
 
                 <?php if ($row['updated_at']): ?>
@@ -320,8 +289,3 @@ html 부분
 </html>
 ```
 
-|
-
----
-
-|

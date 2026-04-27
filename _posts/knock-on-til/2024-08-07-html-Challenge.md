@@ -1,23 +1,18 @@
 ---
-title: "[2주차 TIL] KnockOn Bootcamp - HTML (Challenge)"
+title: "KnockOn Bootcamp 2nd - 2주차 HTML 실습"
 categories:
-  - Web Architecture
+  - Web Fundamentals
 tags:
-  - Knockon Bootcamp 2nd
+  - KnockOn Bootcamp 2nd
   - HTML
-last_modified_at: 2024-08-07T04:54:00-05:00
+last_modified_at: 2024-08-07T18:54:00+09:00
 published: true
 ---
+## 사과와 바나나를 소개하는 패이지를 제작하여 봅시다
 
-|
+두 개의 페이지는 서로 a태그를 이용하여 서로 연결되어 있습니다
 
-# 사과와 바나나를 소개하는 패이지를 제작하여 봅시다.
-
-두 개의 페이지는 서로 a태그를 이용하여 서로 연결되어 있습니다.
-
-제출 버튼을 눌렀을 때의 동작은 구현하지 않아도 좋습니다.
-
-|
+제출 버튼을 눌렀을 때의 동작은 구현하지 않아도 좋습니다
 
 ## 1. 복숭아
 
@@ -73,9 +68,7 @@ published: true
 </html>
 ```
 
-![복숭아 사진](./assets/images/peach.png)
-
-|
+![복숭아 사진](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-html-challenge-01.png)
 
 ## 2. 딸기
 
@@ -125,16 +118,11 @@ published: true
             <p><a href="peach">복숭아</a>에 대하여</p>
         </section>
     </main>
-    
+
 </body>
 
 </html>
 ```
 
-![딸기 사진](./assets/images/strawberry.png)
+![딸기 사진](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-html-challenge-02.png)
 
-|
-
----
-
-|

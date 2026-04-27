@@ -1,19 +1,16 @@
 ---
-title: "[1주차 TIL] KnockOn Bootcamp - HTML, CSS, Javascript (Challenge)"
+title: "KnockOn Bootcamp 2nd - 1주차 HTML, CSS, JavaScript 실습"
 categories:
-  - Web Architecture
+  - Web Fundamentals
 tags:
-  - Knockon Bootcamp 2nd
+  - KnockOn Bootcamp 2nd
   - HTML
   - CSS
-  - Javascript
-last_modified_at: 2024-08-06T04:54:00-05:00
+  - JavaScript
+last_modified_at: 2024-08-06T18:54:00+09:00
 published: true
 ---
-
-|
-
-# 자신을 소개하는 페이지를 작성해 봅시다(형식 자유)
+## 자신을 소개하는 페이지를 작성해 봅시다(형식 자유)
 
 ```html
 <!DOCTYPE html>
@@ -62,19 +59,11 @@ published: true
 </html>
 ```
 
-|
-
-![자기소개](./assets/images/자기소개.png)
+![자기소개](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-html-css-js-challenge-01.png)
 
 > 코드 실행 결과
 
-|
-
----
-
-|
-
-# 간단한 계산기 페이지를 만들어 봅시다.
+## 간단한 계산기 페이지를 만들어 봅시다
 
 ```html
 <!DOCTYPE html>
@@ -142,20 +131,11 @@ published: true
 </html>
 ```
 
-|
-
-![계산기](./assets/images/계산기.png)
+![계산기](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-html-css-js-challenge-02.png)
 
 > 코드 실행 결과 1
 
-|
-
-![계산기2](./assets/images/계산기2.png)
+![계산기2](/assets/images/writeup/web-architecture/knock-on-til/knock-on-til-html-css-js-challenge-03.png)
 
 > 코드 실행 결과 2
 
-|
-
----
-
-|

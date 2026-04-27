@@ -4,6 +4,7 @@
 
 # IntelliJ IDEA
 *.idea
+.vs
 
 # Sublime Text
 *.sublime-project
@@ -12,8 +13,9 @@
 # Ruby Gem
 *.gem
 .bundle
-Gemfile.lock
+.bundle/
 **/vendor/bundle
+vendor/bundle/
 
 # Node.js and NPM
 node_modules
@@ -24,9 +26,31 @@ codekit-config.json
 # macOS
 .DS_Store
 
+# Windows
+Thumbs.db
+Desktop.ini
+
 # Jekyll generated files
 .jekyll-cache
+.jekyll-cache/
 .jekyll-metadata
 .sass-cache
 _asset_bundler_cache
 _site
+_site/
+
+# Local work artifacts
+tmp/
+logs/
+jekyll-serve.log
+scripts/__pycache__/
+
+# Python local artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+.jekyll-serve-*.log

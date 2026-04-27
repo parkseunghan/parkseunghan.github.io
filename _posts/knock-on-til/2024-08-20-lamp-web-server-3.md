@@ -1,18 +1,15 @@
 ---
-title: "[3주차 TIL] KnockOn Bootcamp - 게시판 만들기(3) - 파일 업로드 & Create/Update"
+title: "KnockOn Bootcamp 2nd - 3주차 게시판 만들기 3 - 파일 업로드 & Create/Update"
 categories:
-  - Web Architecture
+  - Web Fundamentals
 tags:
-  - Knockon Bootcamp 2nd
+  - KnockOn Bootcamp 2nd
   - File Upload
-  - board
-last_modified_at: 2024-08-20T08:54:00-05:00
+  - Board
+last_modified_at: 2024-08-20T22:54:00+09:00
 published: true
 ---
-
-|
-
-# 파일 업로드
+## 파일 업로드
 
 ## config
 
@@ -24,13 +21,9 @@ define('MAX_FILE_SIZE', 5 * 1024 * 1024); // 업로드 최대 허용 크기
 define('ALLOWED_EXTS', ['jpg', 'jpeg', 'png', 'gif', 'pdf']); // 업로드 허용 파일 형식
 ```
 
-|
-
 ## functions
 
 **`handleFileUpload()`**: 파일 업로드 함수
-
-|
 
 ```php
 // functions.php
@@ -113,21 +106,13 @@ function handleFileUpload($existing_file_path) {
 
 > (9) 파일이 업로드되지 않았거나, 파일이 없는 경우 업로드 처리를 하지 않고 기존 파일을 유지
 
-|
-
----
-
-|
-
-# 게시물 생성: create_post.php
+## 게시물 생성: create_post.php
 
 ## functions
 
 **`handleFileUpload()`**: 파일 업로드
 
 **`createPost()`**: 게시물 추가
-
-|
 
 ```php
 // functions.php
@@ -149,8 +134,6 @@ function createPost($title, $content, $file_path) {
 > title, content, file_path, user_id열에 데이터 삽입
 
 > bind_param()에서 s와 i는 s(string), i(integer)를 의미
-
-|
 
 ## create_post
 
@@ -195,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { // (1) POST 요청으로 폼 데이
 
 > (1) POST 방식으로 데이터를 처리했는지 확인
 
-> (2) title과 content가 비어있지 않은지 확인.
+> (2) title과 content가 비어있지 않은지 확인
 
 > trim(): 입력 데이터 앞뒤 공백 제거
 
@@ -204,8 +187,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { // (1) POST 요청으로 폼 데이
 > handleFileUpload(): 파일 업로드 처리 후, 성공시 $file_path에 file_path 경로 저장 또는 실패시  $file_error_message에 error_message 저장
 
 > $file_error_message가 비어있다면(성공), createPost함수로 새 게시물 데이터를 데이터베이스에 삽입 후 성공 메시지 알림 후 index.php로 리다이렉트
-
-|
 
 html 부분
 
@@ -243,13 +224,7 @@ html 부분
 </html>
 ```
 
-|
-
----
-
-|
-
-# 게시물 수정: update_post.php
+## 게시물 수정: update_post.php
 
 ## functions
 
@@ -258,8 +233,6 @@ html 부분
 **`fetchPost()`**: 게시물 데이터 가져오기
 
 **`updatePost()`**: 게시물 수정
-
-|
 
 ```php
 // functions
@@ -278,8 +251,6 @@ function updatePost($id, $title, $content, $file_path) {
 
 > bind_param(): ? 자리에 실제 값을 바인딩
 
-|
-
 ```php
 // functions
 
@@ -296,13 +267,11 @@ function fetchPost($id) {
 
 > posts 테이블에서 제목, 내용, 파일 경로, 작성자 id를 가져옴
 
-> get_result(): 쿼리 실행 결과를 가져옴. 
+> get_result(): 쿼리 실행 결과를 가져옴
 
 > fetch_assoc(): 테이블의 열을 배열의 키, 값을 배열의 값으로 가져와 &result에 저장
 
 > &result: 현재 게시물 데이터를 포함하는 배열이 됨
-
-|
 
 ## update_post
 
@@ -366,7 +335,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $post = fetchPost($id);
 ```
 
-> (1) 삼항연산자 사용. 게시물 id가 있는지 확인 후 id를 intval()을 사용하여 정수로 변환 
+> (1) 삼항연산자 사용. 게시물 id가 있는지 확인 후 id를 intval()을 사용하여 정수로 변환
 
 > id가 유효하지 않다면(NULL) 에러 메시지 출력 후 스크립트 종료
 
@@ -381,8 +350,6 @@ $post = fetchPost($id);
 > (6) 파일 업로드에 문제가 없으면 updatePost()함수로 게시물 수정
 
 > (7) 수정된 최신 게시물 데이터를 다시 가져옴
-
-|
 
 html부분
 
@@ -420,8 +387,3 @@ html부분
 </html>
 ```
 
-|
-
----
-
-|

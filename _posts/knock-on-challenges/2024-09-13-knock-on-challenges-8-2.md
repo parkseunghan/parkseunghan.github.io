@@ -1,52 +1,31 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 8.2 SSTI - secretkey"
+title: "KnockOn Bootcamp 2nd - 8.2 SSTI - Secret Key"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
-  - Server Side Template Injection
-last_modified_at: 2024-09-15T14:30:00-05:00
+  - KnockOn Bootcamp 2nd
+  - SSTI
+last_modified_at: 2024-09-16T04:30:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10004/>
 
-![8.2 SSTI - secretkey 1](/assets/images/writeup/web-hacking/knock-on/8-2_SSTI_1.png)
+![8.2 SSTI - secretkey 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-8-2-ssti-1.png)
 
-![8.2 SSTI - secretkey 2](/assets/images/writeup/web-hacking/knock-on/8-1_SSTI_2.png)
+![8.2 SSTI - secretkey 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-8-2-ssti-1.png)
 
-![8.2 SSTI - secretkey 3](/assets/images/writeup/web-hacking/knock-on/8-1_SSTI_3.png)
-
-|
-
-|
-
-|
+![8.2 SSTI - secretkey 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-8-2-ssti-2.png)
 
 ### 목표
 
----
-
 서버 내부 정보를 노출시켜 FLAG 찾기
-
-|
 
 ### 공격 기법
 
----
-
 Server Side Template Injection
-
-|
-
-|
-
-|
 
 ## 문제 코드
 
@@ -74,27 +53,15 @@ if __name__ == "__main__":
 
 ```
 
-|
-
-|
-
-|
-
-## Explot
+## 풀이
 
 ```html
 config
 ```
 
-![8.2 SSTI - secretkey 4](/assets/images/writeup/web-hacking/knock-on/8-2_SSTI_2.png)
+![8.2 SSTI - secretkey 4](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-8-2-ssti-2.png)
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ```html
 config
@@ -102,12 +69,6 @@ config
 
 ### FLAG
 
----
-
 ```bash
 KO{J1nj42_1s_n0t_s4f3~}
 ```
-
-|
-
----

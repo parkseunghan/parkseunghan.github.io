@@ -1,6 +1,6 @@
 ---
-title : "Posts by Tag"
-permalink : /tags/
-layout : tags
-author_profile : true
+title: "태그"
+permalink: /tags/
+layout: tags
+author_profile: true
 ---

@@ -1,22 +1,17 @@
 ---
-title: "[3주차 TIL] KnockOn Bootcamp - 게시판 만들기(0) - LAMP 스택 설치"
+title: "KnockOn Bootcamp 2nd - 3주차 게시판 만들기 0 - LAMP 스택 설치"
 categories:
-  - Web Architecture
+  - Web Fundamentals
 tags:
-  - Knockon Bootcamp 2nd
+  - KnockOn Bootcamp 2nd
   - LAMP
-  - board
-last_modified_at: 2024-08-20T05:54:00-05:00
+  - Board
+last_modified_at: 2024-08-20T19:54:00+09:00
 published: true
 ---
-
-|
-
-# 게시판 세부 명세서
+## 게시판 세부 명세서
 
 1. 리눅스 환경, Apache 웹 서버, Mysql 데이터베이스, PHP 언어를 사용해야 함
-
-|
 
 2. 다음 기능이 반드시 구현되어야 함
 
@@ -24,20 +19,12 @@ published: true
 - 게시글을 검색하는 기능
 - 게시물을 생성, 삭제, 수정하는 기능
 - 게시글에 파일을 업로드하는 기능
-- 회원가입 로그인 로그아웃(사용자 식별을 쿠키, 세션으로 해결 함)	
+- 회원가입 로그인 로그아웃(사용자 식별을 쿠키, 세션으로 해결 함)
 
-|
-
-3. 외부에서 접속이 가능할 것 
+3. 외부에서 접속이 가능할 것
 (클라우드 사용 권장, 로컬일 경우 포트포워딩을 통해 외부로 접속해야함)
 
-|
-
----
-
-|
-
-# LAMP 스택 설치
+## LAMP 스택 설치
 
 ## Apache
 
@@ -50,8 +37,6 @@ sudo apt install apache2
 
 > Apache 설치 후 퍼블릭 IP 주소로 접속 하여 확인
 
-|
-
 ## MySQL
 
 ```sh
@@ -61,8 +46,6 @@ sudo apt install mysql-server
 # 보안 설정 진행
 sudo mysql_secure_installation
 ```
-
-|
 
 ```sh
 Securing the MySQL server deployment.
@@ -81,13 +64,9 @@ Press y|Y for Yes, any other key for No:
 
 이후 강도 낮은 암호 설정 제한
 
-|
-
 **`N`**: 암호 검증 구성 요소 비활성화
 
 아무 제약 없이 설정 가능
-
-|
 
 ```sh
 Skipping password set for root as authentication with auth_socket is used by default.
@@ -115,13 +94,9 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'your_pas
 FLUSH PRIVILEGES;
 ```
 
-|
-
 **`Y`**: 익명 사용자 제거
 
 `익명 사용자`: 사용자 인증 없이 MySQL 접근 가능. 보안에 취약
-
-|
 
 **`N`**: 익명 사용자 그대로 유지
 
@@ -131,8 +106,6 @@ FLUSH PRIVILEGES;
 DELETE FROM mysql.user WHERE User='';
 FLUSH PRIVILEGES;
 ```
-
-|
 
 ```sh
 Normally, root should only be allowed to connect from
@@ -146,11 +119,7 @@ Disallow root login remotely? (Press y|Y for Yes, any other key for No) :
 
 서버가 설치된 시스템에서만 root 계정으로 접속 가능, 원격은 차단
 
-|
-
 **`N`**: root 사용자 원격 접속 허용
-
-|
 
 ```sh
  ... skipping.
@@ -159,19 +128,14 @@ anyone can access. This is also intended only for testing,
 and should be removed before moving into a production
 environment.
 
-
-Remove test database and access to it? (Press y|Y for Yes, any other key for No) : 
+Remove test database and access to it? (Press y|Y for Yes, any other key for No) :
 ```
 
 **`Y`**: test DB와 그에 대한 접근 권한 제거
 
-|
-
 **`N`**: test DB 그대로 유지
 
 누구나 접근 가능
-
-|
 
 ```sh
  ... skipping.
@@ -183,13 +147,9 @@ Reload privilege tables now? (Press y|Y for Yes, any other key for No) :
 
 **`Y`**: 권한 테이블 즉시 리로드. 변경 사항이 바로 적용됨
 
-|
-
 **`N`**: 현재 변경 사항이 적용되지 않은 상태로 남음
 
 MySQL 서버를 재시작하거나, 수동으로 권한 테이블을 리로드할 떄까지 변경 사항이 반영되지 않음
-
-|
 
 ## PHP
 
@@ -206,8 +166,3 @@ sudo apt install php libapache2-mod-php php-mysql
 
 > 퍼블릭IP주소/phpinfo.php 경로로 들어가서 php 페이지 잘 뜨는지 확인
 
-|
-
----
-
-|

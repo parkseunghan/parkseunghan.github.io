@@ -1,17 +1,16 @@
 ---
-title: "[3주차 TIL] KnockOn Bootcamp - 게시판 만들기(1) - MySQL 데이터베이스"
+title: "KnockOn Bootcamp 2nd - 3주차 게시판 만들기 1 - MySQL 데이터베이스"
 categories:
-  - Web Architecture
+  - Web Fundamentals
 tags:
-  - Knockon Bootcamp 2nd
+  - KnockOn Bootcamp 2nd
   - MySQL
   - Database
-  - board
-last_modified_at: 2024-08-20T06:54:00-05:00
+  - Board
+last_modified_at: 2024-08-20T20:54:00+09:00
 published: true
 ---
-
-# MySQL 데이터베이스 구축
+## MySQL 데이터베이스 구축
 
 ## 데이터베이스 생성
 
@@ -21,15 +20,11 @@ CREATE DATABASE board;
 use board;
 ```
 
-|
-
 ## 테이블 생성
 
 posts: 게시물 데이터 관리 테이블
 
 users: 회원 데이터 관리 테이블
-
-|
 
 ```sql
 -- posts
@@ -57,8 +52,6 @@ CREATE TABLE `posts` (
 
 > user_id: 게시물 작성한 user의 id
 
-|
-
 ```sql
 --users
 CREATE TABLE `users` (
@@ -83,16 +76,12 @@ CREATE TABLE `users` (
 
 > updated_at: 회원정보 수정일
 
-|
-
 ## 유저 생성
 
 ```sql
 -- testuser 생성
 CREATE USER 'testuser'@'locathost' IDENTIFIED BY 'testuser';
 ```
-
-|
 
 ```sql
 -- 권한 부여 (택1)
@@ -103,15 +92,8 @@ GRANT ALL PRIVILEGES ON board.* TO 'testuser'@'localhost';
 GRANT SELECT, INSERT, UPDATE, DELETE ON board.* TO 'testuser'@'localhost';
 ```
 
-|
-
 ```sql
 -- 권한 적용
 FLUSH PRIVILEGES;
 ```
 
-|
-
----
-
-|

@@ -4,8 +4,8 @@
 
 @charset "utf-8";
 
-@import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
-@import "minimal-mistakes"; // main partials
+@use "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}" as *; // skin
+@use "minimal-mistakes" as *; // main partials
 
 /* --- [Layout Expansion: 전역 레이아웃 밸런싱 및 사이드바 여백 확보 패치] --- */
 
@@ -50,4 +50,608 @@
     border-radius: 6px; /* 콤팩트 모던 미니멀 기조 적용 */
     box-shadow: 0 2px 6px rgba(0,0,0,0.08); /* 이미지와 배경을 분리하는 미세한 그림자 */
   }
+}
+
+.sidebar .nav__title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #6a737d;
+  margin-bottom: 0.8rem;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  border: none;
+}
+
+.sidebar .nav__items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar .nav__items a {
+  color: #444d56;
+  text-decoration: none;
+  font-size: 0.85rem;
+  padding: 0.25rem 0.5rem;
+  margin-bottom: 0.1rem;
+  border-radius: 4px;
+  display: block;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sidebar .nav__items a:hover {
+  background-color: rgba(3, 102, 214, 0.08);
+  color: #0366d6;
+}
+
+.taxonomy__index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 2.5rem;
+  padding: 0;
+}
+
+.taxonomy__index li {
+  list-style: none;
+}
+
+.taxonomy__index a {
+  display: inline-block;
+  background-color: #f1f8ff;
+  color: #0366d6;
+  padding: 0.25rem 0.7rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: none;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.taxonomy__index a:hover {
+  background-color: #0366d6;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(3, 102, 214, 0.2);
+}
+
+.taxonomy__section .archive__subtitle {
+  font-size: 1.1rem;
+  color: #24292e;
+  margin-top: 2rem;
+  margin-bottom: 0.8rem;
+  font-weight: 700;
+  border: none;
+  position: relative;
+}
+
+.taxonomy__section .archive__subtitle::after {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 2px;
+  background-color: #0366d6;
+  margin-top: 6px;
+  border-radius: 2px;
+}
+
+.archive__item {
+  margin-bottom: 0.4rem;
+  padding: 0.1rem 0;
+  transition: transform 0.2s ease;
+}
+
+.archive__item:hover {
+  transform: translateX(4px);
+}
+
+.archive__item-title {
+  font-size: 0.95rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.archive__item-title a {
+  color: #24292e;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.archive__item-title a:hover {
+  color: #0366d6;
+}
+
+.portfolio-container {
+  max-width: 850px;
+  margin: 0 auto;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.profile-summary {
+  padding: 1.2rem 1.5rem;
+  background-color: rgba(128, 128, 128, 0.03);
+  border-left: 4px solid #0366d6;
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+.portfolio-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.portfolio-card {
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  border-radius: 4px;
+  padding: 1.5rem;
+  background-color: #fff;
+  transition: box-shadow 0.2s ease;
+}
+
+.portfolio-card:hover {
+  box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+  border-color: rgba(3, 102, 214, 0.4);
+}
+
+.portfolio-card h3 {
+  font-size: 1.2rem;
+  margin-top: 0;
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid rgba(128, 128, 128, 0.15);
+  color: #24292e;
+  font-weight: 600;
+}
+
+.portfolio-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.portfolio-item {
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.portfolio-item:last-child {
+  margin-bottom: 0;
+}
+
+.portfolio-item::before {
+  content: "\25A0";
+  position: absolute;
+  left: 0;
+  color: #0366d6;
+  font-size: 0.7em;
+  top: 0.35rem;
+}
+
+.item-title {
+  font-weight: 600;
+  display: block;
+  color: #24292e;
+}
+
+.item-desc {
+  color: #586069;
+  font-size: 0.95em;
+  margin-top: 0.3rem;
+  display: block;
+  line-height: 1.5;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.8em;
+  background: rgba(3, 102, 214, 0.08);
+  color: #0366d6;
+  border-radius: 3px;
+  margin-right: 0.4rem;
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+.badge-status {
+  background: #e1e4e8;
+  color: #24292e;
+}
+
+.badge-progress {
+  background: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+}
+
+/* --- [Readability Refresh: 기존 테마 유지 + 본문 대비 개선] --- */
+html {
+  background-color: #f6f7f9;
+}
+
+body {
+  color: #313b46;
+  background: linear-gradient(180deg, #f7f8fa 0%, #f4f6f8 100%);
+}
+
+a,
+a:visited {
+  color: #215c86;
+}
+
+a:hover {
+  color: #173f63;
+}
+
+.masthead {
+  background-color: rgba(250, 252, 253, 0.94);
+  border-bottom: 1px solid #d9e1e8;
+}
+
+.greedy-nav,
+.greedy-nav a,
+.masthead__menu-item a {
+  color: #2c3948;
+}
+
+.greedy-nav a:hover,
+.masthead__menu-item a:hover {
+  color: #215c86;
+}
+
+.page__content,
+.archive {
+  color: #33404d;
+}
+
+.page__content p,
+.page__content li,
+.page__content dd,
+.archive__item-excerpt {
+  color: #3b4958;
+  line-height: 1.76;
+}
+
+.page__content h1,
+.page__content h2,
+.page__content h3,
+.page__content h4,
+.page__content h5,
+.page__content h6,
+.archive__item-title a {
+  color: #1f2d3d;
+}
+
+.page__content code.language-plaintext.highlighter-rouge,
+.page__content p code,
+.page__content li code,
+.page__content td code {
+  background-color: #eef3f7;
+  border: 1px solid #d8e3ec;
+  color: #1c537b;
+  border-radius: 6px;
+  padding: 0.12em 0.38em;
+}
+
+.page__content blockquote {
+  color: #4a5968;
+  border-inline-start-color: #9db3c8;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.sidebar .nav__title {
+  color: #697889;
+}
+
+.sidebar .nav__items a {
+  color: #394655;
+}
+
+.sidebar .nav__items a:hover {
+  background-color: rgba(33, 92, 134, 0.09);
+  color: #215c86;
+}
+
+.taxonomy__index a {
+  background-color: #edf4f9;
+  color: #215c86;
+}
+
+.taxonomy__index a:hover {
+  background-color: #215c86;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(33, 92, 134, 0.22);
+}
+
+.taxonomy__section .archive__subtitle,
+.archive__item-title a {
+  color: #1f2d3d;
+}
+
+.taxonomy__section .archive__subtitle::after,
+.portfolio-item::before,
+.profile-summary {
+  background-color: #215c86;
+  border-left-color: #215c86;
+}
+
+.profile-summary {
+  background-color: rgba(33, 92, 134, 0.04);
+}
+
+.portfolio-card {
+  border-color: rgba(114, 132, 150, 0.22);
+  box-shadow: 0 10px 24px rgba(31, 45, 61, 0.04);
+}
+
+.portfolio-card:hover {
+  border-color: rgba(33, 92, 134, 0.35);
+  box-shadow: 0 14px 32px rgba(31, 45, 61, 0.08);
+}
+
+.badge {
+  background: rgba(33, 92, 134, 0.09);
+  color: #215c86;
+}
+
+/* --- [Code Block Fix: copy 버튼 위치 및 코드 가독성 보정] --- */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+div.highlighter-rouge,
+figure.highlight {
+  --code-copy-button-offset: 0.55rem;
+  --code-copy-button-size: 1.72rem;
+  --code-block-toolbar-height: calc(
+    var(--code-copy-button-size) + (var(--code-copy-button-offset) * 2)
+  );
+  position: relative;
+  background: #1f2731;
+  border: 1px solid #33404e;
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(20, 26, 33, 0.12);
+  overflow: hidden;
+}
+
+div.highlighter-rouge > .highlight,
+figure.highlight > .highlight {
+  border-radius: inherit;
+}
+
+pre.highlight,
+div.highlighter-rouge pre,
+figure.highlight pre {
+  position: relative;
+  margin: 0;
+  padding: var(--code-block-toolbar-height) 1rem 1rem;
+  background: transparent;
+  overflow: auto;
+  scrollbar-width: none;
+  scrollbar-color: rgba(173, 210, 238, 0.72) transparent;
+  -ms-overflow-style: none;
+}
+
+pre.highlight:hover,
+div.highlighter-rouge pre:hover,
+figure.highlight pre:hover {
+  scrollbar-width: thin;
+}
+
+pre.highlight::-webkit-scrollbar,
+div.highlighter-rouge pre::-webkit-scrollbar,
+figure.highlight pre::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+
+pre.highlight:hover::-webkit-scrollbar,
+div.highlighter-rouge pre:hover::-webkit-scrollbar,
+figure.highlight pre:hover::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+pre.highlight::-webkit-scrollbar-track,
+div.highlighter-rouge pre::-webkit-scrollbar-track,
+figure.highlight pre::-webkit-scrollbar-track,
+pre.highlight::-webkit-scrollbar-corner,
+div.highlighter-rouge pre::-webkit-scrollbar-corner,
+figure.highlight pre::-webkit-scrollbar-corner {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+pre.highlight::-webkit-scrollbar-thumb,
+div.highlighter-rouge pre::-webkit-scrollbar-thumb,
+figure.highlight pre::-webkit-scrollbar-thumb {
+  background: rgba(173, 210, 238, 0.66);
+  border: 0;
+  border-radius: 999px;
+}
+
+pre.highlight:hover::-webkit-scrollbar-thumb:hover,
+div.highlighter-rouge pre:hover::-webkit-scrollbar-thumb:hover,
+figure.highlight pre:hover::-webkit-scrollbar-thumb:hover {
+  background: rgba(203, 229, 248, 0.88);
+}
+
+.highlight,
+.highlight pre,
+.highlight code {
+  background: transparent;
+}
+
+div.highlighter-rouge > .clipboard-copy-button,
+figure.highlight > .clipboard-copy-button,
+pre .clipboard-copy-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: var(--code-copy-button-offset);
+  inset-inline-end: var(--code-copy-button-offset);
+  z-index: 3;
+  width: var(--code-copy-button-size);
+  height: var(--code-copy-button-size);
+  min-width: var(--code-copy-button-size);
+  min-height: var(--code-copy-button-size);
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  line-height: 0;
+  font-size: 0;
+  overflow: hidden;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid rgba(214, 227, 240, 0.18);
+  border-radius: 0.5rem;
+  background: rgba(244, 248, 252, 0.08);
+  color: #d9e5f2;
+  opacity: 0;
+  visibility: hidden;
+  box-shadow: none;
+  cursor: pointer;
+  pointer-events: none;
+  transform: translateY(-0.2rem);
+  transition:
+    opacity 0.24s ease,
+    transform 0.24s ease,
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    color 0.16s ease,
+    visibility 0s linear 0.24s;
+}
+
+div.highlighter-rouge:hover > .clipboard-copy-button,
+div.highlighter-rouge:focus-within > .clipboard-copy-button,
+figure.highlight:hover > .clipboard-copy-button,
+figure.highlight:focus-within > .clipboard-copy-button,
+div.highlighter-rouge > .clipboard-copy-button:focus,
+div.highlighter-rouge > .clipboard-copy-button:focus-visible,
+figure.highlight > .clipboard-copy-button:focus,
+figure.highlight > .clipboard-copy-button:focus-visible,
+div.highlighter-rouge > .clipboard-copy-button.copied,
+figure.highlight > .clipboard-copy-button.copied,
+pre:hover .clipboard-copy-button,
+pre .clipboard-copy-button:focus,
+pre .clipboard-copy-button:focus-visible,
+pre .clipboard-copy-button.copied {
+  opacity: 0.96;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+
+div.highlighter-rouge > .clipboard-copy-button,
+figure.highlight > .clipboard-copy-button,
+pre.highlight .clipboard-copy-button {
+  color: #d9e5f2;
+}
+
+div.highlighter-rouge > .clipboard-copy-button:hover,
+figure.highlight > .clipboard-copy-button:hover,
+pre .clipboard-copy-button:hover {
+  background: rgba(109, 163, 208, 0.22);
+  border-color: rgba(173, 210, 238, 0.32);
+  color: #ffffff;
+}
+
+div.highlighter-rouge > .clipboard-copy-button:focus,
+figure.highlight > .clipboard-copy-button:focus,
+pre .clipboard-copy-button:focus {
+  outline: 2px solid rgba(173, 210, 238, 0.45);
+  outline-offset: 2px;
+}
+
+div.highlighter-rouge > .clipboard-copy-button::before,
+figure.highlight > .clipboard-copy-button::before,
+pre .clipboard-copy-button::before {
+  display: none;
+  content: none;
+}
+
+div.highlighter-rouge > .clipboard-copy-button i,
+figure.highlight > .clipboard-copy-button i,
+pre .clipboard-copy-button i {
+  position: static;
+  inset-inline-end: auto;
+  top: auto;
+  width: 0.95rem;
+  height: 0.95rem;
+  margin: 0;
+  line-height: 1;
+  font-size: 0.84rem;
+  pointer-events: none;
+}
+
+div.highlighter-rouge > .clipboard-copy-button .fa-copy,
+div.highlighter-rouge > .clipboard-copy-button .fa-check,
+figure.highlight > .clipboard-copy-button .fa-copy,
+figure.highlight > .clipboard-copy-button .fa-check,
+pre .clipboard-copy-button .fa-copy,
+pre .clipboard-copy-button .fa-check {
+  display: none;
+}
+
+div.highlighter-rouge > .clipboard-copy-button .fa-copy,
+figure.highlight > .clipboard-copy-button .fa-copy,
+pre .clipboard-copy-button .fa-copy {
+  display: block;
+}
+
+div.highlighter-rouge > .clipboard-copy-button.copied .fa-copy,
+figure.highlight > .clipboard-copy-button.copied .fa-copy,
+pre .clipboard-copy-button.copied .fa-copy {
+  display: none;
+}
+
+div.highlighter-rouge > .clipboard-copy-button.copied .fa-check,
+figure.highlight > .clipboard-copy-button.copied .fa-check,
+pre .clipboard-copy-button.copied .fa-check {
+  display: block;
+}
+
+div.highlighter-rouge > .clipboard-copy-button .sr-only,
+div.highlighter-rouge > .clipboard-copy-button .screen-reader-text,
+figure.highlight > .clipboard-copy-button .sr-only,
+figure.highlight > .clipboard-copy-button .screen-reader-text,
+pre .clipboard-copy-button .sr-only,
+pre .clipboard-copy-button .screen-reader-text {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.highlight table td,
+.highlight table th {
+  border-bottom: 0;
+}
+
+.highlight table td.code,
+.highlight table td.rouge-code {
+  padding-top: var(--code-block-toolbar-height);
 }

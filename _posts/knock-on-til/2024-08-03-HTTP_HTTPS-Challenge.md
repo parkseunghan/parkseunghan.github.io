@@ -1,60 +1,54 @@
 ---
-title: "[1주차 TIL] KnockOn Bootcamp - HTTP / HTTPS (Challenge)"
+title: "KnockOn Bootcamp 2nd - 1주차 HTTP/HTTPS 실습"
 categories:
-  - Web Architecture
+  - Web Fundamentals
 tags:
-  - Knockon Bootcamp 2nd
-  - HTTP / HTTPS
-last_modified_at: 2024-08-03T02:54:00-05:00
+  - KnockOn Bootcamp 2nd
+  - HTTP/HTTPS
+last_modified_at: 2024-08-03T16:54:00+09:00
 published: true
 ---
-
-
-# curl을 이용하여 HTTP요청 직접 보내보기
+## curl을 이용하여 HTTP요청 직접 보내보기
 
 ## 기본 옵션
 
-**`-X`** 또는 **`--request <command>`**: HTTP 메서드 설정 (예: GET, POST, PUT, DELETE).
+**`-X`** 또는 **`--request <command>`**: HTTP 메서드 설정 (예: GET, POST, PUT, DELETE)
 
-**`-H`** 또는 **`--header <header>`**: 특정 헤더를 추가하거나 변경.
+**`-H`** 또는 **`--header <header>`**: 특정 헤더를 추가하거나 변경
 
-**`-d`** 또는 **`--data <data>`**: POST 요청에 데이터 전송. @를 사용하여 파일에서 데이터를 읽을 수 있음.
+**`-d`** 또는 **`--data <data>`**: POST 요청에 데이터 전송. @를 사용하여 파일에서 데이터를 읽을 수 있음
 
-**`-F`** 또는 **`--form <name=content>`**: multipart/form-data 형식으로 데이터 전송 (파일 업로드 등).
+**`-F`** 또는 **`--form <name=content>`**: multipart/form-data 형식으로 데이터 전송 (파일 업로드 등)
 
-**`-o`** 또는 **`--output <file>`**: 응답 내용을 파일에 저장.
+**`-o`** 또는 **`--output <file>`**: 응답 내용을 파일에 저장
 
-**`-O`** 또는 **`--remote-name`**: 원격 파일 이름을 사용하여 파일을 저장.
+**`-O`** 또는 **`--remote-name`**: 원격 파일 이름을 사용하여 파일을 저장
 
-**`-u`** 또는 **`--user <user:password>`**: 서버 인증 (HTTP 기본 인증).
-
-|
+**`-u`** 또는 **`--user <user:password>`**: 서버 인증 (HTTP 기본 인증)
 
 ## 고급 옵션
 
-**`-I`** 또는 **`--head`**: HTTP 헤더만 가져옴.
+**`-I`** 또는 **`--head`**: HTTP 헤더만 가져옴
 
-**`-L`** 또는 **`--location`**: 서버가 반환한 Location 헤더를 따라감 (리다이렉션 추적).
+**`-L`** 또는 **`--location`**: 서버가 반환한 Location 헤더를 따라감 (리다이렉션 추적)
 
-**`-k`** 또는 **`--insecure`**: SSL 인증서 검증을 비활성화 (보안상 위험함).
+**`-k`** 또는 **`--insecure`**: SSL 인증서 검증을 비활성화 (보안상 위험함)
 
-**`-s`** 또는 **`--silent`**: 진행률 및 오류 메시지를 숨김.
+**`-s`** 또는 **`--silent`**: 진행률 및 오류 메시지를 숨김
 
-**`-v`** 또는 **`--verbose`**: 상세한 요청/응답 정보를 출력.
+**`-v`** 또는 **`--verbose`**: 상세한 요청/응답 정보를 출력
 
-**`--limit-rate <speed>`**: 전송 속도를 제한 (예: 100K).
+**`--limit-rate <speed>`**: 전송 속도를 제한 (예: 100K)
 
-**`-e`** 또는 **`--referer <URL>`**: Referer 헤더 설정.
+**`-e`** 또는 **`--referer <URL>`**: Referer 헤더 설정
 
-**`-A`** 또는 **`--user-agent <string>`**: User-Agent 헤더 설정.
+**`-A`** 또는 **`--user-agent <string>`**: User-Agent 헤더 설정
 
-**`-b`** 또는 **`--cookie <data>`**: 쿠키 데이터 전송.
+**`-b`** 또는 **`--cookie <data>`**: 쿠키 데이터 전송
 
-**`-c`** 또는 **`--cookie-jar <file>`**: 쿠키를 파일에 저장.
+**`-c`** 또는 **`--cookie-jar <file>`**: 쿠키를 파일에 저장
 
 **`--compressed`**: 압축된 응답을 허용
-
-|
 
 ## 예
 
@@ -95,8 +89,6 @@ curl war.knock-on.org:10001
 </html>
 ```
 
-|
-
 ```sh
 curl -X POST war.knock-on.org:10001
 curl --request POST war.knock-on.org:10001
@@ -134,8 +126,6 @@ curl --request POST war.knock-on.org:10001
 </body>
 </html>
 ```
-
-|
 
 ```sh
 curl -X POST war.knock-on.org:10001 -d "request=get-flag"
@@ -175,8 +165,6 @@ curl --request POST war.knock-on.org:10001 --data "request=get-flag"
 </html>
 ```
 
-|
-
 ```sh
 curl -X POST -H "User-Agent: bot" war.knock-on.org:10001 -d "request=get-flag"
 curl --request POST --header "User-Agent: bot" war.knock-on.org:10001 --data "request=get-flag"
@@ -214,8 +202,6 @@ curl --request POST --header "User-Agent: bot" war.knock-on.org:10001 --data "re
 </body>
 </html>
 ```
-
-|
 
 ```sh
 curl -X POST -H "User-Agent: bot" -H "Cookie: API_KEY=SUp3r_STr0000ng_k3y" war.knock-on.org:10001 -d "request=get-flag"
@@ -255,19 +241,11 @@ curl --request POST --header "User-Agent: bot" --header "Cookie: API_KEY=SUp3r_S
 </html>
 ```
 
-|
-
----
-
-|
-
-# 웹 브라우저 개발자 도구를 사용하여 웹 사이트의 HTTP 통신을 살펴보기
+## 웹 브라우저 개발자 도구를 사용하여 웹 사이트의 HTTP 통신을 살펴보기
 
 ## 1. 개발자 도구 열기
 
 Google Chrome 기준
-
-|
 
 ```sh
 Ctrl + Shift + I
@@ -277,8 +255,6 @@ Ctrl + Shift + I
 F12
 ```
 
-|
-
 ## 2. 네트워크 탭
 
 1. 개발자 도구 상단 메뉴에서 "Network" 탭 클릭
@@ -286,8 +262,6 @@ F12
 2. 새로고침(*F5* 또는 *Ctrl + R*): 웹 사이트가 로드하는 모든 요청이 나타남
 
 3. 각 요청 클릭: 요청/응답 헤더, 페이로드, 타이밍 등 상세 정보 확인
-
-|
 
 ## 3. 네트워크 요청 분석
 
@@ -305,8 +279,6 @@ F12
 
 **`Time`**: 요청에 걸린 시간
 
-|
-
 ### 세부 정보
 
 **`Headers`**: 요청과 응답의 HTTP 헤더를 확인
@@ -319,26 +291,11 @@ F12
 
 `Payload`: POST 요청에서 전송된 데이터. (GET 요청은 없음)
 
-|
+**`Preview`**: 서버 응답의 미리 보기
 
-**`Preview`**: 서버 응답의 미리 보기.
+**`Response`**: 서버의 응답 본문 (예: HTML, JSON)
 
-|
+**`Timing`**: 요청의 타이밍 정보를 그래픽으로 표시
 
-**`Response`**: 서버의 응답 본문 (예: HTML, JSON).
-
-|
-
-**`Timing`**: 요청의 타이밍 정보를 그래픽으로 표시.
-
-|
-
-**`Cookies`**: 요청 및 응답에 포함된 쿠키 정보.
-
-|
-
----
-
-|
-
+**`Cookies`**: 요청 및 응답에 포함된 쿠키 정보
 

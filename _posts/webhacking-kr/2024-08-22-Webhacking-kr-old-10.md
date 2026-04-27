@@ -1,26 +1,18 @@
 ---
-title: "[Writeup] Webhacking.kr - old-10"
+title: "Webhacking.kr old-10 - DOM Manipulation"
 categories:
   - Web Hacking
 tags:
   - Wargame
   - Webhacking.kr
-  - old-10
-last_modified_at: 2024-08-22T20:31:00-05:00
+  - JavaScript
+  - DOM Manipulation
+last_modified_at: 2024-08-23T10:31:00+09:00
 published: true
 ---
-
-|
-
 ## 문제
 
 <https://webhacking.kr/challenge/code-1/>
-
-|
-
-|
-
-|
 
 ## 문제 코드
 
@@ -32,12 +24,6 @@ published: true
   onmouseout="this.innerHTML='O'">O</a>
 ```
 
-|
-
-|
-
-|
-
 ## 코드 분석
 
 ```jsx
@@ -46,15 +32,11 @@ published: true
 
 화면에 “O” 표시
 
-|
-
 ```jsx
 style="position:relative;left:0;top:0"
 ```
 
 **`position:relative`**: 요소를 상대적으로 배치. 기본 위치를 기준으로 `left:0`, `top:0` 이동하여 배치. 초기 위치는 변하지 않음
-
-|
 
 ```jsx
 onclick="this.style.left=parseInt(this.style.left,10)+1+'px';if(this.style.left=='1600px')this.href='?go='+this.style.left"
@@ -70,9 +52,7 @@ css에서는 숫자가 아닌 문자열을 받아들임 (’px’, ‘%’, ‘e
 
 따라서, `10 + 1 + ‘px’`가 되어 `‘11px’`가 됨
 
-**`if(this.style.left=='1600px')this.href='?go='+this.style.left"`**: left 값이 1600px가 되면, href 속성이 `?go=1600px`로 설정됨.
-
-|
+**`if(this.style.left=='1600px')this.href='?go='+this.style.left"`**: left 값이 1600px가 되면, href 속성이 `?go=1600px`로 설정됨
 
 ```jsx
 onmouseover="this.innerHTML='yOu'"
@@ -83,22 +63,15 @@ onmouseout="this.innerHTML='O'"
 
 마우스를 치우면 다시 ‘O’로 바뀜
 
-> 
+>
 
-|
-
-|
-
-|
-
-## Payload
+## 페이로드
 
 a 태그의 요소를 1600px 위치에 도달시켜야 함
 
 ### 방법 1
 
 ‘O’를 1600번 클릭
-
 
 ### 방법 2
 
@@ -107,7 +80,3 @@ style="position:relative;left:1599;top:0"
 ```
 
 left 속성을 1599로 바꿔준 뒤, ‘O’ 요소를 한번 클릭해주어 1600px 위치에 도달
-
-|
-
----
