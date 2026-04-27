@@ -1,4 +1,4 @@
-﻿---
+---
 title: "KISA Academy"
 layout: single
 permalink: /series/kisa-academy/
@@ -35,4 +35,3 @@ KISA Academy 정리 글을 주제별로 모아둔 페이지
 - `YARA`
 - `Shellcode`
 - `Spear Phishing`
-
