@@ -4,8 +4,8 @@
 
 @charset "utf-8";
 
-@use "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}" as *; // skin
-@use "minimal-mistakes" as *; // main partials
+@import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
+@import "minimal-mistakes"; // main partials
 
 /* --- [Layout Expansion: 전역 레이아웃 밸런싱 및 사이드바 여백 확보 패치] --- */
 
